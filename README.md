@@ -41,4 +41,4 @@ Your app is ready to be deployed!
 ## Contributors
 
 | [<img src="https://avatars3.githubusercontent.com/u/19779828?s=460&v=4" width="100px;"/><br /><sub><b>António Santos</b></sub>](https://antoniosantos.me) | [<img src="https://avatars3.githubusercontent.com/u/25771694?s=460&v=4" width="100px;"/><br /><sub><b>Francisco Regalado</b></sub>](https://github.com/fsfregalado) | [<img src="https://avatars1.githubusercontent.com/u/24814636?s=460&v=4" width="100px;"/><br /><sub><b>Henrique Silva</b></sub>](https://github.com/HenriqueSilva2) |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| :---: | :---: | :---: |
