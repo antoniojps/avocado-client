@@ -1,4 +1,6 @@
 import Emoji from './Emoji'
 
-export * from './Card'
+export * from './Cards'
+export * from './Type'
+
 export { Emoji }
