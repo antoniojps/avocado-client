@@ -32,6 +32,7 @@ const size = {
   xs: rem('16px'),
   ls: rem('18px'),
   s: rem('20px'),
+  sm: rem('24px'),
   m: rem('32px'),
   l: rem('48px'),
   xl: rem('60px'),

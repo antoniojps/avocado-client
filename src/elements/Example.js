@@ -2,13 +2,13 @@ import styled from 'styled-components'
 import { applyStyleModifiers } from 'styled-components-modifiers'
 import { above } from 'utilities'
 
-const CARD_MODIFIERS = {
+const EXAMPLE_MODIFIERS = {
   column: () => `
     flex-direction: column;
   `,
 }
 
-export const Card = styled.div`
+export const Example = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,5 +19,5 @@ export const Card = styled.div`
     ${above.md`
       background-image: linear-gradient(-180deg, #FFF090 0%, #FFDD57 100%);
     `}
-    ${applyStyleModifiers(CARD_MODIFIERS)};
+    ${applyStyleModifiers(EXAMPLE_MODIFIERS)};
 `
