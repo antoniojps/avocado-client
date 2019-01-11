@@ -15,5 +15,7 @@ Emoji.propTypes = {
 }
 
 export default styled(Emoji)`
-  font-size: 10rem;
+  display: inline-flex;
+  font-size: 2rem;
+  padding-right: 1rem;
 `
