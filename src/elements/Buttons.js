@@ -1,6 +1,8 @@
+import React from 'react'
 import styled from 'styled-components'
 import { applyStyleModifiers } from 'styled-components-modifiers'
 import { lighten } from 'polished'
+import Ink from 'react-ink'
 
 const BUTTON_MODIFIERS = {
   small: ({ theme }) => `
@@ -44,27 +46,35 @@ const BUTTON_MODIFIERS = {
 `,
 }
 
-export const Button = styled.button`
-    margin-bottom: ${props => props.theme.spacing.base};
-    padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.base};
-    box-shadow: 0 2px 3px 0 rgba(10,10,10,0.10), 0 0 0 1px rgba(10,10,10,0.10);
-    border-radius: ${props => props.theme.value.borderRadius};
+const StyledButton = styled.button`
+  position: relative;
+  margin-bottom: ${props => props.theme.spacing.base};
+  padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.base};
+  box-shadow: 0 2px 3px 0 rgba(10,10,10,0.10), 0 0 0 1px rgba(10,10,10,0.10);
+  border-radius: ${props => props.theme.value.borderRadius};
+  background-color: ${props => props.theme.color.bgLighter};
+  color: ${props => props.theme.color.baseLighter};
+  ${props => props.theme.mixin.transition()}
+  &:hover {
+    background-color: ${props => lighten(0.02, props.theme.color.bg)};
+    border: 1px solid ${props => props.theme.color.primary};
+    color: ${props => props.theme.color.base};
+    cursor: pointer;
+  }
+  &:focus {
+    outline: 0;
+    border: 1px solid ${props => props.theme.color.primary};
+  }
+  &:active {
     background-color: ${props => props.theme.color.bgLighter};
-    color: ${props => props.theme.color.baseLighter};
-    ${props => props.theme.mixin.transition()}
-    &:hover {
-      background-color: ${props => lighten(0.02, props.theme.color.bg)};
-      border: 1px solid ${props => props.theme.color.primary};
-      color: ${props => props.theme.color.base};
-      cursor: pointer;
-    }
-    &:focus {
-      outline: 0;
-      border: 1px solid ${props => props.theme.color.primary};
-    }
-    &:active {
-      background-color: ${props => props.theme.color.bgLighter};
-      border: 1px solid ${props => props.theme.color.border};
-    }
-    ${applyStyleModifiers(BUTTON_MODIFIERS)};
+    border: 1px solid ${props => props.theme.color.border};
+  }
+  ${applyStyleModifiers(BUTTON_MODIFIERS)};
 `
+
+export const Button = ({ children, modifiers }) => (
+  <StyledButton modifiers={modifiers}>
+    {children}
+    <Ink />
+  </StyledButton>
+)
