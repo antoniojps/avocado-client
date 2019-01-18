@@ -6,6 +6,7 @@ export const Title = styled.h1`
   font-weight: bold;
   margin: 0;
   padding-bottom: ${props => props.theme.spacing.base};
+  padding-top: ${props => props.theme.spacing.base};
 `
 
 export const Subtitle = styled.h2`

@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
 } from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
-import { theme } from 'utilities'
 import { Layout } from 'elements'
 import BaseTabs from 'ui/BaseTabs'
 import Routes from './Routes'
@@ -11,13 +9,13 @@ import Routes from './Routes'
 const Tabs = () => (
   <BaseTabs>
     <BaseTabs.Tab to="/">
-    Type
+      Type
     </BaseTabs.Tab>
     <BaseTabs.Tab to="/elements">
-    Elements
+      Elements
     </BaseTabs.Tab>
     <BaseTabs.Tab to="/components">
-    Components
+      Components
     </BaseTabs.Tab>
   </BaseTabs>
 )
@@ -26,14 +24,14 @@ const Tabs = () => (
 class App extends Component {
   render() {
     return (
-      <Router>
-        <ThemeProvider theme={theme}>
+      <>
+        <Router>
           <Layout>
             <Tabs />
             <Routes />
           </Layout>
-        </ThemeProvider>
-      </Router>
+        </Router>
+      </>
     )
   }
 }

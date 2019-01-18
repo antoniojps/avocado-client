@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import PageTypography from 'ui/PageTypography'
-import PageElements from 'ui/PageElements'
-import PageComponents from 'ui/PageComponents'
+import PageTypography from 'docs/PageTypography'
+import PageElements from 'docs/PageElements'
+import PageComponents from 'docs/PageComponents'
 
 const Routes = () => (
   <>

@@ -1,10 +1,11 @@
 import React from 'react'
-import { Title, Subtitle, P } from 'elements'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { coy } from 'react-syntax-highlighter/dist/styles/prism'
+import {
+  Title, Subtitle, P, Container
+} from 'elements'
+import SyntaxHighlighter from 'docs/SyntaxHighlighter'
 
 const PageTypography = () => (
-  <>
+  <Container>
     <Title>
       Title
     </Title>
@@ -23,7 +24,7 @@ const PageTypography = () => (
       chillwave af celiac.
     </P>
 
-    <SyntaxHighlighter language="jsx" style={coy} customStyle={{ backgroundColor: 'white' }}>
+    <SyntaxHighlighter>
       {`import { Title, Subtitle, P } from 'elements'
 
 <Title>
@@ -36,7 +37,7 @@ const PageTypography = () => (
   Lorem ipsum dolor amet fam vinyl vegan synth. Prism chartreuse...
 </P>`}
     </SyntaxHighlighter>
-  </>
+  </Container>
 )
 
 export default PageTypography
