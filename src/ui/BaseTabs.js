@@ -132,5 +132,4 @@ BaseTabs.Tab.defaultProps = {
 
 export default withRouter(styled(BaseTabs)`
   display: flex;
-  margin-bottom: ${props => props.theme.spacing.m};
 `)

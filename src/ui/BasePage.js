@@ -3,8 +3,23 @@ import {
   Emoji,
   Title,
 } from 'elements'
+import BaseTabs from 'ui/BaseTabs'
 import styled from 'styled-components'
 import { above } from 'utilities'
+
+const Tabs = ({ className }) => (
+  <BaseTabs className={className}>
+    <BaseTabs.Tab to="/">
+      Type
+    </BaseTabs.Tab>
+    <BaseTabs.Tab to="/elements">
+      Elements
+    </BaseTabs.Tab>
+    <BaseTabs.Tab to="/components">
+      Components
+    </BaseTabs.Tab>
+  </BaseTabs>
+)
 
 const BasePage = ({ children, className }) => (
   <div className={className}>
@@ -14,6 +29,7 @@ const BasePage = ({ children, className }) => (
         {' '}
         Design System
       </Title>
+      <Tabs />
     </LayoutHeader>
     <LayoutMain>
       <div className="container">

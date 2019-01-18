@@ -40,6 +40,7 @@ export default class PageComponents extends Component {
             Tab 3
           </BaseTabs.Tab>
         </BaseTabs>
+        <br />
         <SyntaxHighlighter>
           {`import { BaseTabs } from 'ui'
 
