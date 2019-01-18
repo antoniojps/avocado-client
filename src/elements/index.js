@@ -5,5 +5,6 @@ export * from './Layouts'
 export * from './Type'
 export * from './Buttons'
 export * from './Tags'
+export * from './Icons'
 
 export { Emoji }

@@ -19,6 +19,7 @@ const color = {
   purple: '#B86BFF',
   warning: '#F5874A',
   success: '#FB6D77',
+  star: '#FFDD57',
 }
 
 const gradient = {
