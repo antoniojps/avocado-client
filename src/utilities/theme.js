@@ -8,6 +8,7 @@ const color = {
   primary: '#40CB89',
   primaryDarker: '#2AB875',
   border: '#E6E6E6',
+  borderBtn: '#DDDDDD',
   bg: '#F5F5F5',
   bgLighter: '#FFFFFF',
   bgDark: '#242424',

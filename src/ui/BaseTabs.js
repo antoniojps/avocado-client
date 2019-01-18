@@ -70,34 +70,40 @@ const TAB_MODIFIERS = {
   left: ({ theme }) => `
     border-top-left-radius: ${theme.value.borderRadius};
     border-bottom-left-radius: ${theme.value.borderRadius};
-    border-left: ${theme.value.borderSize} solid ${theme.color.border} !important;
+    ${props => props.theme.mixin.border()}
+    border-left: 0;
     &:hover {
-      border-left: ${theme.value.borderSize} solid ${theme.color.primary} !important;
+      background-color: ${theme.color.primaryDarker};
+      ${theme.mixin.border({ color: theme.color.primaryDarker })};
+      border-left: 0;
     }
   `,
   leftActive: ({ theme }) => `
     background-color: ${theme.color.primary};
     color: ${theme.color.baseInverse};
     ${theme.mixin.border({ color: theme.color.primary })};
+    border-left: 0;
     border-top-left-radius: ${theme.value.borderRadius};
     border-bottom-left-radius: ${theme.value.borderRadius};
-    border-left: ${theme.value.borderSize} solid ${theme.color.primary} !important;
     &:hover {
-      border-left: ${theme.value.borderSize} solid ${theme.color.primary};
+      ${theme.mixin.border({ color: theme.color.primaryDarker })};
+      border-left: 0;
     }
   `,
   right: ({ theme }) => `
     border-top-right-radius: ${theme.value.borderRadius};
     border-bottom-right-radius: ${theme.value.borderRadius};
-    &:hover {
-      border-right: ${theme.value.borderSize} solid ${theme.color.primary};
-    }
   `,
   active: ({ theme }) => `
     background-color: ${theme.color.primary};
     color: ${theme.color.baseInverse};
-    ${theme.mixin.border({ color: theme.color.primary })};
+    ${theme.mixin.border({ color: theme.color.primary })}
     border-left: 0;
+    &:hover {
+      background-color: ${theme.color.primaryDarker};
+      ${theme.mixin.border({ color: theme.color.primaryDarker })}
+      border-left: 0;
+    }
   `,
 }
 
@@ -110,9 +116,9 @@ BaseTabs.Tab = styled.button`
   ${props => props.theme.mixin.transition()}
   &:hover {
     background-color: ${props => props.theme.color.primaryDarker};
+    ${props => props.theme.mixin.border({ color: props.theme.color.primaryDarker })}
     color: ${props => props.theme.color.baseInverse};
     cursor: pointer;
-    ${props => props.theme.mixin.border({ color: props.theme.color.primary })};
     border-left: 0;
   }
   &:focus {
