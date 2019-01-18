@@ -13,6 +13,8 @@ const color = {
   bgDark: '#242424',
   danger: '#FB6D77',
   dangerDarker: '#EB4D5D',
+  blue: '#3273DC',
+  purple: '#B86BFF',
   warning: '#F5874A',
   success: '#FB6D77',
 }

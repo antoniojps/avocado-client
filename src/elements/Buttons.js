@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import Ink from 'react-ink'
 import { applyStyleModifiers } from 'styled-components-modifiers'
 import { lighten } from 'polished'
-import Ink from 'react-ink'
 
 const BUTTON_MODIFIERS = {
   small: ({ theme }) => `
