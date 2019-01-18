@@ -36,7 +36,10 @@ class BaseTabs extends Component {
 
     if (isFirstTab) modifiers = ['left']
     if (isLastTab) modifiers = ['right']
-    if (tabHasToProp && tabToProp === pathname) modifiers.push('active')
+    if (tabHasToProp && tabToProp === pathname) {
+      if (isFirstTab) modifiers = ['leftActive']
+      else modifiers.push('active')
+    }
     return { modifiers }
   }
 
@@ -68,6 +71,17 @@ const TAB_MODIFIERS = {
     border-top-left-radius: ${theme.value.borderRadius};
     border-bottom-left-radius: ${theme.value.borderRadius};
     border-left: ${theme.value.borderSize} solid ${theme.color.border} !important;
+    &:hover {
+      border-left: ${theme.value.borderSize} solid ${theme.color.primary} !important;
+    }
+  `,
+  leftActive: ({ theme }) => `
+    background-color: ${theme.color.primary};
+    color: ${theme.color.baseInverse};
+    ${theme.mixin.border({ color: theme.color.primary })};
+    border-top-left-radius: ${theme.value.borderRadius};
+    border-bottom-left-radius: ${theme.value.borderRadius};
+    border-left: ${theme.value.borderSize} solid ${theme.color.primary} !important;
     &:hover {
       border-left: ${theme.value.borderSize} solid ${theme.color.primary};
     }

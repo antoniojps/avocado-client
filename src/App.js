@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
 } from 'react-router-dom'
-import { Layout } from 'elements'
+import { BasePage } from 'ui'
 import BaseTabs from 'ui/BaseTabs'
 import Routes from './Routes'
 
@@ -26,10 +26,10 @@ class App extends Component {
     return (
       <>
         <Router>
-          <Layout>
+          <BasePage>
             <Tabs />
             <Routes />
-          </Layout>
+          </BasePage>
         </Router>
       </>
     )

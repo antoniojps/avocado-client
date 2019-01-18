@@ -1,14 +1,4 @@
 import styled from 'styled-components'
-import { above } from 'utilities'
-
-export const Layout = styled.div`
-    width: 100%;
-    height: 100%;
-    padding: ${props => props.theme.spacing.base};
-    ${above.md`
-        padding: ${props => `${props.theme.spacing.m} ${props.theme.spacing.xl}`};
-    `}
-`
 
 export const Container = styled.div`
     background: ${props => props.theme.color.bgLighter};
@@ -16,5 +6,4 @@ export const Container = styled.div`
     border-radius: ${props => props.theme.value.borderRadius};
     padding: ${props => `${props.theme.spacing.s} ${props.theme.spacing.ms}`};
     margin-bottom: ${props => props.theme.spacing.base};
-
 `

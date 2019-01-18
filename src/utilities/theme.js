@@ -11,6 +11,7 @@ const color = {
   bg: '#F5F5F5',
   bgLighter: '#FFFFFF',
   bgDark: '#242424',
+  bgPrimary: '#42705C',
   danger: '#FB6D77',
   dangerDarker: '#EB4D5D',
   blue: '#3273DC',
@@ -21,7 +22,7 @@ const color = {
 
 const gradient = {
   bg: () => css`
-    background-image: linear-gradient(-135deg, #408263 0%, #42705C 100%);
+    background-image: linear-gradient(-90deg, #408263 2%, #42705C 100%);
   `,
 }
 

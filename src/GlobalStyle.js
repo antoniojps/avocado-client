@@ -16,11 +16,13 @@ const GlobalStyle = createGlobalStyle`
     width:100%;
     height: 100%;
     font-size: 16px;
-    background-color: ${props => props.theme.color.bg};
+    ${props => props.theme.gradient.bg()};
+    background-color: ${props => props.theme.color.bgPrimary};
   }
   #root {
     height: 100%;
     width: 100%;
+    background-color: ${props => props.theme.color.bg};
   }
   `
 

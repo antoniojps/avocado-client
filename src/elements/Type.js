@@ -1,4 +1,11 @@
 import styled from 'styled-components'
+import { applyStyleModifiers } from 'styled-components-modifiers'
+
+const TITLE_MODIFIERS = {
+  inverse: ({ theme }) => `
+    color: ${theme.color.baseInverse};
+  `,
+}
 
 export const Title = styled.h1`
   font-size: ${props => props.theme.size.m};
@@ -7,6 +14,7 @@ export const Title = styled.h1`
   margin: 0;
   padding-bottom: ${props => props.theme.spacing.base};
   padding-top: ${props => props.theme.spacing.base};
+  ${applyStyleModifiers(TITLE_MODIFIERS)};
 `
 
 export const Subtitle = styled.h2`
