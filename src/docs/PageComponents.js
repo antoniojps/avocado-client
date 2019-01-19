@@ -33,7 +33,7 @@ export default class PageComponents extends Component {
     return (
       <Container>
         <Title>
-          BaseTabs
+          Tabs
         </Title>
         <P>
           Tabs to control current route
@@ -124,7 +124,7 @@ class Example extends Component {
 </BaseToggle>`}
         </SyntaxHighlighter>
         <Title>
-          BaseRater
+          Rater
         </Title>
         <BaseRater
           rating={3}

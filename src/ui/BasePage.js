@@ -10,9 +10,6 @@ import { above } from 'utilities'
 const Tabs = ({ className }) => (
   <BaseTabs className={className}>
     <BaseTabs.Tab to="/">
-      Type
-    </BaseTabs.Tab>
-    <BaseTabs.Tab to="/elements">
       Elements
     </BaseTabs.Tab>
     <BaseTabs.Tab to="/components">
