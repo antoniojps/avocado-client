@@ -53,7 +53,7 @@ export default class PageComponents extends Component {
         <SyntaxHighlighter>
           {`import { BaseTabs } from 'ui'
 
-<BaseTabs orientation="vertical">
+<BaseTabs>
   <BaseTabs.Tab to="/components">
     Components
   </BaseTabs.Tab>

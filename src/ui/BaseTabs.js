@@ -22,7 +22,14 @@ class BaseTabs extends Component {
         },
       }
     }
-    return { ...element, key: generateKey(pre) }
+    return {
+      ...element,
+      key: generateKey(pre),
+      props: {
+        ...props,
+        orientation,
+      },
+    }
   }
 
   // style modifiers according to tab position and active path
