@@ -5,22 +5,31 @@ import {
   Button,
   Container,
 } from 'elements'
-import { BaseTabs, BaseSwitch, BaseToggle } from 'ui'
+import {
+  BaseTabs,
+  BaseSwitch,
+  BaseToggle,
+  BaseRater,
+} from 'ui'
 import SyntaxHighlighter from 'docs/SyntaxHighlighter'
 
 export default class PageComponents extends Component {
   state = {
     isChecked: false,
+    ratingInfo: 'Rated 3 stars',
   }
 
   handleSwitchChange = () => {
     const { isChecked } = this.state
     this.setState({ isChecked: !isChecked })
-    console.log(`switch is ${!isChecked}`)
+  }
+
+  setRatingInfo = (info) => {
+    this.setState({ ratingInfo: info })
   }
 
   render() {
-    const { isChecked } = this.state
+    const { isChecked, ratingInfo } = this.state
     return (
       <Container>
         <Title>
@@ -101,7 +110,9 @@ class Example extends Component {
           )}
         </BaseToggle>
         <SyntaxHighlighter>
-          {`<BaseToggle>
+          {`import { BaseToggle } from 'ui'
+
+<BaseToggle>
   {({ isOn, toggle }) => (
     <>
       {isOn && <P>Show me</P>}
@@ -111,6 +122,29 @@ class Example extends Component {
     </>
   )}
 </BaseToggle>`}
+        </SyntaxHighlighter>
+        <Title>
+          BaseRater
+        </Title>
+        <BaseRater
+          rating={3}
+          max={5}
+          onRate={(selectedRating) => this.setRatingInfo(`Rated ${selectedRating} stars`)}
+          onMouseEnterStar={(hoveredRating) => this.setRatingInfo(`Hovering ${hoveredRating} stars`)}
+          onMouseLeave={(selectedRating) => this.setRatingInfo(`Rated ${selectedRating} stars`)}
+        />
+        <P>{ratingInfo}</P>
+        <SyntaxHighlighter>
+          {`import { BaseRater } from 'ui'
+
+<BaseRater
+  rating={3}
+  max={5}
+  onRate={(selectedRating) => this.setRatingInfo(\`Rated \${selectedRating} stars\`)}
+  onMouseEnterStar={(hoveredRating) => this.setRatingInfo(\`Hovering \${hoveredRating} stars\`)}
+  onMouseLeave={(selectedRating) => this.setRatingInfo(\`Rated \${selectedRating} stars\`)}
+/>
+<P>{ratingInfo}</P>`}
         </SyntaxHighlighter>
       </Container>
     )
