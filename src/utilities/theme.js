@@ -72,7 +72,14 @@ const colorBorder = color.border
 const colorPrimary = color.primary
 const zIndexM = zIndex.m
 const mixin = {
-  border: ({ color = colorBorder } = {}) => `border: ${value.borderSize} solid ${color}`,
+  border: ({ color = colorBorder, orientation = null } = {}) => {
+    let style = `border: ${value.borderSize} solid ${color};`
+    if (orientation) {
+      if (orientation === 'horizontal') style += 'border-left: 0;'
+      else style += 'border-bottom: 0;'
+    }
+    return style
+  },
   outline: () => `
     outline: ${colorPrimary} auto 5px;
     z-index: ${zIndexM};

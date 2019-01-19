@@ -37,7 +37,7 @@ export default styled(BaseRateStar)`
   padding: ${props => props.theme.spacing.xxxs};
   transform: scale(1);
   transition: all 250ms;
-  &:hover{´
+  &:hover{
     transform: scale(1.2);
   }
 `

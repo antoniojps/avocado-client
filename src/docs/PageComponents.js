@@ -36,7 +36,7 @@ export default class PageComponents extends Component {
           Tabs
         </Title>
         <P>
-          Tabs to control current route
+          Horizontal
         </P>
         <BaseTabs>
           <BaseTabs.Tab to="/components">
@@ -53,17 +53,47 @@ export default class PageComponents extends Component {
         <SyntaxHighlighter>
           {`import { BaseTabs } from 'ui'
 
-  <BaseTabs>
-    <BaseTabs.Tab to="/components">
-      Components
-    </BaseTabs.Tab>
-    <BaseTabs.Tab to="/components/tab-2">
-      Tab 2
-    </BaseTabs.Tab>
-    <BaseTabs.Tab to="/components/tab-3">
-      Tab 3
-    </BaseTabs.Tab>
-  </BaseTabs>`}
+<BaseTabs orientation="vertical">
+  <BaseTabs.Tab to="/components">
+    Components
+  </BaseTabs.Tab>
+  <BaseTabs.Tab to="/components/tab-2">
+    Tab 2
+  </BaseTabs.Tab>
+  <BaseTabs.Tab to="/components/tab-3">
+    Tab 3
+  </BaseTabs.Tab>
+</BaseTabs>`}
+        </SyntaxHighlighter>
+        <P>
+          Vertical
+        </P>
+        <BaseTabs orientation="vertical">
+          <BaseTabs.Tab to="/components">
+            Components
+          </BaseTabs.Tab>
+          <BaseTabs.Tab to="/components/tab-2">
+            Tab 2
+          </BaseTabs.Tab>
+          <BaseTabs.Tab to="/components/tab-3">
+            Tab 3
+          </BaseTabs.Tab>
+        </BaseTabs>
+        <br />
+        <SyntaxHighlighter>
+          {`import { BaseTabs } from 'ui'
+
+<BaseTabs orientation="vertical">
+  <BaseTabs.Tab to="/components">
+    Components
+  </BaseTabs.Tab>
+  <BaseTabs.Tab to="/components/tab-2">
+    Tab 2
+  </BaseTabs.Tab>
+  <BaseTabs.Tab to="/components/tab-3">
+    Tab 3
+  </BaseTabs.Tab>
+</BaseTabs>`}
         </SyntaxHighlighter>
         <Title>
           Switch

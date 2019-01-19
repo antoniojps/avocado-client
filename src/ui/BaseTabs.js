@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { applyStyleModifiers, styleModifierPropTypes } from 'styled-components-modifiers'
-import { generateKey } from 'utilities'
+import { generateKey, above } from 'utilities'
 
 class BaseTabs extends Component {
   // adds key and onClick router push function according to props
   generateTabElement = ({ element, pre }) => {
-    const { history: { push } } = this.props
+    const { history: { push }, orientation } = this.props
     const { props } = element
     const tabHasToProp = ('to' in props && props.to !== null)
     if (tabHasToProp) {
@@ -17,6 +17,7 @@ class BaseTabs extends Component {
         key: generateKey(pre),
         props: {
           ...props,
+          orientation,
           onClick: () => push(props.to),
         },
       }
@@ -26,18 +27,21 @@ class BaseTabs extends Component {
 
   // style modifiers according to tab position and active path
   generateModifiers = ({ index }) => {
-    const { children, location: { pathname } } = this.props
+    const { children, location: { pathname }, orientation } = this.props
     const tab = children[index]
     const tabHasToProp = ('to' in tab.props && tab.props.to !== null)
     const { to: tabToProp } = tab.props
+    const isHorizontal = orientation === 'horizontal'
     const isFirstTab = index === 0
     const isLastTab = index === children.length - 1
+    const isActive = (tabHasToProp && tabToProp === pathname)
     let modifiers = []
 
-    if (isFirstTab) modifiers = ['left']
-    if (isLastTab) modifiers = ['right']
-    if (tabHasToProp && tabToProp === pathname) {
-      if (isFirstTab) modifiers = ['leftActive']
+    if (isFirstTab) modifiers = isHorizontal ? ['left'] : ['top']
+    if (isLastTab) modifiers = isHorizontal ? ['right'] : ['bottom']
+    if (isActive) {
+      if (isFirstTab && isHorizontal) modifiers = ['leftActive']
+      if (isLastTab && !isHorizontal) modifiers = ['bottomActive']
       else modifiers.push('active')
     }
     return { modifiers }
@@ -64,45 +68,78 @@ class BaseTabs extends Component {
 BaseTabs.propTypes = {
   className: PropTypes.string.isRequired,
   children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  orientation: PropTypes.string,
+}
+
+BaseTabs.defaultProps = {
+  orientation: 'horizontal',
 }
 
 const TAB_MODIFIERS = {
-  left: ({ theme }) => `
+  top: ({ theme, orientation }) => `
+  border-top-left-radius: ${theme.value.borderRadius};
+  border-top-right-radius: ${theme.value.borderRadius};
+  ${theme.mixin.border({ orientation })};
+
+  &:hover {
+    background-color: ${theme.color.primaryDarker};
+    ${theme.mixin.border({ color: theme.color.primaryDarker, orientation })};
+  }
+  `,
+  bottom: ({ theme }) => `
+  border-bottom-left-radius: ${theme.value.borderRadius};
+  border-bottom-right-radius: ${theme.value.borderRadius};
+  ${theme.mixin.border()};
+  &:hover {
+    background-color: ${theme.color.primaryDarker};
+    ${theme.mixin.border({ color: theme.color.primaryDarker })};
+  }
+  `,
+  bottomActive: ({ theme }) => `
+  color: ${theme.color.baseInverse};
+  background-color: ${theme.color.primary};
+  border-bottom-left-radius: ${theme.value.borderRadius};
+  border-bottom-right-radius: ${theme.value.borderRadius};
+  ${theme.mixin.border({ color: theme.color.primary })};
+  &:hover {
+    background-color: ${theme.color.primaryDarker};
+    ${theme.mixin.border({ color: theme.color.primaryDarker })};
+  }
+  `,
+  left: ({ theme, orientation }) => `
     border-top-left-radius: ${theme.value.borderRadius};
     border-bottom-left-radius: ${theme.value.borderRadius};
-    ${props => props.theme.mixin.border()}
-    border-left: 0;
+    ${theme.mixin.border({ orientation })}
+    border-left: 2px solid ${theme.color.borderBtn};
     &:hover {
       background-color: ${theme.color.primaryDarker};
-      ${theme.mixin.border({ color: theme.color.primaryDarker })};
-      border-left: 0;
+      ${theme.mixin.border({ color: theme.color.primaryDarker, orientation })};
+      border-left: 2px solid ${theme.color.primaryDarker};
     }
   `,
-  leftActive: ({ theme }) => `
+  leftActive: ({ theme, orientation }) => `
     background-color: ${theme.color.primary};
     color: ${theme.color.baseInverse};
-    ${theme.mixin.border({ color: theme.color.primary })};
-    border-left: 0;
+    ${theme.mixin.border({ color: theme.color.primary, orientation })};
+    border-left: 2px solid ${theme.color.primary} !important;
     border-top-left-radius: ${theme.value.borderRadius};
     border-bottom-left-radius: ${theme.value.borderRadius};
     &:hover {
-      ${theme.mixin.border({ color: theme.color.primaryDarker })};
-      border-left: 0;
+      ${theme.mixin.border({ color: theme.color.primaryDarker, orientation })};
+      border-left: 2px solid ${theme.color.primaryDarker} !important;
     }
   `,
   right: ({ theme }) => `
     border-top-right-radius: ${theme.value.borderRadius};
     border-bottom-right-radius: ${theme.value.borderRadius};
   `,
-  active: ({ theme }) => `
+  active: ({ theme, orientation }) => `
     background-color: ${theme.color.primary};
     color: ${theme.color.baseInverse};
-    ${theme.mixin.border({ color: theme.color.primary })}
-    border-left: 0;
+    ${theme.mixin.border({ color: theme.color.primary, orientation })}
     &:hover {
       background-color: ${theme.color.primaryDarker};
-      ${theme.mixin.border({ color: theme.color.primaryDarker })}
-      border-left: 0;
+      ${theme.mixin.border({ color: theme.color.primaryDarker, orientation })}
     }
   `,
 }
@@ -110,16 +147,14 @@ const TAB_MODIFIERS = {
 BaseTabs.Tab = styled.button`
   padding: ${props => props.theme.spacing.xms} ${props => props.theme.spacing.m};
   color: ${props => props.theme.color.baseLighter};
-  ${props => props.theme.mixin.border()}
-  border-left: 0;
+  ${props => props.theme.mixin.border({ orientation: props.orientation })}
   background-color: ${props => props.theme.color.bgLighter};
   ${props => props.theme.mixin.transition()}
   &:hover {
     background-color: ${props => props.theme.color.primaryDarker};
-    ${props => props.theme.mixin.border({ color: props.theme.color.primaryDarker })}
+    ${props => props.theme.mixin.border({ color: props.theme.color.primaryDarker, orientation: props.orientation })}
     color: ${props => props.theme.color.baseInverse};
     cursor: pointer;
-    border-left: 0;
   }
   &:focus {
     ${props => props.theme.mixin.outline()};
@@ -138,4 +173,9 @@ BaseTabs.Tab.defaultProps = {
 
 export default withRouter(styled(BaseTabs)`
   display: flex;
+  flex-direction: ${({ orientation }) => ((orientation === 'vertical') ? 'column' : 'row')}
+  overflow: scroll;
+  ${above.sm`
+      overflow:auto;
+  `}
 `)

@@ -42,7 +42,6 @@ class BaseRater extends Component {
     if (typeof onMouseLeaveFromParent === 'function') onMouseLeaveFromParent(setRating)
   }
 
-  // render active stars
   renderActiveStars = () => {
     const { isHovering, activeRating, setRating } = this.state
     const activeStars = []
@@ -64,7 +63,6 @@ class BaseRater extends Component {
     return activeStars
   }
 
-  // render disabled stars
   renderDisabledStars = () => {
     const {
       maxRating,
