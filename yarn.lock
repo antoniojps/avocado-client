@@ -7253,6 +7253,12 @@ react-scripts@2.1.2:
   optionalDependencies:
     fsevents "1.2.4"
 
+react-spring@^7.2.9:
+  version "7.2.9"
+  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-7.2.9.tgz#57b2b01e3bc4a34b48c18b34bca01a87e230b4a7"
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+
 react-syntax-highlighter@^10.1.2:
   version "10.1.2"
   resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-10.1.2.tgz#645ad5e3d8667fd7a2b73fc1059f871055d23f82"
