@@ -1,62 +1,67 @@
 import React from 'react'
-import {
-  Emoji,
-  Title,
-} from 'elements'
-import BaseTabs from 'ui/BaseTabs'
+import { TheNavBar, TheNavList } from 'ui'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { above } from 'utilities'
 
-const Tabs = ({ className }) => (
-  <BaseTabs className={className}>
-    <BaseTabs.Tab to="/">
-      Elements
-    </BaseTabs.Tab>
-    <BaseTabs.Tab to="/components">
-      Components
-    </BaseTabs.Tab>
-  </BaseTabs>
-)
-
-const BasePage = ({ children, className }) => (
+const BasePage = ({ children, title, className }) => (
   <div className={className}>
     <Header>
-      <Title modifiers="inverse">
-        <Emoji label="avocado" emoji="🥑" />
-        {' '}
-        Design System
-      </Title>
-      <Tabs />
+      <Row>
+        <TheNavBar>
+          {title}
+        </TheNavBar>
+        <Header.Seperator />
+        <TheNavList list={[
+          {
+            name: 'Elements',
+            to: '/',
+          },
+          {
+            name: 'Components',
+            to: '/components',
+          },
+        ]}
+        />
+      </Row>
     </Header>
     <Main>
-      <div className="container">
-        {children}
-      </div>
+      <Row>
+        <div className="container">
+          {children}
+        </div>
+      </Row>
     </Main>
     <Footer>
-      Footer
+      <Row>
+        Footer
+      </Row>
     </Footer>
   </div>
 )
 
+BasePage.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.node.isRequired,
+  className: PropTypes.string.isRequired,
+}
+
 const Header = styled.header`
-    ${props => props.theme.gradient.bg()};
-    padding: ${props => props.theme.spacing.base};
-    padding-bottom: 0;
-    ${above.md`
-        padding: ${props => `${props.theme.spacing.m} ${props.theme.spacing.xl}`};
-        padding-bottom: 0;
-    `}
+  ${props => props.theme.gradient.bg()};
+  padding: ${props => props.theme.spacing.m} ${props => props.theme.spacing.base} ${props => props.theme.spacing.xxms} ${props => props.theme.spacing.base};
 `
+
+Header.Seperator = styled.div`
+  height: 2px;
+  width: 100%;
+  background-image: linear-gradient(90deg, rgba(255,255,255,0.00) 0%, rgba(255,255,255,0.32) 15%, rgba(255,255,255,0.32) 50%, rgba(255,255,255,0.36) 85%, rgba(255,255,255,0.00) 100%);`
 
 const Main = styled.main`
     display: block;
     position: relative;
     background-color: ${props => props.theme.color.bg};
     padding: ${props => props.theme.spacing.base};
-    ${above.md`
-      padding: ${props => `${props.theme.spacing.m}  ${props.theme.spacing.xl}`};
-    `}
+    padding-top: 0;
     &:before {
       ${props => props.theme.gradient.bg()};
       content: " ";
@@ -76,8 +81,13 @@ const Footer = styled.footer`
   padding: ${props => props.theme.spacing.base};
   margin-top: auto;
   ${above.md`
-      padding: ${props => `${props.theme.spacing.m} ${props.theme.spacing.xl}`};
+      padding: 0;
   `}
+`
+const Row = styled.section`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
 `
 
 export default styled(BasePage)`

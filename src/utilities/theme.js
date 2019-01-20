@@ -31,6 +31,7 @@ const gradient = {
 const value = {
   borderRadius: '8px',
   borderSize: '2px',
+  transition: '150ms',
 }
 
 const size = {

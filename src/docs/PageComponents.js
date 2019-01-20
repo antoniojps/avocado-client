@@ -6,6 +6,7 @@ import {
   Container,
 } from 'elements'
 import {
+  BasePage,
   BaseTabs,
   BaseSwitch,
   BaseToggle,
@@ -31,27 +32,28 @@ export default class PageComponents extends Component {
   render() {
     const { isChecked, ratingInfo } = this.state
     return (
-      <Container>
-        <Title>
-          Tabs
-        </Title>
-        <P>
-          Horizontal
-        </P>
-        <BaseTabs>
-          <BaseTabs.Tab to="/components">
-            Components
-          </BaseTabs.Tab>
-          <BaseTabs.Tab to="/components/tab-2">
-            Tab 2
-          </BaseTabs.Tab>
-          <BaseTabs.Tab to="/components/tab-3">
-            Tab 3
-          </BaseTabs.Tab>
-        </BaseTabs>
-        <br />
-        <SyntaxHighlighter>
-          {`import { BaseTabs } from 'ui'
+      <BasePage title="Design system">
+        <Container>
+          <Title>
+            Tabs
+          </Title>
+          <P>
+            Horizontal
+          </P>
+          <BaseTabs>
+            <BaseTabs.Tab to="/components">
+              Components
+            </BaseTabs.Tab>
+            <BaseTabs.Tab to="/components/tab-2">
+              Tab 2
+            </BaseTabs.Tab>
+            <BaseTabs.Tab to="/components/tab-3">
+              Tab 3
+            </BaseTabs.Tab>
+          </BaseTabs>
+          <br />
+          <SyntaxHighlighter>
+            {`import { BaseTabs } from 'ui'
 
 <BaseTabs>
   <BaseTabs.Tab to="/components">
@@ -64,24 +66,24 @@ export default class PageComponents extends Component {
     Tab 3
   </BaseTabs.Tab>
 </BaseTabs>`}
-        </SyntaxHighlighter>
-        <P>
-          Vertical
-        </P>
-        <BaseTabs orientation="vertical">
-          <BaseTabs.Tab to="/components">
-            Components
-          </BaseTabs.Tab>
-          <BaseTabs.Tab to="/components/tab-2">
-            Tab 2
-          </BaseTabs.Tab>
-          <BaseTabs.Tab to="/components/tab-3">
-            Tab 3
-          </BaseTabs.Tab>
-        </BaseTabs>
-        <br />
-        <SyntaxHighlighter>
-          {`import { BaseTabs } from 'ui'
+          </SyntaxHighlighter>
+          <P>
+            Vertical
+          </P>
+          <BaseTabs orientation="vertical">
+            <BaseTabs.Tab to="/components">
+              Components
+            </BaseTabs.Tab>
+            <BaseTabs.Tab to="/components/tab-2">
+              Tab 2
+            </BaseTabs.Tab>
+            <BaseTabs.Tab to="/components/tab-3">
+              Tab 3
+            </BaseTabs.Tab>
+          </BaseTabs>
+          <br />
+          <SyntaxHighlighter>
+            {`import { BaseTabs } from 'ui'
 
 <BaseTabs orientation="vertical">
   <BaseTabs.Tab to="/components">
@@ -94,17 +96,17 @@ export default class PageComponents extends Component {
     Tab 3
   </BaseTabs.Tab>
 </BaseTabs>`}
-        </SyntaxHighlighter>
-        <Title>
-          Switch
-        </Title>
-        <BaseSwitch isChecked={isChecked} onChange={this.handleSwitchChange}>
-          Switch is
-          {' '}
-          {isChecked ? 'on' : 'off'}
-        </BaseSwitch>
-        <SyntaxHighlighter>
-          {`import { BaseSwitch } from 'ui'
+          </SyntaxHighlighter>
+          <Title>
+            Switch
+          </Title>
+          <BaseSwitch isChecked={isChecked} onChange={this.handleSwitchChange}>
+            Switch is
+            {' '}
+            {isChecked ? 'on' : 'off'}
+          </BaseSwitch>
+          <SyntaxHighlighter>
+            {`import { BaseSwitch } from 'ui'
 
 class Example extends Component {
   state = {
@@ -127,20 +129,20 @@ class Example extends Component {
     )
   }
 }`}
-        </SyntaxHighlighter>
-        <Title>Toggle</Title>
-        <BaseToggle>
-          {({ isOn, toggle }) => (
-            <>
-              {isOn && <P>Toggle is on!</P>}
-              <Button modifiers="danger" onClick={toggle}>
-                Click to toggle
-              </Button>
-            </>
-          )}
-        </BaseToggle>
-        <SyntaxHighlighter>
-          {`import { BaseToggle } from 'ui'
+          </SyntaxHighlighter>
+          <Title>Toggle</Title>
+          <BaseToggle>
+            {({ isOn, toggle }) => (
+              <>
+                {isOn && <P>Toggle is on!</P>}
+                <Button modifiers="danger" onClick={toggle}>
+                  Click to toggle
+                </Button>
+              </>
+            )}
+          </BaseToggle>
+          <SyntaxHighlighter>
+            {`import { BaseToggle } from 'ui'
 
 <BaseToggle>
   {({ isOn, toggle }) => (
@@ -152,20 +154,20 @@ class Example extends Component {
     </>
   )}
 </BaseToggle>`}
-        </SyntaxHighlighter>
-        <Title>
-          Rater
-        </Title>
-        <BaseRater
-          rating={3}
-          max={5}
-          onRate={(selectedRating) => this.setRatingInfo(`Rated ${selectedRating} stars`)}
-          onMouseEnterStar={(hoveredRating) => this.setRatingInfo(`Hovering ${hoveredRating} stars`)}
-          onMouseLeave={(selectedRating) => this.setRatingInfo(`Rated ${selectedRating} stars`)}
-        />
-        <P>{ratingInfo}</P>
-        <SyntaxHighlighter>
-          {`import { BaseRater } from 'ui'
+          </SyntaxHighlighter>
+          <Title>
+            Rater
+          </Title>
+          <BaseRater
+            rating={3}
+            max={5}
+            onRate={(selectedRating) => this.setRatingInfo(`Rated ${selectedRating} stars`)}
+            onMouseEnterStar={(hoveredRating) => this.setRatingInfo(`Hovering ${hoveredRating} stars`)}
+            onMouseLeave={(selectedRating) => this.setRatingInfo(`Rated ${selectedRating} stars`)}
+          />
+          <P>{ratingInfo}</P>
+          <SyntaxHighlighter>
+            {`import { BaseRater } from 'ui'
 
 <BaseRater
   rating={3}
@@ -175,8 +177,9 @@ class Example extends Component {
   onMouseLeave={(selectedRating) => this.setRatingInfo(\`Rated \${selectedRating} stars\`)}
 />
 <P>{ratingInfo}</P>`}
-        </SyntaxHighlighter>
-      </Container>
+          </SyntaxHighlighter>
+        </Container>
+      </BasePage>
     )
   }
 }

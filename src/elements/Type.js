@@ -5,6 +5,9 @@ const TITLE_MODIFIERS = {
   inverse: ({ theme }) => `
     color: ${theme.color.baseInverse};
   `,
+  small: ({ theme }) => `
+    font-size: ${theme.size.sm};
+  `,
 }
 
 export const Title = styled.h1`
