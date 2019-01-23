@@ -1,3 +1,4 @@
-import uniqueID from 'lodash.uniqueid'
+import { uniqueId } from 'lodash'
 
-export const generateKey = (prefix) => `${uniqueID(prefix)}_${new Date().getTime()}`
+export const generateKey = (prefix) => `${uniqueId(prefix)}_${new Date().getTime()}`
+export const hyphenToSpace = (str) => str.replace(/-/g, ' ')

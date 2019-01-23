@@ -11,33 +11,41 @@ const BUTTON_MODIFIERS = {
   primary: ({ theme }) => `
     background-color: ${theme.color.primaryDarker};
     color: ${theme.color.baseInverse};
+    border: 1px solid ${theme.color.primaryDarker};
     &:hover {
       background-color: ${darken(0.03, theme.color.primaryDarker)};
+      border: 1px solid ${darken(0.03, theme.color.primaryDarker)};
       color: ${theme.color.baseInverse};
       cursor: pointer;
     }
     &:focus {
       color: ${theme.color.baseInverse};
       background-color: ${darken(0.1, theme.color.primaryDarker)};
+      border: 1px solid ${darken(0.1, theme.color.primaryDarker)};
     }
     &:active {
-      background-color: ${theme.color.primary};
+      border: 1px solid ${theme.color.primaryDarker};
+      background-color: ${theme.color.primaryDarker};
     }
   `,
   danger: ({ theme }) => `
   background-color: ${theme.color.danger};
   color: ${theme.color.baseInverse};
+  border: 1px solid ${theme.color.danger};
   &:hover {
     background-color: ${darken(0.06, theme.color.danger)};
+    border: 1px solid ${darken(0.06, theme.color.danger)};
     color: ${theme.color.baseInverse};
     cursor: pointer;
   }
   &:focus {
     color: ${theme.color.baseInverse};
     background-color: ${darken(0.1, theme.color.danger)};
+    border: 1px solid ${darken(0.1, theme.color.danger)};
   }
   &:active {
     background-color: ${theme.color.danger};
+    border: 1px solid ${theme.color.danger};
   }
 `,
 }

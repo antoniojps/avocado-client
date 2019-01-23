@@ -38,7 +38,7 @@ NavList.Ul = styled.ul`
 NavList.Li = styled.li`
   font-size: ${props => props.theme.size.base};
   color: ${props => props.theme.color.baseInverse};
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   a {

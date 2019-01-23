@@ -11,6 +11,7 @@ import {
   BaseSwitch,
   BaseToggle,
   BaseRater,
+  BaseBreadcrumb,
 } from 'ui'
 import SyntaxHighlighter from 'docs/SyntaxHighlighter'
 
@@ -32,8 +33,12 @@ export default class PageComponents extends Component {
   render() {
     const { isChecked, ratingInfo } = this.state
     return (
-      <BasePage title="Design system">
+      <BasePage>
         <Container>
+          <Title>
+            Breadcrumb
+          </Title>
+          <BaseBreadcrumb />
           <Title>
             Tabs
           </Title>

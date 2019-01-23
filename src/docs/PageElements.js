@@ -11,7 +11,7 @@ import { BasePage } from 'ui'
 import SyntaxHighlighter from 'docs/SyntaxHighlighter'
 
 const PageElements = () => (
-  <BasePage title="Design system">
+  <BasePage>
     <Container>
       <Title>
         Title

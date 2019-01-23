@@ -1,21 +1,23 @@
 import React from 'react'
-import { TheNavBar, TheNavList } from 'ui'
+import { TheNavBar, TheNavList, BaseBreadcrumb } from 'ui'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { above } from 'utilities'
 
-const BasePage = ({ children, title, className }) => (
+const BasePage = ({ children, breadcrumbBase, className }) => (
   <div className={className}>
     <Header>
       <Row>
         <TheNavBar>
-          {title}
+          <NavWrapper>
+            <BaseBreadcrumb modifiers="inverse" basePage={breadcrumbBase && breadcrumbBase} />
+          </NavWrapper>
         </TheNavBar>
         <Header.Seperator />
         <TheNavList list={[
           {
             name: 'Elements',
-            to: '/',
+            to: '/elements',
           },
           {
             name: 'Components',
@@ -42,8 +44,18 @@ const BasePage = ({ children, title, className }) => (
 
 BasePage.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.node.isRequired,
+  breadcrumbBase: PropTypes.shape({
+    title: PropTypes.string,
+    to: PropTypes.string,
+  }),
   className: PropTypes.string.isRequired,
+}
+
+BasePage.defaultProps = {
+  breadcrumbBase: {
+    title: 'Avocado',
+    to: '/',
+  },
 }
 
 const Header = styled.header`
@@ -88,6 +100,10 @@ const Row = styled.section`
   margin-left: auto;
   margin-right: auto;
   max-width: 1200px;
+`
+
+const NavWrapper = styled.div`
+  display: flex;
 `
 
 export default styled(BasePage)`

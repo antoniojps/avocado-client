@@ -27,8 +27,10 @@ const SyntaxHighlighter = ({ children, className }) => (
 
           <Transition
             items={isOn}
-            from={{ display: 'flex', opacity: 0, height: 0 }}
-            enter={{ opacity: 1, height: 'auto' }}
+            from={{
+              display: 'flex', opacity: 0, height: 0,
+            }}
+            enter={{ opacity: 1, overflow: 'scroll', height: 'auto' }}
             leave={{ opacity: 0, height: 0 }}
           >
             {isOn => (isOn
@@ -49,5 +51,4 @@ const SyntaxHighlighter = ({ children, className }) => (
 
 export default styled(SyntaxHighlighter)`
   width: 100%;
-  overflow: scroll;
 `

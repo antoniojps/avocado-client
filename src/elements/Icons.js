@@ -1,11 +1,20 @@
 /* eslint-disable react/style-prop-object */
 import React from 'react'
-import PropTypes from 'prop-types';
-import { theme } from 'utilities'
+import PropTypes from 'prop-types'
+import { withTheme } from 'styled-components'
 
 const getWidth = (originalWidth, originalHeight, currentHeight) => Math.round(currentHeight * (originalWidth / originalHeight))
 
-export const Icon = ({ icon, color, height }) => {
+const BaseIcon = ({
+  icon,
+  color,
+  height,
+  theme,
+  modifiers,
+}) => {
+  const isInverseModifierActive = (typeof modifiers === 'string' ? modifiers === 'inverse' : modifiers.includes('inverse'))
+  const iconColor = color || (isInverseModifierActive ? theme.color.baseInverse : theme.color.base)
+
   switch (icon) {
     case 'logo':
       return (
@@ -24,7 +33,7 @@ export const Icon = ({ icon, color, height }) => {
         <svg width={getWidth(20, 19, height)} height={height} viewBox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
           <g fill="none" fillRule="evenodd">
             <path d="M-2-2h24v24H-2z" />
-            <path fill={color} fillRule="nonzero" d="M10 15.27L16.18 19l-1.64-7.03L20 7.24l-7.19-.61L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19z" />
+            <path fill={iconColor} fillRule="nonzero" d="M10 15.27L16.18 19l-1.64-7.03L20 7.24l-7.19-.61L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19z" />
             <path d="M-2-2h24v24H-2z" />
           </g>
         </svg>
@@ -33,9 +42,19 @@ export const Icon = ({ icon, color, height }) => {
       return (
         <svg width={getWidth(20, 19, height)} height={height} viewBox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
           <g fill="none" fillRule="evenodd">
-            <path d="M20 7.24l-7.19-.62L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19 10 15.27 16.18 19l-1.63-7.03L20 7.24zM10 13.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L10 4.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L10 13.4z" fill={color} fillRule="nonzero" />
+            <path d="M20 7.24l-7.19-.62L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19 10 15.27 16.18 19l-1.63-7.03L20 7.24zM10 13.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L10 4.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L10 13.4z" fill={iconColor} fillRule="nonzero" />
             <path d="M-2-2h24v24H-2z" />
           </g>
+        </svg>
+      )
+    case 'chevron-right':
+      return (
+        <svg width={getWidth(8, 12, height)} height={height} viewBox="0 0 8 12" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" fillRule="evenodd">
+            <path fill={iconColor} fillRule="nonzero" d="M2 0L.59 1.41 5.17 6 .59 10.59 2 12l6-6z" />
+            <path d="M-8-6h24v24H-8z" />
+          </g>
+
         </svg>
       )
     default:
@@ -44,13 +63,20 @@ export const Icon = ({ icon, color, height }) => {
   }
 }
 
-Icon.propTypes = {
-  icon: PropTypes.oneOf(['logo', 'star', 'star-border']).isRequired,
+BaseIcon.propTypes = {
+  icon: PropTypes.oneOf(['logo', 'star', 'star-border', 'chevron-right']).isRequired,
   color: PropTypes.string,
   height: PropTypes.number,
+  modifiers: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string,
+  ]),
 }
 
-Icon.defaultProps = {
-  color: theme.color.base,
+BaseIcon.defaultProps = {
+  color: null,
   height: 24,
+  modifiers: [],
 }
+
+export const Icon = withTheme(BaseIcon)

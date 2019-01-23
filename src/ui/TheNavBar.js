@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {
   Icon,
   Title,
+  Button,
 } from 'elements'
 
 const TheNavBar = ({ children }) => (
@@ -17,7 +18,9 @@ const TheNavBar = ({ children }) => (
       </NavBar.Breadcrumb>
     </NavBar.Left>
     <NavBar.Right>
-      Right
+      <Button modifiers={['small', 'primary']}>
+        Login
+      </Button>
     </NavBar.Right>
   </NavBar>
 )
