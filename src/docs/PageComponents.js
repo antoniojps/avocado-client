@@ -5,6 +5,7 @@ import {
   Button,
   Container,
 } from 'elements'
+import { Link } from 'react-router-dom'
 import {
   BasePage,
   BaseTabs,
@@ -35,10 +36,6 @@ export default class PageComponents extends Component {
     return (
       <BasePage>
         <Container>
-          <Title>
-            Breadcrumb
-          </Title>
-          <BaseBreadcrumb />
           <Title>
             Tabs
           </Title>
@@ -182,6 +179,54 @@ class Example extends Component {
   onMouseLeave={(selectedRating) => this.setRatingInfo(\`Rated \${selectedRating} stars\`)}
 />
 <P>{ratingInfo}</P>`}
+          </SyntaxHighlighter>
+          <Title>
+            Breadcrumb
+          </Title>
+          <P>
+            <Link to="/components/tab-2">
+              Click to go to Tab 2
+            </Link>
+            {' or '}
+            <Link to="/components/tab-3">
+              Click to go to Tab 3
+            </Link>
+          </P>
+          <BaseBreadcrumb
+            basePage={{
+              title: 'Design',
+              to: '/',
+            }}
+          />
+          <br />
+          <SyntaxHighlighter>
+            {`import { BaseBreadcrumb } from 'ui'
+
+<BaseBreadcrumb
+basePage={{
+  title: 'Design',
+  to: '/',
+}}
+/>`}
+          </SyntaxHighlighter>
+          <BaseBreadcrumb
+            basePage={{
+              title: '💅 Components',
+              to: '/components',
+            }}
+            parentVisible={false}
+          />
+          <br />
+          <SyntaxHighlighter>
+            {`import { BaseBreadcrumb } from 'ui'
+
+<BaseBreadcrumb
+  basePage={{
+    title: 'Components',
+    to: '/components',
+  }}
+  parentVisible={false}
+/>`}
           </SyntaxHighlighter>
         </Container>
       </BasePage>

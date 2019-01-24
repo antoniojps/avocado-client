@@ -9,9 +9,7 @@ const BasePage = ({ children, breadcrumbBase, className }) => (
     <Header>
       <Row>
         <TheNavBar>
-          <NavWrapper>
-            <BaseBreadcrumb modifiers="inverse" basePage={breadcrumbBase && breadcrumbBase} />
-          </NavWrapper>
+          <BaseBreadcrumb modifiers="inverse" basePage={breadcrumbBase && breadcrumbBase} />
         </TheNavBar>
         <Header.Seperator />
         <TheNavList list={[
@@ -100,10 +98,6 @@ const Row = styled.section`
   margin-left: auto;
   margin-right: auto;
   max-width: 1200px;
-`
-
-const NavWrapper = styled.div`
-  display: flex;
 `
 
 export default styled(BasePage)`

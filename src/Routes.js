@@ -9,14 +9,17 @@ export const RoutesConfig = [
     exact: true,
     path: '/',
     component: PageIndex,
+    key: 'index',
   },
   {
     path: '/elements',
     component: PageElements,
+    key: 'elements',
   },
   {
     path: '/components',
     component: PageComponents,
+    key: 'components',
   },
 ]
 

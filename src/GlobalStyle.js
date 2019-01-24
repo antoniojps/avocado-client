@@ -19,10 +19,21 @@ const GlobalStyle = createGlobalStyle`
     ${props => props.theme.gradient.bg()};
     background-color: ${props => props.theme.color.bgPrimary};
   }
+
   #root {
     height: 100%;
     width: 100%;
     background-color: ${props => props.theme.color.bg};
+  }
+
+  a {
+    color: ${props => props.theme.color.primaryDarker};
+    display: inline-block;
+    font-weight: 500;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
   `
 

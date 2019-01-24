@@ -1,14 +1,14 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import PropTypes from 'prop-types'
 import { Icon } from 'elements'
-import { theme } from 'utilities'
 
 function BaseRateStar({
   isActive,
   className,
   onMouseEnter,
   onClick,
+  theme,
 }) {
   return (
     <div className={className} role="button" tabIndex={0} onKeyPress={onClick} onClick={onClick} onMouseEnter={onMouseEnter}>
@@ -26,13 +26,16 @@ BaseRateStar.propTypes = {
   className: PropTypes.string.isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
+  theme: PropTypes.shape({}).isRequired,
 }
 
 BaseRateStar.defaultProps = {
   isActive: false,
 }
 
-export default styled(BaseRateStar)`
+const BaseRaterStarWithTheme = withTheme(BaseRateStar)
+
+export default styled(BaseRaterStarWithTheme)`
   cursor: pointer;
   padding: ${props => props.theme.spacing.xxxs};
   transform: scale(1);
