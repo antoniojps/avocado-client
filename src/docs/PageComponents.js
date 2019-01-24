@@ -222,7 +222,7 @@ basePage={{
 
 <BaseBreadcrumb
   basePage={{
-    title: 'Components',
+    title: '💅 Components',
     to: '/components',
   }}
   parentVisible={false}

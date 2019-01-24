@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import GlobalStyle from 'GlobalStyle'
+import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'utilities'
+import store from 'redux/store'
 import App from './App';
 import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render((
-  <ThemeProvider theme={theme}>
-    <>
-      <App />
-      <GlobalStyle />
-    </>
-  </ThemeProvider>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <>
+        <App />
+        <GlobalStyle />
+      </>
+    </ThemeProvider>
+  </Provider>
 ), document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

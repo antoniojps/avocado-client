@@ -21,6 +21,10 @@ const BasePage = ({ children, breadcrumbBase, className }) => (
             name: 'Components',
             to: '/components',
           },
+          {
+            name: 'Store',
+            to: '/store',
+          },
         ]}
         />
       </Row>
