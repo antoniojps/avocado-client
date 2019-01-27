@@ -27,7 +27,12 @@ const PageIndex = () => (
       <Title modifiers="small">
         Docs
         {' '}
-        <Emoji emoji="🤓" label="nerd" />
+        {/*
+          children prop used to prevent eslint error
+          jsx-a11y/accessible-emoji rule doesnt recogniza styled component as a span element
+          this rule can only be disabled by ejecting
+        */}
+        <Emoji children="🤓" label="nerd" />
       </Title>
       <P>
         Store created for testing and examples purposes
