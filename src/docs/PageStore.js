@@ -36,7 +36,7 @@ const PageIndex = () => (
         Actions
       </Subtitle>
       <SyntaxHighlighter>
-        {`export const REQUEST_STARSHIP = 'REQUEST_STARWARS'
+        {`export const REQUEST_STARSHIP = 'REQUEST_STARSHIP'
 export const REQUEST_STARSHIP_LOADING = 'REQUEST_STARSHIP_LOADING'
 export const REQUEST_STARSHIP_SUCCESS = 'REQUEST_STARSHIP_SUCCESS'
 export const REQUEST_STARSHIP_FAILURE = 'REQUEST_STARSHIP_FAILURE'
