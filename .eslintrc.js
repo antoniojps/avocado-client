@@ -41,7 +41,8 @@ module.exports = {
         'comma-dangle': ['error', 'always-multiline'],
         'no-unused-vars': ['error', { varsIgnorePattern: 'expect' }],
         'semi': 0,
-        "no-shadow": "off",
-        "import/prefer-default-export": "off",
+        "no-shadow": 0,
+        "import/prefer-default-export": 0,
+        "react/no-children-prop": 0,
     }
 };
