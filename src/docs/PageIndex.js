@@ -12,10 +12,10 @@ const PageIndex = () => (
   <BasePage>
     <Container>
       <Title>
-        Design system
+        Avocado
       </Title>
       <P>
-        Preview of the design system
+        Avocado is a management and planning platform of food safety audits and their resources.
       </P>
     </Container>
   </BasePage>

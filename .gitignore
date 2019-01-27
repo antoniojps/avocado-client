@@ -8,6 +8,7 @@
 
 # production
 /build
+/sftp.js
 
 # misc
 .DS_Store
