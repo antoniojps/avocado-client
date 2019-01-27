@@ -2,7 +2,6 @@ import React from 'react'
 import { TheNavBar, TheNavList, BaseBreadcrumb } from 'ui'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { above } from 'utilities'
 
 const BasePage = ({ children, breadcrumbBase, className }) => (
   <div className={className}>
@@ -94,9 +93,6 @@ const Footer = styled.footer`
   color: ${props => props.theme.color.baseInverse};
   padding: ${props => props.theme.spacing.base};
   margin-top: auto;
-  ${above.md`
-      padding: 0;
-  `}
 `
 const Row = styled.section`
   margin-left: auto;

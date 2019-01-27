@@ -1,9 +1,8 @@
 import { combineReducers } from 'redux'
-
-import ui from 'ui/reducer'
+import docs from 'docs/reducer'
 
 const rootReducer = combineReducers({
-  ui,
+  docs,
 })
 
 export default rootReducer
