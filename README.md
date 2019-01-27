@@ -17,9 +17,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 Clone
 
-```
+`
 $ git clone git@github.com:antoniojps/avocado-client.git
-```
+`
 
 Install dependencies
 
@@ -67,6 +67,14 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
+
+### `yarn deploy`
+
+Builds the app for production to the `build` folder and then deploys the production build via sftp to the remote directory.
+
+#### To deploy the app you must first setup sftp.
+
+Rename `example.sftp.js` to `sftp.js` and setup with the correct options.
 
 ## Source Folder structure
 
