@@ -1,20 +1,11 @@
-import React, { Component } from 'react'
-import {
-  BrowserRouter as Router,
-} from 'react-router-dom'
-import withTenant from 'tenant/withTenant';
-import Routes from './Routes'
-/* eslint-disable react/prefer-stateless-function */
-class App extends Component {
-  render() {
-    return (
-      <>
-        <Router>
-          <Routes />
-        </Router>
-      </>
-    )
-  }
-}
+import React from 'react'
+import { getTenant } from 'utilities';
+import AppTenant from 'tenant/AppTenant';
+import AppMain from 'main/AppMain';
 
-export default withTenant(App)
+const App = () => {
+  const isTenant = getTenant()
+  return isTenant ? <AppTenant /> : <AppMain />
+};
+
+export default App

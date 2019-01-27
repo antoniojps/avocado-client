@@ -12,7 +12,7 @@ const PageIndex = () => (
   <BasePage>
     <Container>
       <Title>
-        Avocado
+        Tenant website
       </Title>
       <P>
         Avocado is a management and planning platform of food safety audits and their resources.

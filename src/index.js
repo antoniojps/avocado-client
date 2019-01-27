@@ -1,21 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import GlobalStyle from 'GlobalStyle'
 import { Provider } from 'react-redux'
-import { ThemeProvider } from 'styled-components'
-import { theme } from 'utilities'
 import store from 'redux/store'
-import App from './App';
+import App from 'App';
 import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render((
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <>
-        <App />
-        <GlobalStyle />
-      </>
-    </ThemeProvider>
+    <App />
   </Provider>
 ), document.getElementById('root'));
 

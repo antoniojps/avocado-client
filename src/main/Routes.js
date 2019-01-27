@@ -1,31 +1,31 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import PageElements from 'docs/PageElements'
-import PageComponents from 'docs/PageComponents'
-import PageIndex from 'docs/PageIndex'
-import PageStore from 'docs/PageStore'
+import PageDocsElements from 'docs/PageElements'
+import PageDocsComponents from 'docs/PageComponents'
+import PageDocsStore from 'docs/PageStore'
+import PageIndex from './PageIndex'
 
 export const RoutesConfig = [
   {
     exact: true,
     path: '/',
     component: PageIndex,
-    key: 'index',
+    key: 'Index',
   },
   {
     path: '/elements',
-    component: PageElements,
-    key: 'elements',
+    component: PageDocsElements,
+    key: 'docsElements',
   },
   {
     path: '/components',
-    component: PageComponents,
-    key: 'components',
+    component: PageDocsComponents,
+    key: 'docsComponents',
   },
   {
     path: '/store',
-    component: PageStore,
-    key: 'store',
+    component: PageDocsStore,
+    key: 'docsSore',
   },
 ]
 
