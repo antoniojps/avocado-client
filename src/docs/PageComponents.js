@@ -14,6 +14,7 @@ import {
   BaseRater,
   BaseBreadcrumb,
   BaseLoader,
+  BaseFormInput,
 } from 'ui'
 import SyntaxHighlighter from 'docs/SyntaxHighlighter'
 
@@ -37,6 +38,12 @@ export default class PageComponents extends Component {
     return (
       <BasePage>
         <Container>
+          <Title>
+            Input
+          </Title>
+          <BaseFormInput placeholder="Name" />
+          <BaseFormInput placeholder="Valid" modifiers="valid" />
+          <BaseFormInput placeholder="Error" modifiers="error" error="epa ocorreu um grave erro" />
           <Title>
             Loader
           </Title>

@@ -18,7 +18,7 @@ const color = {
   blue: '#3273DC',
   purple: '#B86BFF',
   warning: '#F5874A',
-  success: '#FB6D77',
+  success: '#40CB89',
   star: '#FFDD57',
 }
 
@@ -71,10 +71,11 @@ const zIndex = {
 
 const colorBorder = color.border
 const colorPrimary = color.primary
+const { borderSize } = value
 const zIndexM = zIndex.m
 const mixin = {
-  border: ({ color = colorBorder, orientation = null } = {}) => {
-    let style = `border: ${value.borderSize} solid ${color};`
+  border: ({ color = colorBorder, size = borderSize, orientation = null } = {}) => {
+    let style = `border: ${size} solid ${color};`
     if (orientation) {
       if (orientation === 'horizontal') style += 'border-left: 0;'
       else style += 'border-bottom: 0;'

@@ -1,30 +1,59 @@
 import React, { Component } from 'react';
-import Form, { inputTypes } from 'ui/BaseForm';
+import BaseForm, { inputTypes } from 'ui/BaseForm';
+import PropTypes from 'prop-types'
+import { BaseFormInput } from 'ui'
+import { Button } from 'elements'
 
-class App extends Component {
+class TenantCreateForm extends Component {
   onSubmit = (values, actions) => {
     console.log('onSubmit');
+    console.log(values)
   }
 
-  renderSubmitButton = (props) => (
-    <button type="submit">Submit</button>
+  renderSubmitButton = () => (
+    <Button type="submit" modifiers="primary">Create workspace</Button>
   )
 
-  render() {
-    const CustomInputComponent = ({
-      field, // { name, value, onChange, onBlur }
-      form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-      ...props
-    }) => (
-      <div>
-        <input type="text" {...field} {...props} />
-        {touched[field.name]
-            && errors[field.name] && <div className="error">{errors[field.name]}</div>}
-      </div>
-    );
+  renderInput = ({
+    field, // { name, value, onChange, onBlur }
+    form: { touched, errors }, // values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+    ...props
+  }) => (
+    <BaseFormInput
+      {...field}
+      {...props}
+      type="text"
+      touched={touched[field.name]}
+      error={errors[field.name]}
+      onChange={(event) => this.handleChangeCostum(event, { field, errors })}
+    />
+  )
 
+  isSubdomainValid = (subdomain) => {
+    const hasInvalidRegex = /[ !@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/i.test(subdomain)
+    return !hasInvalidRegex
+  }
+
+  handleChangeCostum = (event, { field, errors }) => {
+    const { handleSubdomainChange } = this.props
+    const { onChange, name } = field
+    const { SUBDOMAIN } = inputTypes
+    const { value: subdomain } = event.target
+
+    // formik handler
+    onChange(event)
+
+    const subdomainValid = this.isSubdomainValid(subdomain)
+
+    // costum handler from prop
+    if (name === SUBDOMAIN && typeof handleSubdomainChange === 'function' && subdomainValid) {
+      handleSubdomainChange(event, event.target.value)
+    }
+  }
+
+  render() {
     const {
-      EMAIL, FIRST_NAME, LAST_NAME, PHONE, AGE, SUBDOMAIN,
+      EMAIL, FIRST_NAME, LAST_NAME, SUBDOMAIN,
     } = inputTypes
 
     const form = {
@@ -33,74 +62,62 @@ class App extends Component {
       inputs: [
         {
           id: 1,
-          name: EMAIL,
-          type: EMAIL,
-          initialValue: '',
-          validation: true,
-          required: true,
-          placeholder: 'E-mail',
-          component: CustomInputComponent,
-        },
-        {
-          id: 2,
           name: FIRST_NAME,
           type: FIRST_NAME,
           initialValue: '',
           validation: true,
           required: true,
           placeholder: 'Primeiro nome',
-          component: CustomInputComponent,
+          component: this.renderInput,
         },
         {
-          id: 3,
+          id: 2,
           name: LAST_NAME,
           type: LAST_NAME,
           initialValue: '',
           validation: true,
           required: true,
           placeholder: 'Último nome',
-          component: CustomInputComponent,
+          component: this.renderInput,
         },
         {
-          id: 4,
-          name: PHONE,
-          type: PHONE,
-          initialValue: '',
-          validation: true,
-          required: false,
-          placeholder: 'Número de telefone',
-          component: CustomInputComponent,
-        },
-        {
-          id: 5,
-          name: AGE,
-          type: AGE,
+          id: 3,
+          name: EMAIL,
+          type: EMAIL,
           initialValue: '',
           validation: true,
           required: true,
-          placeholder: 'Idade',
-          component: CustomInputComponent,
+          placeholder: 'E-mail',
+          component: this.renderInput,
         },
         {
-          id: 6,
+          id: 4,
           name: SUBDOMAIN,
           type: SUBDOMAIN,
           initialValue: '',
           validation: true,
           required: true,
           placeholder: 'Subdomínio',
-          component: CustomInputComponent,
+          component: this.renderInput,
         },
       ],
-      // submitButton: this.renderSubmitButton()
+      submitButton: this.renderSubmitButton(),
     }
 
     return (
       <>
-        <Form form={form} />
+        <BaseForm form={form} />
       </>
     );
   }
 }
 
-export default App;
+TenantCreateForm.propTypes = {
+  handleSubdomainChange: PropTypes.func,
+}
+
+TenantCreateForm.defaultProps = {
+  handleSubdomainChange: null,
+}
+
+export default TenantCreateForm;

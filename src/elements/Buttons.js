@@ -50,7 +50,7 @@ const BUTTON_MODIFIERS = {
 `,
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled.button.attrs({ type: 'button' })`
   position: relative;
   margin-bottom: ${props => props.theme.spacing.base};
   border: 1px solid ${props => props.theme.color.borderBtn};

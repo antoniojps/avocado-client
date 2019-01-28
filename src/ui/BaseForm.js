@@ -1,5 +1,7 @@
 import React from 'react';
 import { Formik, Field } from 'formik';
+import styled from 'styled-components'
+import { Button } from 'elements'
 
 export const inputTypes = {
   FIRST_NAME: 'FIRST_NAME',
@@ -78,7 +80,14 @@ const validate = (values, inputs) => {
   return errors;
 }
 
-const Form = ({ form: { onSubmit, inputs, submitButton } }) => {
+const Form = ({
+  form: {
+    onSubmit,
+    inputs,
+    submitButton,
+  },
+  className,
+}) => {
   const initialValues = {};
   inputs.forEach(input => { initialValues[input.type] = input.initialValue });
   return (
@@ -87,7 +96,7 @@ const Form = ({ form: { onSubmit, inputs, submitButton } }) => {
       onSubmit={(values, actions) => onSubmit(values, actions)}
       validate={(values) => validate(values, inputs)}
       render={(props) => (
-        <form onSubmit={props.handleSubmit}>
+        <form className={className} onSubmit={props.handleSubmit}>
           {inputs.map(({
             id, type, name, placeholder, component,
           }) => (
@@ -98,7 +107,7 @@ const Form = ({ form: { onSubmit, inputs, submitButton } }) => {
               }
             </div>
           ))}
-          {submitButton || <button type="submit">Submit</button>
+          {submitButton || <Button type="submit" modifiers="primary">Submit</Button>
           }
         </form>
       )}
@@ -106,4 +115,6 @@ const Form = ({ form: { onSubmit, inputs, submitButton } }) => {
   )
 };
 
-export default Form;
+export default styled(Form)`
+  width: 100%;
+`

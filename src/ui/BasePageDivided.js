@@ -27,7 +27,7 @@ BasePageDivided.defaultProps = {
 
 const Main = styled.main`
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   display: flex;
   justify-content: center;
   background-color: ${props => props.theme.color.bgLighter};
@@ -43,7 +43,7 @@ const Secondary = styled.div`
   display: none;
   background-color: ${props => props.theme.color.bg};
   ${above.md`
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     display: flex;
@@ -56,8 +56,5 @@ const Secondary = styled.div`
 `
 
 export default styled(BasePageDivided)`
-  display: flex;
-  flex-direction: row;
   height: 100%;
-  width: 100%;
 `
