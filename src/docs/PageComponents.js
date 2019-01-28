@@ -15,6 +15,8 @@ import {
   BaseBreadcrumb,
   BaseLoader,
   BaseFormInput,
+  BaseModal,
+
 } from 'ui'
 import SyntaxHighlighter from 'docs/SyntaxHighlighter'
 
@@ -44,6 +46,21 @@ export default class PageComponents extends Component {
           <BaseFormInput placeholder="Name" />
           <BaseFormInput placeholder="Valid" modifiers="valid" />
           <BaseFormInput placeholder="Error" modifiers="error" error="epa ocorreu um grave erro" />
+          <Title>
+            Modal
+          </Title>
+          <BaseToggle>
+            {({ isOn, toggle }) => (
+              <>
+                <Button modifiers="danger" onClick={toggle}>
+                  Click to toggle
+                </Button>
+                <BaseModal toggle={toggle} isOn={isOn}>
+                  <div>Im a modal</div>
+                </BaseModal>
+              </>
+            )}
+          </BaseToggle>
           <Title>
             Loader
           </Title>

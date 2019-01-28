@@ -76,8 +76,10 @@ const StyledButton = styled.button.attrs({ type: 'button' })`
   ${applyStyleModifiers(BUTTON_MODIFIERS)};
 `
 
-export const Button = ({ children, modifiers, onClick }) => (
-  <StyledButton modifiers={modifiers} onClick={onClick}>
+export const Button = ({
+  children, modifiers, onClick, className,
+}) => (
+  <StyledButton modifiers={modifiers} onClick={onClick} className={className}>
     {children}
     <Ink />
   </StyledButton>
