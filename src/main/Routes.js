@@ -4,6 +4,7 @@ import PageDocsElements from 'docs/PageElements'
 import PageDocsComponents from 'docs/PageComponents'
 import PageDocsStore from 'docs/PageStore'
 import PageIndex from './PageIndex'
+import PageTenantCreate from './PageTenantCreate'
 
 export const RoutesConfig = [
   {
@@ -25,7 +26,12 @@ export const RoutesConfig = [
   {
     path: '/store',
     component: PageDocsStore,
-    key: 'docsSore',
+    key: 'docsStore',
+  },
+  {
+    path: '/create',
+    component: PageTenantCreate,
+    key: 'create',
   },
 ]
 

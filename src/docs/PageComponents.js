@@ -13,6 +13,7 @@ import {
   BaseToggle,
   BaseRater,
   BaseBreadcrumb,
+  BaseLoader,
 } from 'ui'
 import SyntaxHighlighter from 'docs/SyntaxHighlighter'
 
@@ -36,6 +37,15 @@ export default class PageComponents extends Component {
     return (
       <BasePage>
         <Container>
+          <Title>
+            Loader
+          </Title>
+          <BaseLoader message="Loading something..." />
+          <SyntaxHighlighter>
+            {`import { BaseLoader } from 'ui'
+
+<BaseLoader message="Loading something..." />`}
+          </SyntaxHighlighter>
           <Title>
             Tabs
           </Title>
