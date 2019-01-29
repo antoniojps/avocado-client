@@ -16,18 +16,19 @@ class TenantCreateForm extends Component {
 
   // api request
   createTenant = async (values) => {
-    // const {
-    //   EMAIL: email, FIRST_NAME, LAST_NAME, SUBDOMAIN: fqdn,
-    // } = values
-    // await this.createTenant({
-    //   email,
-    //   name: FIRST_NAME + LAST_NAME,
-    //   fqdn,
-    // })
-    return new Promise((resolve) => {
-      setTimeout(resolve, 3000)
+    const {
+      EMAIL: email, FIRST_NAME, LAST_NAME, PASSWORD, PASSWORD_REPEAT, SUBDOMAIN: fqdn,
+    } = values
+    const tenantNew = await createTenant({
+      email,
+      name: FIRST_NAME + LAST_NAME,
+      password: PASSWORD,
+      password_confirmation: PASSWORD_REPEAT,
+      fqdn,
     })
+    return tenantNew
   }
+
 
   onSubmit = async (values, actions) => {
     const { handleLoading, handleFailure, handleSuccess } = this.props
@@ -41,6 +42,7 @@ class TenantCreateForm extends Component {
       this.setState(() => ({ loading: false, tenant: { subdomain: 'sonae' }, failure: false }))
       callPropFunc(handleSuccess({ tenant: { subdomain: 'sonae' } }))
     } catch (error) {
+      console.log(error)
       this.setState(() => ({ loading: false, tenant: null, failure: true }))
       callPropFunc(handleFailure)
     }
@@ -56,10 +58,10 @@ class TenantCreateForm extends Component {
 
   renderSucces = () => (
     <Success>
-      <img src={illustrationSuccess} alt="success arrow illustration" />
       <Button pulse modifiers={['primary']}>
         Go to your workspace and login
       </Button>
+      <img src={illustrationSuccess} alt="success arrow illustration" />
     </Success>
   )
 
@@ -72,6 +74,19 @@ class TenantCreateForm extends Component {
       {...field}
       {...props}
       type="text"
+      autoComplete="username"
+      touched={touched[field.name]}
+      error={errors[field.name]}
+      onChange={(event) => this.handleChangeCostum(event, { field, errors })}
+    />
+  )
+
+  renderInputPassword = ({ field, form: { touched, errors }, ...props }) => (
+    <BaseFormInput
+      {...field}
+      {...props}
+      type="password"
+      autoComplete="new-password"
       touched={touched[field.name]}
       error={errors[field.name]}
       onChange={(event) => this.handleChangeCostum(event, { field, errors })}
@@ -103,15 +118,16 @@ class TenantCreateForm extends Component {
   render() {
     const { tenant, loading } = this.state
     const {
-      EMAIL, FIRST_NAME, LAST_NAME, SUBDOMAIN,
+      EMAIL, FIRST_NAME, LAST_NAME, SUBDOMAIN, PASSWORD, REPEAT_PASSWORD,
     } = inputTypes
 
     const form = {
-      name: 'Test form',
+      name: 'Tenant create form',
+      language: 'en-us',
       onSubmit: (values, actions) => this.onSubmit(values, actions),
       inputs: [
         {
-          id: 1,
+          id: FIRST_NAME,
           name: FIRST_NAME,
           type: FIRST_NAME,
           initialValue: '',
@@ -121,7 +137,7 @@ class TenantCreateForm extends Component {
           component: this.renderInput,
         },
         {
-          id: 2,
+          id: LAST_NAME,
           name: LAST_NAME,
           type: LAST_NAME,
           initialValue: '',
@@ -131,7 +147,7 @@ class TenantCreateForm extends Component {
           component: this.renderInput,
         },
         {
-          id: 3,
+          id: EMAIL,
           name: EMAIL,
           type: EMAIL,
           initialValue: '',
@@ -141,7 +157,27 @@ class TenantCreateForm extends Component {
           component: this.renderInput,
         },
         {
-          id: 4,
+          id: PASSWORD,
+          name: PASSWORD,
+          type: PASSWORD,
+          initialValue: '',
+          validation: true,
+          required: true,
+          placeholder: 'Password',
+          component: this.renderInputPassword,
+        },
+        {
+          id: REPEAT_PASSWORD,
+          name: REPEAT_PASSWORD,
+          type: REPEAT_PASSWORD,
+          initialValue: '',
+          validation: true,
+          required: true,
+          placeholder: 'Confirm password',
+          component: this.renderInputPassword,
+        },
+        {
+          id: SUBDOMAIN,
           name: SUBDOMAIN,
           type: SUBDOMAIN,
           initialValue: '',
@@ -177,7 +213,7 @@ const Success = styled.div`
   flex-direction: column;
   img {
     animation: ${props => props.theme.animation.pop} 1s ease;
-    padding-bottom: ${props => props.theme.spacing.base};
+    padding-top: ${props => props.theme.spacing.base};
   }
 `
 
