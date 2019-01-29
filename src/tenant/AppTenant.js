@@ -6,9 +6,15 @@ import GlobalStyle from 'GlobalStyle'
 import withTenant from 'tenant/withTenant';
 import { ThemeProvider } from 'styled-components'
 import { theme } from 'utilities'
+import PropTypes from 'prop-types'
 import Routes from './Routes'
-/* eslint-disable react/prefer-stateless-function */
+
 class App extends Component {
+  componentDidMount() {
+    const { getTenant } = this.props;
+    getTenant();
+  }
+
   render() {
     return (
       <ThemeProvider theme={theme}>
@@ -21,6 +27,9 @@ class App extends Component {
       </ThemeProvider>
     )
   }
+}
+App.propTypes = {
+  getTenant: PropTypes.func.isRequired,
 }
 
 export default withTenant(App)

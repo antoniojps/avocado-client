@@ -85,7 +85,6 @@ const StyledButton = styled.button.attrs({ type: 'button' })`
   ${applyStyleModifiers(BUTTON_MODIFIERS)};
 `
 
-
 export const Button = ({
   children, modifiers, onClick, pulse, className,
 }) => (
@@ -103,6 +102,7 @@ Button.propTypes = {
   ]),
   onClick: PropTypes.func,
   pulse: PropTypes.bool,
+  className: PropTypes.string,
 }
 
 Button.defaultProps = {
@@ -110,4 +110,5 @@ Button.defaultProps = {
   modifiers: [],
   onClick: null,
   pulse: false,
+  className: '',
 }
