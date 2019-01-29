@@ -18,7 +18,7 @@ const TheNavBar = ({ children }) => (
       </NavBar.Breadcrumb>
     </NavBar.Left>
     <NavBar.Right>
-      <Button modifiers={['small', 'primary']}>
+      <Button modifiers={['primary', 'noMargin', 'important']}>
         Login
       </Button>
     </NavBar.Right>

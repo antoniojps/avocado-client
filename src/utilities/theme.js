@@ -1,5 +1,5 @@
 import { rem } from 'polished'
-import { css } from 'styled-components'
+import { css, keyframes } from 'styled-components'
 
 const color = {
   base: '#363636',
@@ -89,6 +89,14 @@ const mixin = {
   transition: () => 'transition: all 150ms;',
 }
 
+const animation = {
+  pulse: keyframes`
+  0% {transform: scale(0.94);}
+  50% {transform: scale(1);}
+  100% {transform: scale(0.94);}
+  `,
+}
+
 export const theme = {
   color,
   gradient,
@@ -97,4 +105,5 @@ export const theme = {
   value,
   zIndex,
   mixin,
+  animation,
 }

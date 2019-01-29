@@ -9,6 +9,7 @@
 # production
 /build
 /sftp.js
+/example.sftp.js
 
 # misc
 .DS_Store

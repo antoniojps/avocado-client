@@ -3,10 +3,18 @@ import styled from 'styled-components'
 import Ink from 'react-ink'
 import { applyStyleModifiers } from 'styled-components-modifiers'
 import { darken } from 'polished'
+import PropTypes from 'prop-types'
 
 const BUTTON_MODIFIERS = {
   small: ({ theme }) => `
     padding: ${theme.spacing.xxxs} ${theme.spacing.xxms};
+  `,
+  noMargin: () => `
+    margin: 0;
+  `,
+  important: () => `
+    font-weight: 600;
+    text-transform: uppercase;
   `,
   primary: ({ theme }) => `
     background-color: ${theme.color.primaryDarker};
@@ -60,6 +68,7 @@ const StyledButton = styled.button.attrs({ type: 'button' })`
   background-color: ${props => props.theme.color.bgLighter};
   color: ${props => props.theme.color.baseLighter};
   ${props => props.theme.mixin.transition()}
+  animation: ${props => props.pulse && props.theme.animation.pulse} 2s infinite ease-out;
   &:hover {
     background-color: ${props => darken(0.04, props.theme.color.bgLighter)};
     color: ${props => props.theme.color.base};
@@ -76,9 +85,29 @@ const StyledButton = styled.button.attrs({ type: 'button' })`
   ${applyStyleModifiers(BUTTON_MODIFIERS)};
 `
 
-export const Button = ({ children, modifiers, onClick }) => (
-  <StyledButton modifiers={modifiers} onClick={onClick}>
+
+export const Button = ({
+  children, modifiers, onClick, pulse, className,
+}) => (
+  <StyledButton pulse={pulse} modifiers={modifiers} onClick={onClick} className={className}>
     {children}
     <Ink />
   </StyledButton>
 )
+
+Button.propTypes = {
+  children: PropTypes.node,
+  modifiers: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string,
+  ]),
+  onClick: PropTypes.func,
+  pulse: PropTypes.bool,
+}
+
+Button.defaultProps = {
+  children: null,
+  modifiers: [],
+  onClick: null,
+  pulse: false,
+}
