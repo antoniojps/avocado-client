@@ -3,6 +3,7 @@ import { takeEvery, put, call } from 'redux-saga/effects'
 import {
   REQUEST_TENANT_LOADING, REQUEST_TENANT, REQUEST_TENANT_SUCCESS, REQUEST_TENANT_FAILURE,
 } from './actions'
+import { CLIENT_ORIGIN } from '../config';
 
 // worker
 function* getTenant() {
@@ -11,6 +12,7 @@ function* getTenant() {
     const { data } = yield call(queryCurrentTenant)
     yield put({ type: REQUEST_TENANT_SUCCESS, data })
   } catch (err) {
+    window.location.replace(CLIENT_ORIGIN);
     yield put({ type: REQUEST_TENANT_FAILURE, data: err })
   }
 }

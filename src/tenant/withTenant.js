@@ -1,12 +1,29 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { BaseLoader } from 'ui'
+import { CenterDiv } from 'elements'
+import { ThemeProvider } from 'styled-components'
+import { theme } from 'utilities'
 import { getTenant } from './actions'
 
 const withTenant = WrappedComponent => {
-  const Tenant = props => <WrappedComponent {...props} />
+  class Tenant extends Component {
+    componentDidMount() {
+      const { tenant, getTenant } = this.props;
+      if (!tenant) {
+        getTenant();
+      }
+    }
 
+    render() {
+      const { tenantLoading } = this.props;
+      return tenantLoading
+        ? <ThemeProvider theme={theme}><CenterDiv><BaseLoader message="Loading something..." /></CenterDiv></ThemeProvider>
+        : <WrappedComponent {...this.props} />;
+    }
+  }
   const mapStateToProps = ({
     tenant: {
       tenant,
