@@ -1,17 +1,66 @@
 import React, { Component } from 'react';
+import styled from 'styled-components'
 import BaseForm, { inputTypes } from 'ui/BaseForm';
 import PropTypes from 'prop-types'
-import { BaseFormInput } from 'ui'
+import { BaseFormInput, BaseLoader } from 'ui'
 import { Button } from 'elements'
+import { createTenant, callPropFunc } from 'utilities'
+import illustrationSuccess from 'assets/success.svg'
 
 class TenantCreateForm extends Component {
-  onSubmit = (values, actions) => {
-    console.log('onSubmit');
-    console.log(values)
+  state = {
+    tenant: null,
+    loading: false,
+    failure: false,
+  }
+
+  // api request
+  createTenant = async (values) => {
+    // const {
+    //   EMAIL: email, FIRST_NAME, LAST_NAME, SUBDOMAIN: fqdn,
+    // } = values
+    // await this.createTenant({
+    //   email,
+    //   name: FIRST_NAME + LAST_NAME,
+    //   fqdn,
+    // })
+    return new Promise((resolve) => {
+      setTimeout(resolve, 3000)
+    })
+  }
+
+  onSubmit = async (values, actions) => {
+    const { handleLoading, handleFailure, handleSuccess } = this.props
+    try {
+      // loading
+      this.setState(() => ({ loading: true, tenant: null, failure: false }))
+      callPropFunc(handleLoading)
+      await this.createTenant(values)
+
+      // success
+      this.setState(() => ({ loading: false, tenant: { subdomain: 'sonae' }, failure: false }))
+      callPropFunc(handleSuccess({ tenant: { subdomain: 'sonae' } }))
+    } catch (error) {
+      this.setState(() => ({ loading: false, tenant: null, failure: true }))
+      callPropFunc(handleFailure)
+    }
   }
 
   renderSubmitButton = () => (
     <Button type="submit" modifiers="primary">Create workspace</Button>
+  )
+
+  renderLoader = () => (
+    <BaseLoader message="Creating workspace..." />
+  )
+
+  renderSucces = () => (
+    <Success>
+      <img src={illustrationSuccess} alt="success arrow illustration" />
+      <Button pulse modifiers={['primary']}>
+        Go to your workspace and login
+      </Button>
+    </Success>
   )
 
   renderInput = ({
@@ -52,6 +101,7 @@ class TenantCreateForm extends Component {
   }
 
   render() {
+    const { tenant, loading } = this.state
     const {
       EMAIL, FIRST_NAME, LAST_NAME, SUBDOMAIN,
     } = inputTypes
@@ -106,18 +156,43 @@ class TenantCreateForm extends Component {
 
     return (
       <>
-        <BaseForm form={form} />
+        {(!tenant && !loading)
+          && <BaseForm form={form} />
+        }
+        {loading
+          && this.renderLoader()
+        }
+        {tenant
+          && this.renderSucces()
+        }
       </>
     );
   }
 }
 
+const Success = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  img {
+    animation: ${props => props.theme.animation.pop} 1s ease;
+    padding-bottom: ${props => props.theme.spacing.base};
+  }
+`
+
 TenantCreateForm.propTypes = {
   handleSubdomainChange: PropTypes.func,
+  handleLoading: PropTypes.func,
+  handleSuccess: PropTypes.func,
+  handleFailure: PropTypes.func,
 }
 
 TenantCreateForm.defaultProps = {
   handleSubdomainChange: null,
+  handleLoading: null,
+  handleSuccess: null,
+  handleFailure: null,
 }
 
 export default TenantCreateForm;

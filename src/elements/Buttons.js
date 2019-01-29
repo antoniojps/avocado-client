@@ -58,7 +58,7 @@ const BUTTON_MODIFIERS = {
 `,
 }
 
-const StyledButton = styled.button.attrs({ type: 'button' })`
+const StyledButton = styled.button`
   position: relative;
   margin-bottom: ${props => props.theme.spacing.base};
   border: 1px solid ${props => props.theme.color.borderBtn};
@@ -86,9 +86,20 @@ const StyledButton = styled.button.attrs({ type: 'button' })`
 `
 
 export const Button = ({
-  children, modifiers, onClick, pulse, className,
+  children,
+  modifiers,
+  onClick,
+  pulse,
+  className,
+  type,
 }) => (
-  <StyledButton pulse={pulse} modifiers={modifiers} onClick={onClick} className={className}>
+  <StyledButton
+    type={type}
+    pulse={pulse}
+    modifiers={modifiers}
+    onClick={onClick}
+    className={className}
+  >
     {children}
     <Ink />
   </StyledButton>
@@ -103,6 +114,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   pulse: PropTypes.bool,
   className: PropTypes.string,
+  type: PropTypes.string,
 }
 
 Button.defaultProps = {
@@ -111,4 +123,5 @@ Button.defaultProps = {
   onClick: null,
   pulse: false,
   className: '',
+  type: 'button',
 }

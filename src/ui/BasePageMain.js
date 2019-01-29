@@ -4,12 +4,15 @@ import PropTypes from 'prop-types'
 import { Icon, Button } from 'elements'
 import { BaseBreakpoints } from 'ui'
 import { withRouter } from 'react-router-dom'
+import { above } from 'utilities'
 
 const BasePage = withRouter(({ children, className, history: { push } }) => (
   <div className={className}>
     <Header>
       <Header.Nav>
-        <Icon icon="logo-text" height={48} />
+        <Logo onClick={() => push('/')}>
+          <Icon icon="logo-text" height={48} />
+        </Logo>
         <div>
           <Button modifiers={['primary', 'noMargin', 'important']} onClick={() => push('/create')}>
             <BaseBreakpoints render={({ md }) => (md ? 'Try for free' : 'Try')} />
@@ -55,6 +58,9 @@ Header.Nav = styled(Row)`
   justify-content: space-between;
   align-items: center;
 `
+const Logo = styled.div`
+  cursor: pointer;
+`
 
 const Main = styled.main`
     display: block;
@@ -62,6 +68,9 @@ const Main = styled.main`
     padding: ${props => props.theme.spacing.base};
     padding-top: 0;
     background-color: ${props => props.theme.color.bgLighter};
+    ${above.md`
+      padding-top: ${props => props.theme.spacing.m};
+  `}
 `
 
 const Footer = styled.footer`

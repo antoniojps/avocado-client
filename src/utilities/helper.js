@@ -14,3 +14,7 @@ export const getApiUrl = () => {
   }
   return `${HTTP_PROTOCOL}${tenant}.${API_URL_BASE}`
 }
+
+export const callPropFunc = (func) => {
+  if (typeof func === 'function') func()
+}

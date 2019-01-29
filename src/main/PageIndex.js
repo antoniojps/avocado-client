@@ -11,60 +11,61 @@ import {
 } from 'ui'
 import { above } from 'utilities'
 import illustration from 'assets/landingPage.svg'
-import { BaseBreakpoints } from 'ui'
 
 const PageIndex = (props) => {
   const { history: { push } } = props
   const goToPageCreate = () => push('/create')
 
   return (
-  <BasePageMain>
-    <Wrapper>
-      <Title>
+    <BasePageMain>
+      <Wrapper>
+        <Title>
         A planning platform of food safety audits
-        {' '}
-        <TextPrimary>
+          {' '}
+          <TextPrimary>
           from the future!
-        </TextPrimary>
-      </Title>
-      <StyledButton
-        pulse
-        onClick={goToPageCreate}
-        modifiers={['primary', 'noMargin', 'important']}
-      >
+          </TextPrimary>
+        </Title>
+        <StyledButton
+          pulse
+          onClick={goToPageCreate}
+          modifiers={['primary', 'noMargin', 'important']}
+        >
         Get started
-      </StyledButton>
-      <P>
+        </StyledButton>
+        <P>
         Rated 5 stars by everyone in the world
-      </P>
-
-      <BaseBreakpoints render={({ md }) => md && (
+        </P>
         <img src={illustration} alt="avocado illustration" />
-      )} />
-    </Wrapper>
-  </BasePageMain>
-)}
+      </Wrapper>
+    </BasePageMain>
+  )
+}
 
 const Wrapper = styled.div`
   text-align: initial;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 0;
+  text-align: center;
   ${Title} {
+    padding-top: 0;
     font-size: ${props => props.theme.size.m};
     ${above.md`
       font-size: ${props => props.theme.size.l};
     `}
   }
+  img {
+    transform: ${props => 'translate(0, 0)'};
+    z-index: ${props => props.theme.zIndex.s};
+    width: 100%;
+    ${above.md`
+      transform: ${props => 'translate(0, -100px)'};
+    `}
+  }
+
   ${above.md`
-    margin-top: ${props => props.theme.spacing.l};
-    text-align: center;
     max-width: 764px;
   `}
-  img {
-    transform: ${props => `translate(0, -100px)`};
-    z-index: ${props => props.theme.zIndex.s};
-  }
 `
 
 const StyledButton = styled(Button)`

@@ -95,6 +95,13 @@ const animation = {
   50% {transform: scale(1);}
   100% {transform: scale(0.94);}
   `,
+  pop: keyframes`
+    0% {
+      opacity:0;
+      transform: scale(0);
+    }
+    100% {transform: scale(1);}
+  `,
 }
 
 export const theme = {
