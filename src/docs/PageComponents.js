@@ -25,6 +25,8 @@ export default class PageComponents extends Component {
   state = {
     isChecked: false,
     ratingInfo: 'Rated 3 stars',
+    arraySearch: ['o', 'avocado', 'é', 'muito', 'saboroso'],
+    filteredArray: ['o', 'avocado', 'é', 'muito', 'saboroso'],
   }
 
   handleSwitchChange = () => {
@@ -37,11 +39,14 @@ export default class PageComponents extends Component {
   }
 
   handleChange = value => {
-    console.log('changed', value)
+    const { arraySearch } = this.state;
+    this.setState({
+      filteredArray: arraySearch.filter(val => !val.search(value)),
+    })
   }
 
   render() {
-    const { isChecked, ratingInfo } = this.state
+    const { isChecked, ratingInfo, filteredArray } = this.state
     return (
       <BasePage>
         <Container>
@@ -49,9 +54,11 @@ export default class PageComponents extends Component {
             Input
           </Title>
           <BaseSearch onChange={this.handleChange} />
+          {filteredArray.map((value) => <P key={value}>{value}</P>)}
           <BaseFormInput placeholder="Name" />
           <BaseFormInput placeholder="Valid" modifiers="valid" />
           <BaseFormInput placeholder="Error" modifiers="error" error="epa ocorreu um grave erro" />
+
           <Title>
             Modal
           </Title>
