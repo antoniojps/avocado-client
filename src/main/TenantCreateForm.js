@@ -12,11 +12,11 @@ class TenantCreateForm extends Component {
     tenant: null,
     loading: false,
     failure: false,
+    reddirectUrl: null,
   }
 
   // api request
   createTenant = async (values) => {
-    console.log('values are', values);
     const {
       EMAIL: email, FIRST_NAME, LAST_NAME, PASSWORD, REPEAT_PASSWORD, SUBDOMAIN: fqdn,
     } = values
@@ -37,10 +37,11 @@ class TenantCreateForm extends Component {
       // loading
       this.setState(() => ({ loading: true, tenant: null, failure: false }))
       callPropFunc(handleLoading)
-      await this.createTenant(values)
-
+      const { data: { reddirectUrl } } = await this.createTenant(values)
       // success
-      this.setState(() => ({ loading: false, tenant: { subdomain: 'sonae' }, failure: false }))
+      this.setState(() => ({
+        loading: false, reddirectUrl, tenant: { subdomain: 'sonae' }, failure: false,
+      }))
       callPropFunc(handleSuccess({ tenant: { subdomain: 'sonae' } }))
     } catch (error) {
       console.log(error)
@@ -57,9 +58,15 @@ class TenantCreateForm extends Component {
     <BaseLoader message="Creating workspace..." />
   )
 
+  handleReddirect = (e) => {
+    e.preventDefault();
+    const { reddirectUrl } = this.state;
+    window.location.replace(reddirectUrl);
+  }
+
   renderSucces = () => (
     <Success>
-      <Button pulse modifiers={['primary']}>
+      <Button pulse modifiers={['primary']} onClick={this.handleReddirect}>
         Go to your workspace and login
       </Button>
       <img src={illustrationSuccess} alt="success arrow illustration" />
@@ -71,16 +78,16 @@ class TenantCreateForm extends Component {
     form: { touched, errors }, // values, setXXXX, handleXXXX, dirty, isValid, status, etc.
     ...props
   }) => (
-    <BaseFormInput
-      {...field}
-      {...props}
-      type="text"
-      autoComplete="username"
-      touched={touched[field.name]}
-      error={errors[field.name]}
-      onChange={(event) => this.handleChangeCostum(event, { field, errors })}
-    />
-  )
+      <BaseFormInput
+        {...field}
+        {...props}
+        type="text"
+        autoComplete="username"
+        touched={touched[field.name]}
+        error={errors[field.name]}
+        onChange={(event) => this.handleChangeCostum(event, { field, errors })}
+      />
+    )
 
   renderInputPassword = ({ field, form: { touched, errors }, ...props }) => (
     <BaseFormInput
