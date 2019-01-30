@@ -54,7 +54,15 @@ export default class PageComponents extends Component {
             Input
           </Title>
           <BaseSearch onChange={this.handleChange} />
-          {filteredArray.map((value) => <P key={value}>{value}</P>)}
+          <SyntaxHighlighter>
+            {`import { BaseSearch } from 'ui'
+
+<BaseSearch onChange={this.handleChange} placeholder='Search' />`}
+          </SyntaxHighlighter>
+          <Container>
+            {filteredArray.map((value) => <P key={value}>{value}</P>)}
+
+          </Container>
           <BaseFormInput placeholder="Name" />
           <BaseFormInput placeholder="Valid" modifiers="valid" />
           <BaseFormInput placeholder="Error" modifiers="error" error="epa ocorreu um grave erro" />
