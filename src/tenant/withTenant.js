@@ -1,58 +1,27 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { bindActionCreators } from 'redux'
+import React from 'react'
 import { connect } from 'react-redux'
-import { BaseLoader } from 'ui'
-import { CenterDiv } from 'elements'
-import { ThemeProvider } from 'styled-components'
-import { theme } from 'utilities'
+import { bindActionCreators } from 'redux'
 import { getTenant } from './actions'
 
-const withTenant = WrappedComponent => {
-  class Tenant extends Component {
-    componentDidMount() {
-      const { tenant, getTenant } = this.props;
-      if (!tenant) {
-        getTenant();
-      }
-    }
-
-    render() {
-      const { tenantLoading } = this.props;
-      return tenantLoading
-        ? <ThemeProvider theme={theme}><CenterDiv><BaseLoader message="Loading something..." /></CenterDiv></ThemeProvider>
-        : <WrappedComponent {...this.props} />;
-    }
-  }
-  const mapStateToProps = ({
-    tenant: {
-      tenant,
-      tenantLoading,
-      tenantError,
-    },
-  }) => ({
+const mapStateToProps = ({
+  tenant: {
     tenant,
     tenantLoading,
-    tenantError,
-  })
-  const mapDispatchToProps = (dispatch) => bindActionCreators({
-    getTenant,
-  }, dispatch)
+    tenantFailure,
+  },
+}) => ({
+  tenant,
+  tenantLoading,
+  tenantFailure,
+})
 
-  Tenant.propTypes = {
-    tenant: PropTypes.shape({}),
-    tenantLoading: PropTypes.bool.isRequired,
-    tenantError: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.shape({}),
-    ]),
-    getTenant: PropTypes.func.isRequired,
-  }
-  Tenant.defaultProps = {
-    tenant: null,
-    tenantError: null,
-  }
+export const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getTenant,
+}, dispatch)
 
-  return connect(mapStateToProps, mapDispatchToProps)(Tenant)
+export const Tenant = (WrappedComponent) => {
+  const hocComponent = ({ ...props }) => <WrappedComponent {...props} />
+  return hocComponent
 }
-export default withTenant
+
+export default WrapperComponent => connect(mapStateToProps, mapDispatchToProps)(Tenant(WrapperComponent))

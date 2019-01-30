@@ -7,6 +7,16 @@ export const getTenant = () => {
   return splittedDomain.length === 3 && `${splittedDomain[0]}`
 }
 
+export const getMainUrl = () => {
+  const { hostname, protocol, port } = window.location
+  const splittedHost = hostname.split('.')
+  const splittedMainHost = splittedHost.length === 3 ? splittedHost.slice(1) : splittedHost
+  const mainHost = splittedMainHost.join('.')
+  const mainPort = (port === '') ? '' : `:${port}`
+  const mainUrl = `${protocol}//${mainHost}${mainPort}`
+  return mainUrl
+}
+
 export const getApiUrl = () => {
   const tenant = getTenant()
   if (!tenant) {

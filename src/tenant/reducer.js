@@ -8,7 +8,7 @@ import {
 const initialState = {
   tenant: null,
   tenantLoading: false,
-  tenantError: null,
+  tenantFailure: false,
 }
 
 export default function (state = initialState, action) {
@@ -17,20 +17,23 @@ export default function (state = initialState, action) {
   case REQUEST_TENANT_LOADING:
     return {
       ...state,
+      tenant: null,
       tenantLoading: true,
+      tenantFailure: false,
     }
   case REQUEST_TENANT_SUCCESS:
     return {
       ...state,
       tenant: data,
       tenantLoading: false,
+      tenantFailure: false,
     }
   case REQUEST_TENANT_FAILURE:
     return {
       ...state,
       tenant: null,
-      tenantError: data,
       tenantLoading: false,
+      tenantFailure: data,
     }
   default:
     return state
