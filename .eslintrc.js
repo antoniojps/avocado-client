@@ -44,5 +44,6 @@ module.exports = {
         "no-shadow": 0,
         "import/prefer-default-export": 0,
         "react/no-children-prop": 0,
+        "import/no-named-as-default": 0,
     }
 };

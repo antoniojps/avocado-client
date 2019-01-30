@@ -1,23 +1,38 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   BrowserRouter as Router,
 } from 'react-router-dom'
 import GlobalStyle from 'GlobalStyle'
-import withTenant from 'tenant/withTenant';
+import withAuth from 'user/withAuth'
 import { ThemeProvider } from 'styled-components'
-import { theme } from 'utilities'
+import { theme, history } from 'utilities'
 import Routes from './Routes'
 
+class AppTenant extends Component {
+  componentWillMount() {
+    const { updateGatherRedirect } = this.props
+    updateGatherRedirect(window.location.pathname + window.location.search)
+    history.push('/gather')
+  }
 
-const AppTenant = () => (
-  <ThemeProvider theme={theme}>
-    <>
-      <Router>
-        <Routes />
-      </Router>
-      <GlobalStyle />
-    </>
-  </ThemeProvider>
-)
+  render() {
+    return (
+      <ThemeProvider theme={theme}>
+        <>
+          <Router>
+            <Routes />
+          </Router>
+          <GlobalStyle />
+        </>
+      </ThemeProvider>
+    )
+  }
+}
 
-export default withTenant(AppTenant)
+AppTenant.propTypes = {
+  updateGatherRedirect: PropTypes.func.isRequired,
+}
+
+
+export default withAuth(AppTenant)

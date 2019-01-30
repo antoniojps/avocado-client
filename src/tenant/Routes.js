@@ -4,6 +4,7 @@ import PageDocsElements from 'docs/PageElements'
 import PageDocsComponents from 'docs/PageComponents'
 import PageDocsStore from 'docs/PageStore'
 import PageResources from 'resources/PageResources'
+import PageGather from 'user/PageGather'
 import PageIndex from './PageIndex'
 
 export const RoutesConfig = [
@@ -12,6 +13,11 @@ export const RoutesConfig = [
     path: '/',
     component: PageIndex,
     key: 'index',
+  },
+  {
+    path: '/gather',
+    component: PageGather,
+    key: 'gather',
   },
   {
     path: '/elements',
