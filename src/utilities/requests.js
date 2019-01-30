@@ -6,13 +6,16 @@ const axios = ax.create({
 })
 
 export const queryCurrentTenant = () => axios.get('/tenant');
+export const checkDomain = fqdn => axios.post('/checkDomain', {
+  fqdn,
+})
 
 // fqdn is the subdomain
 export const createTenant = ({
   name,
   email,
   password,
-  password_confirmation,
+  password_confirmation, // eslint-disable-line 
   fqdn,
 }) => axios.post('/tenant', {
   name,

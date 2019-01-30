@@ -1,7 +1,10 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
+import PageDocsElements from 'docs/PageElements'
+import PageDocsComponents from 'docs/PageComponents'
+import PageDocsStore from 'docs/PageStore'
+import PageResources from 'resources/PageResources'
 import PageIndex from './PageIndex'
-
 
 export const RoutesConfig = [
   {
@@ -9,6 +12,26 @@ export const RoutesConfig = [
     path: '/',
     component: PageIndex,
     key: 'index',
+  },
+  {
+    path: '/elements',
+    component: PageDocsElements,
+    key: 'docsElements',
+  },
+  {
+    path: '/components',
+    component: PageDocsComponents,
+    key: 'docsComponents',
+  },
+  {
+    path: '/store',
+    component: PageDocsStore,
+    key: 'docsStore',
+  },
+  {
+    path: '/resources',
+    component: PageResources,
+    key: 'resources',
   },
 ]
 

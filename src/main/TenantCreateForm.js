@@ -44,9 +44,14 @@ class TenantCreateForm extends Component {
       }))
       callPropFunc(handleSuccess({ tenant: { subdomain: 'sonae' } }))
     } catch (error) {
-      console.log(error)
-      this.setState(() => ({ loading: false, tenant: null, failure: true }))
-      callPropFunc(handleFailure)
+      this.setState(() => ({
+        loading: false, tenant: null, failure: true,
+      }))
+      if (error.response && error.response.data) {
+        handleFailure(Object.values(error.response.data.data))
+      } else {
+        handleFailure();
+      }
     }
   }
 
@@ -78,16 +83,16 @@ class TenantCreateForm extends Component {
     form: { touched, errors }, // values, setXXXX, handleXXXX, dirty, isValid, status, etc.
     ...props
   }) => (
-      <BaseFormInput
-        {...field}
-        {...props}
-        type="text"
-        autoComplete="username"
-        touched={touched[field.name]}
-        error={errors[field.name]}
-        onChange={(event) => this.handleChangeCostum(event, { field, errors })}
-      />
-    )
+    <BaseFormInput
+      {...field}
+      {...props}
+      type="text"
+      autoComplete="username"
+      touched={touched[field.name]}
+      error={errors[field.name]}
+      onChange={(event) => this.handleChangeCostum(event, { field, errors })}
+    />
+  )
 
   renderInputPassword = ({ field, form: { touched, errors }, ...props }) => (
     <BaseFormInput
@@ -141,7 +146,7 @@ class TenantCreateForm extends Component {
           initialValue: '',
           validation: true,
           required: true,
-          placeholder: 'Primeiro nome',
+          placeholder: 'First name',
           component: this.renderInput,
         },
         {
@@ -151,7 +156,7 @@ class TenantCreateForm extends Component {
           initialValue: '',
           validation: true,
           required: true,
-          placeholder: 'Último nome',
+          placeholder: 'Last name',
           component: this.renderInput,
         },
         {
@@ -191,7 +196,7 @@ class TenantCreateForm extends Component {
           initialValue: '',
           validation: true,
           required: true,
-          placeholder: 'Subdomínio',
+          placeholder: 'Workspace',
           component: this.renderInput,
         },
       ],
