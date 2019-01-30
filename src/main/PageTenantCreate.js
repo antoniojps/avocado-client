@@ -21,6 +21,7 @@ export default class PageTenantCreate extends Component {
     formLoading: false,
     formFailure: false,
     formSuccess: false,
+    errors: [],
   }
 
   handleSubdomainChange = (event, value) => {
@@ -41,8 +42,10 @@ export default class PageTenantCreate extends Component {
     this.setState(() => ({ formLoading: false, formSuccess: true, formFailure: false }))
   }
 
-  handleFailure = () => {
-    this.setState(() => ({ formLoading: false, formSuccess: false, formFailure: true }))
+  handleFailure = (errors) => {
+    this.setState(() => ({
+      formLoading: false, formSuccess: false, formFailure: true, errors,
+    }))
   }
 
   renderHeader = () => {
@@ -60,7 +63,7 @@ export default class PageTenantCreate extends Component {
     const paragraph = () => {
       if (formLoading) return 'Hang on we are hard at work setting up your workspace! '
       if (formSuccess) return 'Go to your workspace and login with the account you just created'
-      if (formFailure) return 'We\'re sorry but something went wrong, refresh and try again, if it doesn\'t work please contact us!'
+      if (formFailure) return this.state.errors[0] || 'We\'re sorry but something went wrong, refresh and try again, if it doesn\'t work please contact us!'
       return 'A private database and a unique sob-domain will be created to keep your data secure and independent.'
     }
 
