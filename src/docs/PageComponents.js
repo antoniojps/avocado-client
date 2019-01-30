@@ -16,6 +16,7 @@ import {
   BaseLoader,
   BaseFormInput,
   BaseModal,
+  BaseSearch,
 
 } from 'ui'
 import SyntaxHighlighter from 'docs/SyntaxHighlighter'
@@ -35,6 +36,10 @@ export default class PageComponents extends Component {
     this.setState({ ratingInfo: info })
   }
 
+  handleChange = value => {
+    console.log('changed', value)
+  }
+
   render() {
     const { isChecked, ratingInfo } = this.state
     return (
@@ -43,6 +48,7 @@ export default class PageComponents extends Component {
           <Title>
             Input
           </Title>
+          <BaseSearch onChange={this.handleChange} />
           <BaseFormInput placeholder="Name" />
           <BaseFormInput placeholder="Valid" modifiers="valid" />
           <BaseFormInput placeholder="Error" modifiers="error" error="epa ocorreu um grave erro" />

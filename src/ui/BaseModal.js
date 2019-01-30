@@ -26,10 +26,11 @@ const BaseModal = ({ children, toggle, isOn }) => (
 
 BaseModal.propTypes = {
   children: element.isRequired,
-  toggle: PropTypes.func.isRequired,
+  toggle: PropTypes.func,
   isOn: PropTypes.bool,
 }
 BaseModal.defaultProps = {
   isOn: false,
+  toggle: () => null,
 }
 export default BaseModal
