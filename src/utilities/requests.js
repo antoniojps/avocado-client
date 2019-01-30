@@ -12,12 +12,12 @@ export const createTenant = ({
   name,
   email,
   password,
-  passwordConfirmation,
+  password_confirmation,
   fqdn,
 }) => axios.post('/tenant', {
   name,
   email,
   password,
-  password_confirmation: passwordConfirmation,
+  password_confirmation,
   fqdn,
 })

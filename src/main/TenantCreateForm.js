@@ -16,14 +16,15 @@ class TenantCreateForm extends Component {
 
   // api request
   createTenant = async (values) => {
+    console.log('values are', values);
     const {
-      EMAIL: email, FIRST_NAME, LAST_NAME, PASSWORD, PASSWORD_REPEAT, SUBDOMAIN: fqdn,
+      EMAIL: email, FIRST_NAME, LAST_NAME, PASSWORD, REPEAT_PASSWORD, SUBDOMAIN: fqdn,
     } = values
     const tenantNew = await createTenant({
       email,
-      name: FIRST_NAME + LAST_NAME,
+      name: `${FIRST_NAME} ${LAST_NAME}`,
       password: PASSWORD,
-      password_confirmation: PASSWORD_REPEAT,
+      password_confirmation: REPEAT_PASSWORD,
       fqdn,
     })
     return tenantNew
