@@ -6,7 +6,7 @@ const axios = ax.create({
 })
 
 export const queryCurrentTenant = () => axios.get('/tenant');
-export const checkDomain = fqdn => axios.post('/checkDomain', {
+export const queryDomainAlreadyExists = fqdn => axios.post('/checkDomain', {
   fqdn,
 })
 
@@ -15,7 +15,7 @@ export const createTenant = ({
   name,
   email,
   password,
-  password_confirmation, // eslint-disable-line 
+  password_confirmation, // eslint-disable-line
   fqdn,
 }) => axios.post('/tenant', {
   name,
