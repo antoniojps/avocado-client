@@ -7,18 +7,23 @@ import {
 import {
   BasePage,
 } from 'ui'
+import withTenant from 'tenant/withTenant'
 
-const PageIndex = () => (
-  <BasePage>
-    <Container>
-      <Title>
-        Tenant website
-      </Title>
-      <P>
+const PageIndex = (props) => {
+  const { tenant: { name } } = props;
+  console.log(props.tenant);
+  return (
+    <BasePage>
+      <Container>
+        <Title>
+          {name || 'Tenant Website'}
+        </Title>
+        <P>
         Avocado is a management and planning platform of food safety audits and their resources.
-      </P>
-    </Container>
-  </BasePage>
-)
+        </P>
+      </Container>
+    </BasePage>
+  )
+}
 
-export default PageIndex
+export default withTenant(PageIndex)

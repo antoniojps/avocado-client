@@ -12,12 +12,14 @@ export const queryDomainAlreadyExists = fqdn => axios.post('/checkDomain', {
 
 // fqdn is the subdomain
 export const createTenant = ({
+  company,
   name,
   email,
   password,
   password_confirmation, // eslint-disable-line
   fqdn,
 }) => axios.post('/tenant', {
+  company,
   name,
   email,
   password,
