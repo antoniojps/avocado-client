@@ -25,17 +25,20 @@ class Form extends Component {
     workspaceFailure: false,
   }
 
-  debouncedValidate = debounce(({ values, inputs, language }) => this.validate(values, inputs, language), 300, {
+  debouncedValidate = debounce(({ values, inputs, language }) => this.validate(
+    values,
+    inputs,
+    language
+  ), 300, {
     leading: true,
     trailing: false,
   })
 
   validate = async (values, inputs, language) => {
     // in order to allow validations to be made asynchronously
-    // the generateInputError returns a promise
-    // what the code below does is map the result result of this promises into an array
-    // this array of error objects is then reduced into a single errors object
-    // that gets thrown when there are errors and is interpreted by formik
+    // the generateInputError returns a promise which resolves into an "error object"
+    // what the code below does is reduce the array of error objects into a single errors object
+    // when there are errors we throw them and formik catches them
 
     const errorsArray = await Promise.all(inputs.map(async input => ({
       name: input.name,
@@ -115,8 +118,8 @@ class Form extends Component {
           return validations.subdomain.invalid
         }
 
-        // formik validates always validates every input
-        // this way the request to check if the domain already exists is only done when necessary
+        // formik always validates every input
+        // this way the request is only done when necessary
         if (workspace !== values[SUBDOMAIN]) {
           try {
             await queryDomainAlreadyExists(values[SUBDOMAIN])
