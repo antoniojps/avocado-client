@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { Button } from 'elements'
 import { texts } from 'utilities/validations'
 import { queryDomainAlreadyExists } from 'utilities'
-import { debounce } from 'lodash'
 
 export const inputTypes = {
   FIRST_NAME: 'FIRST_NAME',
@@ -17,6 +16,7 @@ export const inputTypes = {
   ADDRESS: 'ADDRESS',
   PASSWORD: 'PASSWORD',
   REPEAT_PASSWORD: 'REPEAT_PASSWORD',
+  COMPANY: 'COMPANY',
 }
 
 class Form extends Component {
@@ -25,14 +25,12 @@ class Form extends Component {
     workspaceFailure: false,
   }
 
-  debouncedValidate = debounce(({ values, inputs, language }) => this.validate(
-    values,
-    inputs,
-    language
-  ), 300, {
-    leading: true,
-    trailing: false,
-  })
+  // not working properly
+  // debouncedValidate = debounce(({ values, inputs, language }) => this.validate(values, inputs, language), 300, {
+  //   leading: true,
+  //   trailing: false,
+  // })
+  debouncedValidate = ({ values, inputs, language }) => this.validate(values, inputs, language);
 
   validate = async (values, inputs, language) => {
     // in order to allow validations to be made asynchronously
@@ -62,7 +60,7 @@ class Form extends Component {
 
   generateInputError = async ({ input, values, language }) => {
     const {
-      EMAIL, FIRST_NAME, LAST_NAME, PHONE, AGE, SUBDOMAIN, ADDRESS, PASSWORD, REPEAT_PASSWORD, SELECT,
+      EMAIL, FIRST_NAME, LAST_NAME, PHONE, AGE, SUBDOMAIN, ADDRESS, PASSWORD, REPEAT_PASSWORD, SELECT, COMPANY,
     } = inputTypes
     const validations = texts(language)
     const { workspace, workspaceFailure } = this.state
@@ -72,6 +70,14 @@ class Form extends Component {
         return validations.required;
       }
       switch (input.name) {
+      case COMPANY:
+        if (values[COMPANY].length < 2) {
+          return validations.company.length;
+        }
+        if (typeof values[COMPANY] !== 'string' || /\d/.test(values[COMPANY])) {
+          return validations.company.string
+        }
+        break;
       case FIRST_NAME:
         if (values[FIRST_NAME].length < 2) {
           return validations.firstName.length;
