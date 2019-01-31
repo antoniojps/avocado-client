@@ -1,8 +1,12 @@
 const textsPT = {
   required: 'Este campo é obrigatório.',
+  company: {
+    length: 'O nome da empresa deve ter, pelo menos, 2 caracteres.',
+    string: 'O nome da empresa é inválido.',
+  },
   firstName: {
     length: 'O primeiro nome deve ter, pelo menos, 2 caracteres.',
-    string: 'O primeiro é inválido.',
+    string: 'O primeiro nome é inválido.',
   },
   lastName: {
     length: 'O último nome deve ter, pelo menos, 2 caracteres.',
@@ -39,6 +43,10 @@ const textsPT = {
 
 const textsEN = {
   required: 'This field is required.',
+  company: {
+    length: 'The Company name must have, at least, 2 characters.',
+    string: 'The Company name is invalid',
+  },
   firstName: {
     length: 'The first name must have, at least, 2 characters.',
     string: 'The first name is invalid',
