@@ -18,9 +18,10 @@ class TenantCreateForm extends Component {
   // api request
   createTenant = async (values) => {
     const {
-      EMAIL: email, FIRST_NAME, LAST_NAME, PASSWORD, REPEAT_PASSWORD, SUBDOMAIN: fqdn,
+      EMAIL: email, FIRST_NAME, LAST_NAME, PASSWORD, REPEAT_PASSWORD, SUBDOMAIN: fqdn, COMPANY,
     } = values
     const tenantNew = await createTenant({
+      company: COMPANY,
       email,
       name: `${FIRST_NAME} ${LAST_NAME}`,
       password: PASSWORD,
@@ -131,7 +132,7 @@ class TenantCreateForm extends Component {
   render() {
     const { tenant, loading } = this.state
     const {
-      EMAIL, FIRST_NAME, LAST_NAME, SUBDOMAIN, PASSWORD, REPEAT_PASSWORD,
+      EMAIL, FIRST_NAME, LAST_NAME, SUBDOMAIN, PASSWORD, REPEAT_PASSWORD, COMPANY,
     } = inputTypes
 
     const form = {
@@ -139,6 +140,16 @@ class TenantCreateForm extends Component {
       language: 'en-us',
       onSubmit: (values, actions) => this.onSubmit(values, actions),
       inputs: [
+        {
+          id: COMPANY,
+          name: COMPANY,
+          type: COMPANY,
+          initialValue: '',
+          validation: true,
+          required: true,
+          placeholder: 'Company name',
+          component: this.renderInput,
+        },
         {
           id: FIRST_NAME,
           name: FIRST_NAME,
