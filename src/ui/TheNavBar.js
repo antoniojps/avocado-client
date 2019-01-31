@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import {
@@ -6,29 +6,94 @@ import {
   Title,
   Button,
 } from 'elements'
+import { BaseBreakpoints, TheNavList } from 'ui'
+import { routes } from 'tenant/Routes'
+import { generateMainNavList } from 'utilities'
+import TheNavIcon from './TheNavIcon'
 
-const TheNavBar = ({ children }) => (
-  <NavBar>
-    <NavBar.Left>
-      <NavBar.Icon>
-        <Icon icon="logo" height={40} />
-      </NavBar.Icon>
-      <NavBar.Breadcrumb modifiers={['small', 'inverse']}>
-        {children}
-      </NavBar.Breadcrumb>
-    </NavBar.Left>
-    <NavBar.Right>
-      <Button modifiers={['primary', 'noMargin', 'important']}>
-        Login
-      </Button>
-    </NavBar.Right>
-  </NavBar>
-)
+class TheNavBar extends Component {
+  state = {
+    isNavOpen: false,
+  }
+
+  openNavMobile = () => {
+    const { isNavOpen } = this.state
+    if (isNavOpen) console.log('close nav')
+    else console.log('open nav')
+    this.setState(({ isNavOpen }) => ({ isNavOpen: !isNavOpen }))
+  }
+
+  getNavList = () => generateMainNavList(routes)
+
+  render() {
+    const list = this.getNavList()
+    const { children } = this.props
+    const { isNavOpen } = this.state
+    return (
+      <>
+        <NavBar>
+          <NavBar.Left>
+            <NavBar.Icon>
+              <BaseBreakpoints render={({ md }) => (md ? (
+                <Icon icon="logo" height={40} />
+              ) : (
+                <TheNavIcon onClick={this.openNavMobile} isOpen={isNavOpen} />
+              ))}
+              />
+            </NavBar.Icon>
+            <BaseBreakpoints render={({ md }) => md && (
+              <NavBar.Breadcrumb modifiers={['small', 'inverse']}>
+                {children}
+              </NavBar.Breadcrumb>
+            )}
+            />
+          </NavBar.Left>
+          <NavBar.Right>
+            <BaseBreakpoints render={({ md }) => (md
+              ? (
+                <Button modifiers={['primary', 'noMargin', 'important']}>
+                  Login
+                </Button>
+              )
+              : (
+                <Button modifiers={['primary', 'noMargin', 'important', 'small']}>
+                  Login
+                </Button>
+              ))
+            }
+            />
+          </NavBar.Right>
+        </NavBar>
+        <BaseBreakpoints render={({ md }) => (md
+          ? (
+            <>
+              <Seperator />
+              <TheNavList list={list} />
+            </>
+          )
+          : (
+            <NavBar.Bottom>
+              <NavBar.Breadcrumb modifiers={['small', 'inverse']}>
+                {children}
+              </NavBar.Breadcrumb>
+            </NavBar.Bottom>
+          ))}
+        />
+      </>
+    )
+  }
+}
+
 
 const NavBar = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-bottom: ${props => props.theme.spacing.xs};
+`
+const Seperator = styled.div`
+  height: 2px;
+  width: 100%;
+  background-image: linear-gradient(90deg, rgba(255,255,255,0.00) 0%, rgba(255,255,255,0.32) 15%, rgba(255,255,255,0.32) 50%, rgba(255,255,255,0.36) 85%, rgba(255,255,255,0.00) 100%);
+  margin-top: ${props => props.theme.spacing.s};
 `
 
 NavBar.Left = styled.div`
@@ -49,6 +114,11 @@ NavBar.Right = styled.div`
   display: flex;
   align-items: center;
   color: white;
+`
+
+NavBar.Bottom = styled.div`
+  padding: ${props => props.theme.spacing.base};
+  padding-top: ${props => props.theme.spacing.xs};
 `
 
 TheNavBar.propTypes = {

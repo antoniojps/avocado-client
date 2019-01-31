@@ -3,7 +3,6 @@ import {
   Title,
   P,
   Button,
-  Container,
 } from 'elements'
 import { Link } from 'react-router-dom'
 import {
@@ -43,59 +42,63 @@ export default class PageComponents extends Component {
   render() {
     const { isChecked, ratingInfo } = this.state
     return (
-      <BasePage>
-        <Container>
-          <Title>
+      <BasePage page={{
+        title: 'Documentation',
+        subtitle: 'Components',
+        description: 'Have a quick look at all the developed components',
+      }}
+      >
+        <Title>
             Input
-          </Title>
-          <BaseSearch onChange={this.handleChange} />
-          <BaseFormInput placeholder="Name" />
-          <BaseFormInput placeholder="Valid" modifiers="valid" />
-          <BaseFormInput placeholder="Error" modifiers="error" error="epa ocorreu um grave erro" />
-          <Title>
+        </Title>
+        <BaseSearch onChange={this.handleChange} />
+        <BaseFormInput placeholder="Name" />
+        <BaseFormInput placeholder="Valid" modifiers="valid" />
+        <BaseFormInput placeholder="Error" modifiers="error" error="epa ocorreu um grave erro" />
+        <Title>
             Modal
-          </Title>
-          <BaseToggle>
-            {({ isOn, toggle }) => (
-              <>
-                <Button modifiers="danger" onClick={toggle}>
+        </Title>
+        <BaseToggle>
+          {({ isOn, toggle }) => (
+            <>
+              <Button modifiers="danger" onClick={toggle}>
                   Click to toggle
-                </Button>
-                <BaseModal toggle={toggle} isOn={isOn}>
-                  <div>Im a modal</div>
-                </BaseModal>
-              </>
-            )}
-          </BaseToggle>
-          <Title>
+              </Button>
+              <BaseModal toggle={toggle} isOn={isOn}>
+                <div>Im a modal</div>
+              </BaseModal>
+            </>
+          )}
+        </BaseToggle>
+        <Title>
             Loader
-          </Title>
-          <BaseLoader message="Loading something..." />
-          <SyntaxHighlighter>
-            {`import { BaseLoader } from 'ui'
+        </Title>
+        <BaseLoader message="Loading something..." />
+        <SyntaxHighlighter>
+          {`import { BaseLoader } from 'ui'
 
 <BaseLoader message="Loading something..." />`}
-          </SyntaxHighlighter>
-          <Title>
+        </SyntaxHighlighter>
+        <Title>
             Tabs
-          </Title>
-          <P>
+        </Title>
+        <P>
             Horizontal
-          </P>
-          <BaseTabs>
-            <BaseTabs.Tab to="/components">
+        </P>
+        <BaseTabs>
+          <BaseTabs.Tab to="/components">
               Components
-            </BaseTabs.Tab>
-            <BaseTabs.Tab to="/components/tab-2">
+          </BaseTabs.Tab>
+          <BaseTabs.Tab to="/components/tab-2">
               Tab 2
-            </BaseTabs.Tab>
-            <BaseTabs.Tab to="/components/tab-3">
+          </BaseTabs.Tab>
+          <BaseTabs.Tab to="/components/tab-3">
               Tab 3
-            </BaseTabs.Tab>
-          </BaseTabs>
-          <br />
-          <SyntaxHighlighter>
-            {`import { BaseTabs } from 'ui'
+          </BaseTabs.Tab>
+        </BaseTabs>
+        <br />
+        <SyntaxHighlighter>
+          {`import { BaseTabs } from 'ui'
 
 <BaseTabs>
   <BaseTabs.Tab to="/components">
@@ -108,24 +111,24 @@ export default class PageComponents extends Component {
     Tab 3
   </BaseTabs.Tab>
 </BaseTabs>`}
-          </SyntaxHighlighter>
-          <P>
+        </SyntaxHighlighter>
+        <P>
             Vertical
-          </P>
-          <BaseTabs orientation="vertical">
-            <BaseTabs.Tab to="/components">
+        </P>
+        <BaseTabs orientation="vertical">
+          <BaseTabs.Tab to="/components">
               Components
-            </BaseTabs.Tab>
-            <BaseTabs.Tab to="/components/tab-2">
+          </BaseTabs.Tab>
+          <BaseTabs.Tab to="/components/tab-2">
               Tab 2
-            </BaseTabs.Tab>
-            <BaseTabs.Tab to="/components/tab-3">
+          </BaseTabs.Tab>
+          <BaseTabs.Tab to="/components/tab-3">
               Tab 3
-            </BaseTabs.Tab>
-          </BaseTabs>
-          <br />
-          <SyntaxHighlighter>
-            {`import { BaseTabs } from 'ui'
+          </BaseTabs.Tab>
+        </BaseTabs>
+        <br />
+        <SyntaxHighlighter>
+          {`import { BaseTabs } from 'ui'
 
 <BaseTabs orientation="vertical">
   <BaseTabs.Tab to="/components">
@@ -138,17 +141,17 @@ export default class PageComponents extends Component {
     Tab 3
   </BaseTabs.Tab>
 </BaseTabs>`}
-          </SyntaxHighlighter>
-          <Title>
+        </SyntaxHighlighter>
+        <Title>
             Switch
-          </Title>
-          <BaseSwitch isChecked={isChecked} onChange={this.handleSwitchChange}>
+        </Title>
+        <BaseSwitch isChecked={isChecked} onChange={this.handleSwitchChange}>
             Switch is
-            {' '}
-            {isChecked ? 'on' : 'off'}
-          </BaseSwitch>
-          <SyntaxHighlighter>
-            {`import { BaseSwitch } from 'ui'
+          {' '}
+          {isChecked ? 'on' : 'off'}
+        </BaseSwitch>
+        <SyntaxHighlighter>
+          {`import { BaseSwitch } from 'ui'
 
 class Example extends Component {
   state = {
@@ -171,20 +174,20 @@ class Example extends Component {
     )
   }
 }`}
-          </SyntaxHighlighter>
-          <Title>Toggle</Title>
-          <BaseToggle>
-            {({ isOn, toggle }) => (
-              <>
-                {isOn && <P>Toggle is on!</P>}
-                <Button modifiers="danger" onClick={toggle}>
+        </SyntaxHighlighter>
+        <Title>Toggle</Title>
+        <BaseToggle>
+          {({ isOn, toggle }) => (
+            <>
+              {isOn && <P>Toggle is on!</P>}
+              <Button modifiers="danger" onClick={toggle}>
                   Click to toggle
-                </Button>
-              </>
-            )}
-          </BaseToggle>
-          <SyntaxHighlighter>
-            {`import { BaseToggle } from 'ui'
+              </Button>
+            </>
+          )}
+        </BaseToggle>
+        <SyntaxHighlighter>
+          {`import { BaseToggle } from 'ui'
 
 <BaseToggle>
   {({ isOn, toggle }) => (
@@ -196,20 +199,20 @@ class Example extends Component {
     </>
   )}
 </BaseToggle>`}
-          </SyntaxHighlighter>
-          <Title>
+        </SyntaxHighlighter>
+        <Title>
             Rater
-          </Title>
-          <BaseRater
-            rating={3}
-            max={5}
-            onRate={(selectedRating) => this.setRatingInfo(`Rated ${selectedRating} stars`)}
-            onMouseEnterStar={(hoveredRating) => this.setRatingInfo(`Hovering ${hoveredRating} stars`)}
-            onMouseLeave={(selectedRating) => this.setRatingInfo(`Rated ${selectedRating} stars`)}
-          />
-          <P>{ratingInfo}</P>
-          <SyntaxHighlighter>
-            {`import { BaseRater } from 'ui'
+        </Title>
+        <BaseRater
+          rating={3}
+          max={5}
+          onRate={(selectedRating) => this.setRatingInfo(`Rated ${selectedRating} stars`)}
+          onMouseEnterStar={(hoveredRating) => this.setRatingInfo(`Hovering ${hoveredRating} stars`)}
+          onMouseLeave={(selectedRating) => this.setRatingInfo(`Rated ${selectedRating} stars`)}
+        />
+        <P>{ratingInfo}</P>
+        <SyntaxHighlighter>
+          {`import { BaseRater } from 'ui'
 
 <BaseRater
   rating={3}
@@ -219,28 +222,28 @@ class Example extends Component {
   onMouseLeave={(selectedRating) => this.setRatingInfo(\`Rated \${selectedRating} stars\`)}
 />
 <P>{ratingInfo}</P>`}
-          </SyntaxHighlighter>
-          <Title>
+        </SyntaxHighlighter>
+        <Title>
             Breadcrumb
-          </Title>
-          <P>
-            <Link to="/components/tab-2">
+        </Title>
+        <P>
+          <Link to="/components/tab-2">
               Click to go to Tab 2
-            </Link>
-            {' or '}
-            <Link to="/components/tab-3">
+          </Link>
+          {' or '}
+          <Link to="/components/tab-3">
               Click to go to Tab 3
-            </Link>
-          </P>
-          <BaseBreadcrumb
-            basePage={{
-              title: 'Design',
-              to: '/',
-            }}
-          />
-          <br />
-          <SyntaxHighlighter>
-            {`import { BaseBreadcrumb } from 'ui'
+          </Link>
+        </P>
+        <BaseBreadcrumb
+          basePage={{
+            title: 'Design',
+            to: '/',
+          }}
+        />
+        <br />
+        <SyntaxHighlighter>
+          {`import { BaseBreadcrumb } from 'ui'
 
 <BaseBreadcrumb
 basePage={{
@@ -248,17 +251,17 @@ basePage={{
   to: '/',
 }}
 />`}
-          </SyntaxHighlighter>
-          <BaseBreadcrumb
-            basePage={{
-              title: '💅 Components',
-              to: '/components',
-            }}
-            parentVisible={false}
-          />
-          <br />
-          <SyntaxHighlighter>
-            {`import { BaseBreadcrumb } from 'ui'
+        </SyntaxHighlighter>
+        <BaseBreadcrumb
+          basePage={{
+            title: '💅 Components',
+            to: '/components',
+          }}
+          parentVisible={false}
+        />
+        <br />
+        <SyntaxHighlighter>
+          {`import { BaseBreadcrumb } from 'ui'
 
 <BaseBreadcrumb
   basePage={{
@@ -267,8 +270,7 @@ basePage={{
   }}
   parentVisible={false}
 />`}
-          </SyntaxHighlighter>
-        </Container>
+        </SyntaxHighlighter>
       </BasePage>
     )
   }

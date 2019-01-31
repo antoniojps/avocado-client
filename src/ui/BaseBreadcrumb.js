@@ -5,9 +5,22 @@ import { withRouter, NavLink } from 'react-router-dom'
 import { takeRight } from 'lodash'
 import { Icon } from 'elements'
 import { applyStyleModifiers } from 'styled-components-modifiers'
-import { hyphenToSpace } from 'utilities'
+import { hyphenToSpace, above } from 'utilities'
 
 class BaseBreadcrumb extends Component {
+  constructor(props) {
+    super(props);
+    this.refBreadcrumb = React.createRef();
+  }
+
+  componentDidMount = () => {
+    this.refBreadcrumb.current.scrollLeft = '9999'
+  }
+
+  componentDidUpdate = () => {
+    this.refBreadcrumb.current.scrollLeft = '9999'
+  }
+
   getPathFromTitle = (title) => {
     const { location: { pathname } } = this.props
     const basePath = pathname.split('/').slice(1)
@@ -37,7 +50,7 @@ class BaseBreadcrumb extends Component {
     const { modifiers, parentVisible, basePage } = this.props
 
     return (
-      <Breadcrumb modifiers={modifiers}>
+      <Breadcrumb modifiers={modifiers} ref={this.refBreadcrumb}>
         {
           basePage
           && (
@@ -96,6 +109,9 @@ const BREADCRUMB_MODIFIERS = {
 const Breadcrumb = styled.div`
   display: flex;
   align-items: center;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
   ${applyStyleModifiers(BREADCRUMB_MODIFIERS)};
 `
 

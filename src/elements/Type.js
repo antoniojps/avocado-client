@@ -5,13 +5,17 @@ const TITLE_MODIFIERS = {
   inverse: ({ theme }) => `
     color: ${theme.color.baseInverse};
   `,
-  small: ({ theme }) => `
-    font-size: ${theme.size.sm};
+  big: ({ theme }) => `
+    font-size: ${theme.size.m};
+  `,
+  noMargin: () => `
+    padding: 0;
+    margin: 0;
   `,
 }
 
 export const Title = styled.h1`
-  font-size: ${props => props.theme.size.m};
+  font-size: ${props => props.theme.size.sm};
   color: ${props => props.theme.color.base};
   font-weight: bold;
   margin: 0;

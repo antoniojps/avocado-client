@@ -152,6 +152,7 @@ const TAB_MODIFIERS = {
 }
 
 BaseTabs.Tab = styled.button`
+  text-align: ${({ orientation }) => (orientation === 'vertical' ? 'left' : 'center')};
   padding: ${props => props.theme.spacing.xms} ${props => props.theme.spacing.m};
   color: ${props => props.theme.color.baseLighter};
   ${props => props.theme.mixin.border({ orientation: props.orientation })}

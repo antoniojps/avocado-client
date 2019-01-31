@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import { applyPathToRoutesObj, mapRoutesObjToArray } from 'utilities/helper'
+import PageDocsIndex from 'docs/PageIndex'
 import PageDocsElements from 'docs/PageElements'
 import PageDocsComponents from 'docs/PageComponents'
 import PageDocsStore from 'docs/PageStore'
@@ -8,72 +9,49 @@ import PageResources from 'resources/PageResources'
 import PageGather from 'user/PageGather'
 import PageIndex from './PageIndex'
 
-export const RoutesConfigOld = [
-  {
-    exact: true,
-    path: '/',
-    component: PageIndex,
-    key: 'index',
-  },
-  {
-    path: '/gather',
-    component: PageGather,
-    key: 'gather',
-  },
-  {
-    path: '/elements',
-    component: PageDocsElements,
-    key: 'docsElements',
-  },
-  {
-    path: '/components',
-    component: PageDocsComponents,
-    key: 'docsComponents',
-  },
-  {
-    path: '/store',
-    component: PageDocsStore,
-    key: 'docsStore',
-  },
-  {
-    path: '/resources',
-    component: PageResources,
-    key: 'resources',
-  },
-]
-
-export const routesObj = applyPathToRoutesObj({
+const routesConfig = {
   index: {
     component: PageIndex,
     key: 'index',
     exact: true,
+    name: 'index',
   },
-  docs: {
-    component: PageDocsElements,
-    key: 'docs',
-  },
-  elements: {
-    component: PageDocsElements,
-    key: 'docsElements',
-  },
-  components: {
-    component: PageDocsComponents,
-    key: 'docsComponents',
-  },
-  store: {
-    component: PageDocsStore,
-    key: 'docsStore',
+  documentation: {
+    index: {
+      component: PageDocsIndex,
+      key: 'docs',
+      exact: true,
+      name: 'Documentation',
+    },
+    elements: {
+      component: PageDocsElements,
+      key: 'docsElements',
+      name: 'Elements',
+    },
+    components: {
+      component: PageDocsComponents,
+      key: 'docsComponents',
+      name: 'Components',
+    },
+    store: {
+      component: PageDocsStore,
+      key: 'docsStore',
+      name: 'Store',
+    },
   },
   gather: {
     component: PageGather,
     key: 'gather',
+    name: 'Gather',
   },
   resources: {
     component: PageResources,
     key: 'resources',
+    name: 'Resources',
   },
-})
+}
 
+const routesObj = applyPathToRoutesObj(routesConfig)
 const routesArr = mapRoutesObjToArray(routesObj)
 
 const Routes = () => (
@@ -85,5 +63,7 @@ const Routes = () => (
     }
   </>
 )
+
+export const routes = routesObj
 
 export default Routes

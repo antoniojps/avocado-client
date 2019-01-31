@@ -7,7 +7,7 @@ import GlobalStyle from 'GlobalStyle'
 import withAuth from 'user/withAuth'
 import { ThemeProvider } from 'styled-components'
 import { theme, history } from 'utilities'
-import Routes from './Routes'
+import Routes from 'tenant/Routes'
 
 class AppTenant extends Component {
   componentWillMount() {

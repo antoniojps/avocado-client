@@ -192,3 +192,25 @@ export const mapRoutesObjToArray = routesObj => {
   const cleanedUpResult = removeDuplicatesBy('key', result)
   return cleanedUpResult
 }
+
+export const generateMainNavList = (routesObj) => {
+  const keys = Object.keys(routesObj)
+  // blacklisted
+  const blackListed = ['index', 'gather']
+
+  // remove blacklisted routes
+  const filteredKeys = keys.filter(key => blackListed.indexOf(key) === -1)
+
+  // format for prop "list" in TheNavList
+  const list = filteredKeys.map((key) => {
+    let route = routesObj[key]
+    // index handling
+    if (typeof route.index === 'object') route = route.index
+    const { name, path } = route
+    return {
+      name,
+      to: path,
+    }
+  })
+  return list
+}

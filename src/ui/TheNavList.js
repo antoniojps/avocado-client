@@ -8,7 +8,7 @@ import { transparentize } from 'polished'
 const TheNavList = ({ list }) => {
   const renderList = () => list.map(({ name, to }) => (
     <NavList.Li key={generateKey(name)}>
-      <NavLink to={to} exact>
+      <NavLink to={to}>
         {name}
       </NavLink>
     </NavList.Li>

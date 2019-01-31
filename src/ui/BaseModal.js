@@ -3,11 +3,10 @@ import {
   ModalWrapper, CloseButton, ModalCard, ModalBackground,
 } from 'elements'
 import PropTypes, { element } from 'prop-types'
-
-import Portal from './Portal'
+import { ThePortal } from 'ui'
 
 const BaseModal = ({ children, toggle, isOn }) => (
-  <Portal>
+  <ThePortal>
     {
       isOn && (
         <ModalWrapper>
@@ -21,7 +20,7 @@ const BaseModal = ({ children, toggle, isOn }) => (
         </ModalWrapper>
       )
     }
-  </Portal>
+  </ThePortal>
 )
 
 BaseModal.propTypes = {

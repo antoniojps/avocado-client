@@ -4,7 +4,7 @@ import PropTypes, { element } from 'prop-types'
 
 const portalRoot = document.getElementById('portal')
 
-class Portal extends Component {
+class ThePortal extends Component {
   constructor(props) {
     super(props);
     this.el = document.createElement('div');
@@ -24,13 +24,13 @@ class Portal extends Component {
   }
 }
 
-Portal.propTypes = {
+ThePortal.propTypes = {
   children: PropTypes.oneOfType([
     element,
     PropTypes.bool,
   ]),
 }
-Portal.defaultProps = {
+ThePortal.defaultProps = {
   children: false,
 }
-export default Portal
+export default ThePortal

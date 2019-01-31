@@ -13,35 +13,36 @@ import ExampleRequestStarship from 'docs/ExampleRequestStarship'
 import SyntaxHighlighter from 'docs/SyntaxHighlighter'
 
 const PageIndex = () => (
-  <BasePage>
+  <BasePage page={{
+    title: 'Documentation',
+    subtitle: 'Store',
+    description: 'Redux saga usage test, open up redux dev tools!',
+  }}
+  >
+    <Title>
+        Saga example
+    </Title>
     <Container>
-      <Title>
-        Stores
-      </Title>
-      <P>
-        Redux saga usage test, open up redux dev tools!
-      </P>
-      <Container>
-        <ExampleRequestStarship />
-      </Container>
-      <Title modifiers="small">
+      <ExampleRequestStarship />
+    </Container>
+    <Title>
         Docs
-        {' '}
-        {/*
+      {' '}
+      {/*
           children prop used to prevent eslint error
           jsx-a11y/accessible-emoji rule doesnt recogniza styled component as a span element
           this rule can only be disabled by ejecting
         */}
-        <Emoji children="🤓" label="nerd" />
-      </Title>
-      <P>
+      <Emoji children="🤓" label="nerd" />
+    </Title>
+    <P>
         Store created for testing and examples purposes
-      </P>
-      <Subtitle>
+    </P>
+    <Subtitle>
         Actions
-      </Subtitle>
-      <SyntaxHighlighter>
-        {`export const REQUEST_STARSHIP = 'REQUEST_STARSHIP'
+    </Subtitle>
+    <SyntaxHighlighter>
+      {`export const REQUEST_STARSHIP = 'REQUEST_STARSHIP'
 export const REQUEST_STARSHIP_LOADING = 'REQUEST_STARSHIP_LOADING'
 export const REQUEST_STARSHIP_SUCCESS = 'REQUEST_STARSHIP_SUCCESS'
 export const REQUEST_STARSHIP_FAILURE = 'REQUEST_STARSHIP_FAILURE'
@@ -50,12 +51,12 @@ export const getStarship = () => ({
   type: REQUEST_STARSHIP,
 })
 `}
-      </SyntaxHighlighter>
-      <Subtitle>
+    </SyntaxHighlighter>
+    <Subtitle>
         Reducer
-      </Subtitle>
-      <SyntaxHighlighter>
-        {`...
+    </Subtitle>
+    <SyntaxHighlighter>
+      {`...
 const initialState = {
   starship: null,
   starshipLoading: false,
@@ -91,12 +92,12 @@ export default function (state = initialState, action) {
   }
 }
 `}
-      </SyntaxHighlighter>
-      <Subtitle>
+    </SyntaxHighlighter>
+    <Subtitle>
         Sagas
-      </Subtitle>
-      <SyntaxHighlighter>
-        {`...
+    </Subtitle>
+    <SyntaxHighlighter>
+      {`...
 import { takeEvery, put, call } from 'redux-saga/effects'
 
 ...
@@ -123,8 +124,7 @@ const watchRequestStarship = function* () {
 export default [
   watchRequestStarship(),
 ]`}
-      </SyntaxHighlighter>
-    </Container>
+    </SyntaxHighlighter>
   </BasePage>
 )
 
