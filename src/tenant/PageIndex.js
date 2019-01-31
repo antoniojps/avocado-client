@@ -11,7 +11,6 @@ import withTenant from 'tenant/withTenant'
 
 const PageIndex = (props) => {
   const { tenant: { name } } = props;
-  console.log(props.tenant);
   return (
     <BasePage>
       <Container>

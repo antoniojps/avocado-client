@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getTenant } from './actions'
+import { getTenant, putTenant } from './actions'
 
 const mapStateToProps = ({
   tenant: {
@@ -14,14 +14,19 @@ const mapStateToProps = ({
   tenantLoading,
   tenantFailure,
 })
-
-export const mapDispatchToProps = (dispatch) => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   getTenant,
+  putTenant,
 }, dispatch)
+
+const editTenant = tenant => editTenant(tenant);
 
 export const Tenant = (WrappedComponent) => {
   const hocComponent = ({ ...props }) => <WrappedComponent {...props} />
   return hocComponent
 }
 
-export default WrapperComponent => connect(mapStateToProps, mapDispatchToProps)(Tenant(WrapperComponent))
+export default WrapperComponent => connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Tenant(WrapperComponent))
