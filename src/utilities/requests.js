@@ -8,7 +8,6 @@ export const queryCurrentTenant = () => axios.get('/tenant');
 export const queryDomainAlreadyExists = fqdn => axios.post('/checkDomain', {
   fqdn,
 })
-
 export const queryPutTenant = ({
   name, description, themes_id, logo,// eslint-disable-line
 }) => axios.put('/tenant', {
@@ -17,6 +16,8 @@ export const queryPutTenant = ({
   themes_id,
   logo,
 })
+export const queryDeleteTenant = () => axios.delete('tenant');
+
 
 // fqdn is the subdomain
 export const createTenant = ({
