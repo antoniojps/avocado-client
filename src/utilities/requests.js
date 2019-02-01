@@ -5,6 +5,7 @@ const axios = ax.create({
   baseURL: `${getApiUrl()}`,
 })
 export const queryCurrentTenant = () => axios.get('/tenant');
+export const queryCurrentTenantRoles = () => axios.get('/roles');
 export const queryDomainAlreadyExists = fqdn => axios.post('/checkDomain', {
   fqdn,
 })

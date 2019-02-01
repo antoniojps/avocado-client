@@ -20,6 +20,7 @@ const color = {
   warning: '#F5874A',
   success: '#40CB89',
   star: '#FFDD57',
+  gray: '#e8e8e8',
 }
 
 const gradient = {

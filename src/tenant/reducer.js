@@ -3,6 +3,10 @@ import {
   REQUEST_TENANT_SUCCESS,
   REQUEST_TENANT_FAILURE,
 
+  REQUEST_ROLES_LOADING,
+  REQUEST_ROLES_SUCCESS,
+  REQUEST_ROLES_FAILURE,
+
   PUT_TENANT_LOADING,
   PUT_TENANT_SUCCESS,
   PUT_TENANT_FAILURE,
@@ -15,6 +19,10 @@ const initialState = {
   tenantFailure: false,
   tenantPutLoading: false,
   tenantPutFailure: false,
+  permissions: null,
+  roles: null,
+  tenantRolesLoading: false,
+  tenantRolesFailure: false,
 }
 
 export default function (state = initialState, action) {
@@ -40,6 +48,30 @@ export default function (state = initialState, action) {
       tenant: null,
       tenantLoading: false,
       tenantFailure: data,
+    }
+  case REQUEST_ROLES_LOADING:
+    return {
+      ...state,
+      permissions: null,
+      roles: null,
+      tenantRolesLoading: true,
+      tenantRolesFailure: false,
+    }
+  case REQUEST_ROLES_SUCCESS:
+    return {
+      ...state,
+      roles: data.roles,
+      permissions: data.permissions,
+      tenantRolesLoading: false,
+      tenantRolesFailure: false,
+    }
+  case REQUEST_ROLES_FAILURE:
+    return {
+      ...state,
+      permissions: null,
+      roles: null,
+      tenantRolesLoading: false,
+      tenantRolesFailure: data,
     }
   case PUT_TENANT_LOADING:
     return { ...state, tenantPutLoading: true }

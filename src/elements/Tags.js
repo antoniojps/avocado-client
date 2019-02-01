@@ -5,6 +5,12 @@ const TAG_MODIFIERS = {
   purple: ({ theme }) => `
     background-color: ${theme.color.purple};
   `,
+  gray: ({ theme }) => `
+    background-color: ${theme.color.gray};
+    color: ${theme.color.bgDark};
+    font-weight: 400
+    text-transform: none;
+  `,
 }
 
 export const Tag = styled.div`

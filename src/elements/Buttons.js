@@ -9,6 +9,7 @@ const BUTTON_MODIFIERS = {
   small: ({ theme }) => `
     padding: ${theme.spacing.xxxs} ${theme.spacing.xxms};
   `,
+  right: () => 'float: right',
   noMargin: () => `
     margin: 0;
   `,
@@ -34,6 +35,26 @@ const BUTTON_MODIFIERS = {
     &:active {
       border: 1px solid ${theme.color.primaryDarker};
       background-color: ${theme.color.primaryDarker};
+    }
+  `,
+  secondary: ({ theme }) => `
+    background-color: ${theme.color.baseInverse};
+    color: ${theme.color.primaryDarker};
+    border: 2px solid ${theme.color.primaryDarker};
+    &:hover {
+      background-color: ${darken(0.03, theme.color.baseInverse)};
+      border: 1px solid ${darken(0.03, theme.color.primaryDarker)};
+      color: ${theme.color.primaryDarker};
+      cursor: pointer;
+    }
+    &:focus {
+      color: ${theme.color.primaryDarker};
+      background-color: ${darken(0.1, theme.color.baseInverse)};
+      border: 1px solid ${darken(0.1, theme.color.primaryDarker)};
+    }
+    &:active {
+      border: 1px solid ${theme.color.primaryDarker};
+      background-color: ${theme.color.baseInverse};
     }
   `,
   danger: ({ theme }) => `

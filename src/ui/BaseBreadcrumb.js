@@ -5,7 +5,7 @@ import { withRouter, NavLink } from 'react-router-dom'
 import { takeRight } from 'lodash'
 import { Icon } from 'elements'
 import { applyStyleModifiers } from 'styled-components-modifiers'
-import { hyphenToSpace, above } from 'utilities'
+import { hyphenToSpace } from 'utilities'
 
 class BaseBreadcrumb extends Component {
   constructor(props) {
