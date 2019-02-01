@@ -39,6 +39,9 @@ const textsPT = {
   select: {
     empty: 'Tem de selecionar um valor.',
   },
+  textarea: {
+    length: 'A descrição só pode ter um máximo de 200 caracteres.',
+  },
 }
 
 const textsEN = {
@@ -81,6 +84,9 @@ const textsEN = {
   },
   select: {
     empty: 'You must select one value.',
+  },
+  textarea: {
+    length: 'The description must have 500 characters maximum.',
   },
 }
 

@@ -8,6 +8,8 @@ import PageDocsStore from 'docs/PageStore'
 import PageResources from 'resources/PageResources'
 import PageGather from 'user/PageGather'
 import PageIndex from './PageIndex'
+import PageSettings from 'settings/PageSettings';
+import PageRoles from 'settings/PageRoles';
 
 const routesConfig = {
   index: {
@@ -49,6 +51,19 @@ const routesConfig = {
     key: 'resources',
     name: 'Resources',
   },
+  settings: {
+    index: {
+      component: PageSettings,
+      key: 'settings',
+      exact: true,
+      name: 'Settings'
+    },
+    roles: {
+      component: PageRoles,
+      key: 'roles',
+      name: 'Roles'
+    },
+  }
 }
 
 const routesObj = applyPathToRoutesObj(routesConfig)
