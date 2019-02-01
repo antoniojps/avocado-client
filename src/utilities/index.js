@@ -1,5 +1,6 @@
 export * from './breakpoints'
 export * from './theme'
+export * from './themeDark'
 export * from './generators'
 export * from './helper'
 export * from './requests'

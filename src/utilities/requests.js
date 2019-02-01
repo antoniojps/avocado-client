@@ -11,12 +11,19 @@ export const queryDomainAlreadyExists = fqdn => axios.post('/checkDomain', {
 })
 export const queryPutTenant = ({
   name, description, themes_id, logo,// eslint-disable-line
-}) => axios.put('/tenant', {
-  name,
-  description,
-  themes_id,
-  logo,
-})
+}) => {
+  console.log('sending', name, description, themes_id)
+  return axios.put('/tenant', {
+    name,
+    description,
+    themes_id,
+    logo,
+  }, {
+    Headers: {
+      'Content-type': 'application/x-www-form-urlencoded',
+    },
+  })
+}
 export const queryDeleteTenant = () => axios.delete('tenant');
 
 

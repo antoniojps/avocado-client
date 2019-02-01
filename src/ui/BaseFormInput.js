@@ -116,20 +116,16 @@ BaseFormInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   error: PropTypes.string,
   touched: PropTypes.bool,
-  type: PropTypes.string,
   modifiers: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string,
   ]),
-  label: PropTypes.string,
 }
 
 BaseFormInput.defaultProps = {
   error: null,
   modifiers: [],
   touched: false,
-  type: '',
-  label: '',
 }
 
 export default BaseFormInput

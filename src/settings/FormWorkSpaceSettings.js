@@ -22,144 +22,149 @@ class FormWorkSpaceSettings extends Component {
     ],
   }
 
-   onSubmit = (values, actions) => {
-     console.log('onSubmit');
-   }
+  onSubmit = ({ COMPANY, SELECT, TEXTAREA }, actions) => {
+    const { putTenant } = this.props;
+    putTenant({
+      name: COMPANY,
+      description: TEXTAREA,
+      themes_id: SELECT,
+    })
+  }
 
-   renderSubmitButton = () => (
-     <Button type="submit" modifiers="primary">Edit preferences</Button>
-   )
+  renderSubmitButton = () => (
+    <Button type="submit" modifiers="primary">Submit preferences</Button>
+  )
 
-   renderLoader = () => (
-     <BaseLoader message="Updating preferences..." />
-   )
+  renderLoader = () => (
+    <BaseLoader message="Updating preferences..." />
+  )
 
-   handleReddirect = (e) => {
-     e.preventDefault();
-     const { reddirectUrl } = this.state;
-     window.location.replace(reddirectUrl);
-   }
+  handleReddirect = (e) => {
+    e.preventDefault();
+    const { reddirectUrl } = this.state;
+    window.location.replace(reddirectUrl);
+  }
 
-   renderSucces = () => (
-     <Success>
-       <Button pulse modifiers={['primary']} onClick={this.handleReddirect}>
+  renderSucces = () => (
+    <Success>
+      <Button pulse modifiers={['primary']} onClick={this.handleReddirect}>
         Go to your workspace and login
-       </Button>
-       <img src={illustrationSuccess} alt="success arrow illustration" />
-     </Success>
-   )
+      </Button>
+      <img src={illustrationSuccess} alt="success arrow illustration" />
+    </Success>
+  )
 
-   renderInput = ({ field, form: { touched, errors }, ...props }) => (
-     <BaseFormInput
-       {...field}
-       {...props}
-       type={props.type}
-       autoComplete="username"
-       touched={touched[field.name]}
-       error={errors[field.name]}
-     />
-   );
+  renderInput = ({ field, form: { touched, errors }, ...props }) => (
+    <BaseFormInput
+      {...field}
+      {...props}
+      type={props.type}
+      autoComplete="username"
+      touched={touched[field.name]}
+      error={errors[field.name]}
+    />
+  );
 
-   renderThemeInput = ({ field, form: { touched, errors }, ...props }) => (
-     <BaseFormSelect
-       {...field}
-       {...props}
-       type={props.type}
-       autoComplete="username"
-       touched={touched[field.name]}
-       error={errors[field.name]}
-       options={this.state.options}
-       initial={0}
-     />
-   )
+  renderThemeInput = ({ field, form: { touched, errors }, ...props }) => (
+    <BaseFormSelect
+      {...field}
+      {...props}
+      type={props.type}
+      autoComplete="username"
+      touched={touched[field.name]}
+      error={errors[field.name]}
+      options={this.state.options}
+      initial={0}
+    />
+  )
 
-   renderFileInput = ({ field, form: { touched, errors }, ...props }) => (
-     <BaseFormFile
-       {...field}
-       {...props}
-       type={props.type}
-       touched={touched[field.name]}
-       error={errors[field.name]}
-     />
-   )
+  renderFileInput = ({ field, form: { touched, errors }, ...props }) => (
+    <BaseFormFile
+      {...field}
+      {...props}
+      type={props.type}
+      touched={touched[field.name]}
+      error={errors[field.name]}
+    />
+  )
 
-   render() {
-     const { tenant, loading } = this.state
-     const {
-       COMPANY, TEXTAREA, SELECT,
-     } = inputTypes
-     const { tenant: { name, description, themes_id } } = this.props
+  render() {
+    const { tenant, loading } = this.state
+    const {
+      COMPANY, TEXTAREA, SELECT,
+    } = inputTypes
+    const { tenant: { name, description, themes_id } } = this.props
 
-     const form = {
-       name: 'Tenant edit form',
-       language: 'en-us',
-       onSubmit: (values, actions) => this.onSubmit(values, actions),
-       inputs: [
-         {
-           id: COMPANY,
-           name: COMPANY,
-           type: COMPANY,
-           initialValue: name || '',
-           validation: true,
-           required: true,
-           placeholder: 'Company name',
-           label: 'Company name',
-           component: this.renderInput,
-         },
-         {
-           id: TEXTAREA,
-           name: TEXTAREA,
-           type: TEXTAREA,
-           initialValue: description || '',
-           validation: true,
-           required: true,
-           placeholder: 'Description',
-           label: 'Description',
-           component: this.renderInput,
-         },
-         {
-           id: SELECT,
-           name: SELECT,
-           type: SELECT,
-           initialValue: themes_id || 1,
-           validation: true,
-           required: true,
-           placeholder: 'Theme',
-           label: 'Theme',
-           component: this.renderThemeInput,
-         },
-         //  {
-         //    id: FILE,
-         //    name: FILE,
-         //    type: FILE,
-         //    initialValue: '',
-         //    validation: false,
-         //    required: false,
-         //    placeholder: 'Logo',
-         //    component: this.renderFileInput,
-         //  },
-       ],
-       submitButton: this.renderSubmitButton(),
-     }
+    const form = {
+      name: 'Tenant edit form',
+      language: 'en-us',
+      onSubmit: (values, actions) => this.onSubmit(values, actions),
+      inputs: [
+        {
+          id: COMPANY,
+          name: COMPANY,
+          type: COMPANY,
+          initialValue: name || '',
+          validation: true,
+          required: true,
+          placeholder: 'Company name',
+          label: 'Company name',
+          component: this.renderInput,
+        },
+        {
+          id: TEXTAREA,
+          name: TEXTAREA,
+          type: TEXTAREA,
+          initialValue: description || '',
+          validation: true,
+          required: false,
+          placeholder: 'Description',
+          label: 'Description',
+          component: this.renderInput,
+        },
+        {
+          id: SELECT,
+          name: SELECT,
+          type: SELECT,
+          initialValue: themes_id || 1,
+          validation: true,
+          required: true,
+          placeholder: 'Theme',
+          label: 'Theme',
+          component: this.renderThemeInput,
+        },
+        //  {
+        //    id: FILE,
+        //    name: FILE,
+        //    type: FILE,
+        //    initialValue: '',
+        //    validation: false,
+        //    required: false,
+        //    placeholder: 'Logo',
+        //    component: this.renderFileInput,
+        //  },
+      ],
+      submitButton: this.renderSubmitButton(),
+    }
 
-     return (
-       <>
-         {(!tenant && !loading)
+    return (
+      <>
+        {(!tenant && !loading)
           && (
             <Form>
               <BaseForm form={form} />
             </Form>
           )
-         }
-         {loading
+        }
+        {loading
           && this.renderLoader()
-         }
-         {tenant
+        }
+        {tenant
           && this.renderSucces()
-         }
-       </>
-     );
-   }
+        }
+      </>
+    );
+  }
 }
 
 const Form = styled.div`
