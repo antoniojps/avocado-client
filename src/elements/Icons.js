@@ -72,6 +72,15 @@ const BaseIcon = ({
 
       </svg>
     )
+    case 'edit':
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" width={getWidth(24, 24, height)} height={height} viewBox="0 0 24 24">
+          <g fill ={iconColor} fillRule="evenodd">
+            <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            <path d="M0 0h24v24H0z" fill="none"/>
+          </g>
+        </svg>
+      )
   default:
     console.error('Invalid Icon prop')
     return 'Invalid Icon'
@@ -82,7 +91,8 @@ BaseIcon.propTypes = {
   icon: PropTypes.oneOf([
     'logo','logo-text',
     'star','star-border',
-    'chevron-right']).isRequired,
+    'chevron-right',
+    'edit']).isRequired,
   color: PropTypes.string,
   height: PropTypes.number,
   modifiers: PropTypes.oneOfType([
