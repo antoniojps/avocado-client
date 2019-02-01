@@ -6,6 +6,7 @@ import PageDocsComponents from 'docs/PageComponents'
 import PageDocsStore from 'docs/PageStore'
 import PageResources from 'resources/PageResources'
 import PageGather from 'user/PageGather'
+import PageSettings from 'tenant/PageSettings';
 import PageIndex from './PageIndex'
 
 export const RoutesConfigOld = [
@@ -71,6 +72,10 @@ export const routesObj = applyPathToRoutesObj({
   resources: {
     component: PageResources,
     key: 'resources',
+  },
+  settings: {
+    component: PageSettings,
+    key: 'settings',
   },
 })
 

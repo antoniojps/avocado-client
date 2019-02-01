@@ -16,7 +16,6 @@ const initialState = {
   tenantPutLoading: false,
   tenantPutFailure: false,
 }
-
 export default function (state = initialState, action) {
   const { type, data } = action
   switch (type) {

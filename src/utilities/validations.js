@@ -39,6 +39,10 @@ const textsPT = {
   select: {
     empty: 'Tem de selecionar um valor.',
   },
+  role: {
+    length: 'A role deve ter, pelo menos, 2 caracteres.',
+    string: 'A role nome é inválida.',
+  },
 }
 
 const textsEN = {
@@ -81,6 +85,10 @@ const textsEN = {
   },
   select: {
     empty: 'You must select one value.',
+  },
+  role: {
+    length: 'Role must have, at least, 2 characters.',
+    string: 'Role is invalid',
   },
 }
 
