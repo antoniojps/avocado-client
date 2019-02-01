@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import BaseForm, { inputTypes } from 'ui/BaseForm';
 import PropTypes from 'prop-types'
 import { BaseFormInput, BaseLoader } from 'ui'
-import { Button } from 'elements'
+import { Button, P } from 'elements'
 import { createTenant, callPropFunc } from 'utilities'
 import illustrationSuccess from 'assets/success.svg'
 import BaseFormSelect from 'ui/BaseFormSelect';
@@ -50,14 +50,17 @@ class TenantEditForm extends Component {
   )
 
   renderInput = ({ field, form: { touched, errors }, ...props }) => (
-    <BaseFormInput
-      {...field}
-      {...props}
-      type={props.type}
-      autoComplete="username"
-      touched={touched[field.name]}
-      error={errors[field.name]}
-    />
+    <>
+      <P>Platform</P>
+      <BaseFormInput
+        {...field}
+        {...props}
+        type={props.type}
+        autoComplete="username"
+        touched={touched[field.name]}
+        error={errors[field.name]}
+      />
+    </>
   );
 
   renderThemeInput = ({ field, form: { touched, errors }, ...props }) => (
