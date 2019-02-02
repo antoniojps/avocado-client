@@ -1,7 +1,7 @@
 const initialState = {
   list: [],
   isLoading: false,
-  current_page: 1,
+  current_page: 0,
   hasMore: true,
   total: null,
   per_page: null,

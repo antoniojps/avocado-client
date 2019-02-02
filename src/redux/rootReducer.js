@@ -9,6 +9,7 @@ const rootReducer = combineReducers({
   tenant,
   user,
   units: withNameCrudReducer('UNITS'),
+  resources: withNameCrudReducer('RESOURCES'),
 })
 
 export default rootReducer

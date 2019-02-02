@@ -12,20 +12,22 @@ class PageUnits extends Component {
 
   handleClick = () => console.log('handle add click')
 
+
   handleSearch = (search) => {
-    this.setState({ search }, () => this.fetchUnits({ search, page: 1 }))
+    this.setState({ search }, () => this.fetchUnits({ search, update: true }))
   }
 
-  fetchUnits = ({ page }) => {
+  fetchUnits = ({ update }) => {
     const { search } = this.state
     const {
-      getUnits, isLoading, hasMore,
+      getUnits, isLoading, hasMore, current_page,
     } = this.props;
+    const page = update ? 1 : current_page + 1
     if (!isLoading && (hasMore || page === 1)) getUnits({ search, page })
   }
 
   render() {
-    const { current_page, list } = this.props
+    const { list } = this.props
     return (
       <BasePage
         page={{ title: 'Units' }}
@@ -36,7 +38,7 @@ class PageUnits extends Component {
           </>
         )}
       >
-        <BaseList {...this.props} context="units" fetchList={this.fetchUnits({ page: current_page + 1 })} loadMore={this.fetchUnits}>
+        <BaseList {...this.props} context="units" fetchList={() => this.fetchUnits} loadMore={this.fetchUnits}>
           {list.map(({ name, id }) => <Container key={id}><Title>{`${id} and ${name}`}</Title></Container>)}
         </BaseList>
       </BasePage>

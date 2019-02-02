@@ -15,7 +15,7 @@ const BaseList = ({
   if (!hasMore && list.lenght === 0) return renderNoResults()
   return (
     <>
-      <InfiniteScroll loadMore={loadMore} hasMore={hasMore} pageStart={0}>
+      <InfiniteScroll loadMore={loadMore} hasMore={hasMore} pageStart={1}>
         {children}
       </InfiniteScroll>
       {!hasMore && renderEndOfResults()}
