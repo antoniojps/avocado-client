@@ -79,9 +79,9 @@ const routesConfig = {
     name: 'Units',
 
   },
-  users: {
+  team: {
     component: PageUsers,
-    key: 'users',
+    key: 'team',
     exact: true,
     name: 'Team',
 

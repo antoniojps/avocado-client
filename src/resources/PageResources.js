@@ -16,13 +16,25 @@ class PageResources extends Component {
     this.setState({ search }, () => this.fetchResources({ search, update: true }))
   }
 
+  getSearchParam = () => {
+    const { location: { search: localSearch } } = this.props;
+    const params = new URLSearchParams(localSearch);
+    return params.get('search');
+  }
+
   fetchResources = ({ update }) => {
-    const { search } = this.state
+    const { search, firstSearch } = this.state
     const {
       getResources, isLoading, hasMore, current_page,
     } = this.props;
+    const searchParams = this.getSearchParam();
+
+    if (firstSearch && searchParams) {
+      getResources({ search: searchParams, page: 1 })
+      setTimeout(this.setState({ firstSearch: false, search: searchParams }), 200)
+    }
     const page = update ? 1 : current_page + 1
-    if (!isLoading && (hasMore || page === 1)) getResources({ search, page })
+    if (!isLoading && (hasMore || page === 1) && !firstSearch) getResources({ search, page })
   }
 
   render() {

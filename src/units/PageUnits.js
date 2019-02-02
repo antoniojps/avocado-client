@@ -17,13 +17,25 @@ class PageUnits extends Component {
     this.setState({ search }, () => this.fetchUnits({ search, update: true }))
   }
 
+  getSearchParam = () => {
+    const { location: { search: localSearch } } = this.props;
+    const params = new URLSearchParams(localSearch);
+    return params.get('search');
+  }
+
   fetchUnits = ({ update }) => {
-    const { search } = this.state
+    const { search, firstSearch } = this.state
     const {
       getUnits, isLoading, hasMore, current_page,
     } = this.props;
+    const searchParams = this.getSearchParam();
+
+    if (firstSearch && searchParams) {
+      getUnits({ search: searchParams, page: 1 })
+      setTimeout(this.setState({ firstSearch: false, search: searchParams }), 200)
+    }
     const page = update ? 1 : current_page + 1
-    if (!isLoading && (hasMore || page === 1)) getUnits({ search, page })
+    if (!isLoading && (hasMore || page === 1) && !firstSearch) getUnits({ search, page })
   }
 
   render() {

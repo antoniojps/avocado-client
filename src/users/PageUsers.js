@@ -8,6 +8,14 @@ import withUsers from './withUsers';
 class PageUsers extends Component {
   state = {
     search: '',
+    firstSearch: true,
+  }
+
+  componentDidMount() {
+    const params = new URLSearchParams(this.props.location.search);
+    const search = params.get('search');
+    console.log('got search', search);
+    if (search) this.fetchUsers({ search, update: true })
   }
 
   handleClick = () => console.log('handle add click')
@@ -16,23 +24,35 @@ class PageUsers extends Component {
     this.setState({ search }, () => this.fetchUsers({ search, update: true }))
   }
 
+  getSearchParam = () => {
+    const { location: { search: localSearch } } = this.props;
+    const params = new URLSearchParams(localSearch);
+    return params.get('search');
+  }
+
   fetchUsers = ({ update }) => {
-    const { search } = this.state
+    const { search, firstSearch } = this.state
     const {
       getUsers, isLoading, hasMore, current_page,
     } = this.props;
+    const searchParams = this.getSearchParam();
+
+    if (firstSearch && searchParams) {
+      getUsers({ search: searchParams, page: 1 })
+      setTimeout(this.setState({ firstSearch: false, search: searchParams }), 200)
+    }
     const page = update ? 1 : current_page + 1
-    if (!isLoading && (hasMore || page === 1)) getUsers({ search, page })
+    if (!isLoading && (hasMore || page === 1) && !firstSearch) getUsers({ search, page })
   }
 
   render() {
     const { list } = this.props
     return (
       <BasePage
-        page={{ title: 'Users' }}
+        page={{ title: 'Team' }}
         sideHeader={(
           <>
-            <Button modifiers={['primary']} onClick={this.handleClick}>Add users</Button>
+            <Button modifiers={['primary']} onClick={this.handleClick}>Add team members</Button>
             <BaseSearch onChange={this.handleSearch} />
           </>
         )}
