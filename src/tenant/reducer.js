@@ -11,6 +11,10 @@ import {
   PUT_TENANT_SUCCESS,
   PUT_TENANT_FAILURE,
 
+  PUT_ROLE_LOADING,
+  PUT_ROLE_SUCCESS,
+  PUT_ROLE_FAILURE,
+
 } from './actions'
 
 const initialState = {
@@ -23,6 +27,8 @@ const initialState = {
   roles: null,
   tenantRolesLoading: false,
   tenantRolesFailure: false,
+  rolePutLoading: false,
+  rolePutFailure: false,
 }
 
 export default function (state = initialState, action) {
@@ -74,11 +80,39 @@ export default function (state = initialState, action) {
       tenantRolesFailure: data,
     }
   case PUT_TENANT_LOADING:
-    return { ...state, tenantPutLoading: true }
+    return {
+      ...state,
+      tenantPutLoading: true,
+    }
   case PUT_TENANT_SUCCESS:
-    return { ...state, tenantPutLoading: false, tenant: data.tenant }
+    return {
+      ...state,
+      tenantPutLoading: false,
+      tenant: data.tenant,
+    }
   case PUT_TENANT_FAILURE:
-    return { ...state, tenantPutLoading: false, tenantFailure: data.response }
+    return {
+      ...state,
+      tenantPutLoading: false,
+      tenantFailure: data.response,
+    }
+  case PUT_ROLE_LOADING:
+    return {
+      ...state,
+      rolePutLoading: true,
+    }
+  case PUT_ROLE_SUCCESS:
+    return {
+      ...state,
+      rolePutLoading: false,
+      roles: state.roles.map(role => (role.id === data.role.id ? data.role : role)),
+    }
+  case PUT_ROLE_FAILURE:
+    return {
+      ...state,
+      rolePutLoading: false,
+      tenantFailure: data.response,
+    }
   default:
     return state
   }
