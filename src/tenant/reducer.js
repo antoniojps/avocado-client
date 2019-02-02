@@ -150,6 +150,7 @@ export default function (state = initialState, action) {
       ...state,
       roleDeleteLoading: false,
       roles: state.roles.filter(({ id }) => id !== data.id),
+
     }
   case DELETE_ROLE_FAILURE:
     return {
