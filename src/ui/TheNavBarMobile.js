@@ -1,24 +1,56 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { callPropFunc } from 'utilities'
+import { callPropFunc, generateMainNavList, getChildrenFromPath } from 'utilities'
 import { NavLink } from 'react-router-dom'
+import { routes } from 'tenant/Routes'
+import { BaseBreakpoints } from 'ui'
 
 class TheNavBarMobile extends Component {
+  state = {
+    pagesList: [],
+  }
+
   onClose = () => {
     const { onClose } = this.props
     callPropFunc(onClose)
   }
 
+  componentDidMount = () => {
+    const mainPages = generateMainNavList(routes)
+    const mainAndChildPages = mainPages.map((page) => {
+      const child = getChildrenFromPath(page.to, routes)
+      return {
+        ...page,
+        child,
+      }
+    })
+    this.setState(() => ({ pagesList: mainAndChildPages }))
+  }
+
+  renderMainPagesList = () => {
+    const { pagesList } = this.state
+    return pagesList.map(page => (
+      <Nav.Link to={page.to} key={page.key}>
+        {page.name}
+      </Nav.Link>
+    ))
+  }
+
   render() {
     const { className, isOpen } = this.props
     return (
-      <div className={className}>
-        <Nav isOpen={isOpen}>
-          lol
-        </Nav>
-        <Background isOpen={isOpen} onClick={this.onClose} />
-      </div>
+      <BaseBreakpoints render={({ md }) => (!md && (
+        <div className={className}>
+          <Nav isOpen={isOpen}>
+            <Nav.LinkWrapper>
+              {this.renderMainPagesList()}
+            </Nav.LinkWrapper>
+          </Nav>
+          <Background isOpen={isOpen} onClick={this.onClose} />
+        </div>
+      ))}
+      />
     )
   }
 }
@@ -34,8 +66,22 @@ const Nav = styled.div`
   padding-top: ${props => props.theme.spacing.xl};
 `
 
-Nav.Link = styled(NavLink)`
+Nav.LinkWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`
 
+Nav.Link = styled(NavLink)`
+  padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.ms};
+  color: ${props => props.theme.color.baseInverse};
+  font-size: ${props => props.theme.size.sm};
+  font-weight: 600;
+  width: 100%;
+  &.active {
+    color: ${props => props.theme.color.base};
+    background-color: ${props => props.theme.color.bgLighter};
+  }
 `
 
 const Background = styled.div`

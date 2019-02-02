@@ -6,9 +6,10 @@ import {
 import GlobalStyle from 'GlobalStyle'
 import withAuth from 'user/withAuth'
 import { ThemeProvider } from 'styled-components'
-import { theme, themeDark, history } from 'utilities'
+import { theme, history } from 'utilities'
 import Routes from 'tenant/Routes'
 import { flow } from 'lodash'
+import { BasePageTheHeader as TheHeader } from 'ui'
 import withTenant from './withTenant';
 
 class AppTenant extends Component {
@@ -19,16 +20,20 @@ class AppTenant extends Component {
   }
 
   render() {
-    const { tenant } = this.props
-    let themesId = null;
-    if (tenant) {
-      themesId = tenant.themes_id;
-    }
+    // removed themes for now because two themes require more maintenance
+    // const { tenant } = this.props
+    // let themesId = null;
+    // if (tenant) {
+    //   themesId = tenant.themes_id;
+    // }
     return (
-      <ThemeProvider theme={themesId === 2 ? themeDark : theme}>
+      <ThemeProvider theme={theme}>
         <>
           <Router>
-            <Routes />
+            <>
+              <TheHeader />
+              <Routes />
+            </>
           </Router>
           <GlobalStyle />
         </>

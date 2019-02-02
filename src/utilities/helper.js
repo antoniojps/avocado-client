@@ -206,11 +206,32 @@ export const generateMainNavList = (routesObj) => {
     let route = routesObj[key]
     // index handling
     if (typeof route.index === 'object') route = route.index
-    const { name, path } = route
+    const { name, path, key: routeKey } = route
     return {
+      key: routeKey,
       name,
       to: path,
     }
   })
   return list
+}
+
+export const getChildrenFromPath = (path, routes) => {
+  if (path === '/') return null
+  const pathParent = path.split('/').slice(1)[0]
+  const pathRoutes = routes[pathParent]
+  const children = []
+  Object.keys(pathRoutes).forEach(keyRoute => {
+    const childRoute = pathRoutes[keyRoute]
+    if (typeof childRoute === 'object' && keyRoute !== 'index') {
+      const { name, path, key } = childRoute
+      children.push({
+        key,
+        name,
+        to: path,
+      })
+    }
+  })
+  if (children.length === 0) return null
+  return children
 }
