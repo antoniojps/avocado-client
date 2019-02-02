@@ -10,6 +10,7 @@ const rootReducer = combineReducers({
   user,
   units: withNameCrudReducer('UNITS'),
   resources: withNameCrudReducer('RESOURCES'),
+  users: withNameCrudReducer('USERS'),
 })
 
 export default rootReducer

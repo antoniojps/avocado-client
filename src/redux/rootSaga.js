@@ -10,5 +10,6 @@ export default function* rootSaga() {
     ...tenantWatchers,
     ...withNameCrudWatcher('UNITS'),
     ...withNameCrudWatcher('RESOURCES'),
+    ...withNameCrudWatcher('USERS'),
   ])
 }

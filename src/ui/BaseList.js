@@ -12,7 +12,7 @@ const BaseList = ({
   hasMore, children, loadMore, error, isLoading, context, list,
 }) => {
   if (error && !isLoading) return renderError(error)
-  if (!hasMore && list.lenght === 0) return renderNoResults()
+  if (!hasMore && +list.length === 0) return renderNoResults()
   return (
     <>
       <InfiniteScroll loadMore={loadMore} hasMore={hasMore} pageStart={1}>

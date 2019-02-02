@@ -12,6 +12,7 @@ import PageSettings from 'settings/PageSettings'
 import PageRoles from 'settings/PageRoles'
 import PageIndex from './PageIndex'
 import PageUnits from '../units/PageUnits';
+import PageUsers from '../users/PageUsers';
 
 const routesConfig = {
   index: {
@@ -76,6 +77,13 @@ const routesConfig = {
     key: 'units',
     exact: true,
     name: 'Units',
+
+  },
+  users: {
+    component: PageUsers,
+    key: 'users',
+    exact: true,
+    name: 'Team',
 
   },
 }
