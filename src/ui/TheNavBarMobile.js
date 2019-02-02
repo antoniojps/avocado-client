@@ -28,12 +28,24 @@ class TheNavBarMobile extends Component {
     this.setState(() => ({ pagesList: mainAndChildPages }))
   }
 
+  renderChildPagesList = (child) => {
+    if (!child) return null;
+    return child.map(page => (
+      <Nav.LinkChild to={page.to} key={page.key} exact>
+        {page.name}
+      </Nav.LinkChild>
+    ))
+  }
+
   renderMainPagesList = () => {
     const { pagesList } = this.state
     return pagesList.map(page => (
-      <Nav.Link to={page.to} key={page.key}>
-        {page.name}
-      </Nav.Link>
+      <div key={page.key}>
+        <Nav.Link to={page.to} key={page.key} exact>
+          {page.name}
+        </Nav.Link>
+        {this.renderChildPagesList(page.child)}
+      </div>
     ))
   }
 
@@ -42,7 +54,7 @@ class TheNavBarMobile extends Component {
     return (
       <BaseBreakpoints render={({ md }) => (!md && (
         <div className={className}>
-          <Nav isOpen={isOpen}>
+          <Nav isOpen={isOpen} onClick={this.onClose}>
             <Nav.LinkWrapper>
               {this.renderMainPagesList()}
             </Nav.LinkWrapper>
@@ -84,11 +96,23 @@ Nav.Link = styled(NavLink)`
   }
 `
 
+Nav.LinkChild = styled(NavLink)`
+  padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.ms};
+  padding-left: ${props => props.theme.spacing.l};
+  color: ${props => props.theme.color.baseInverse};
+  font-size: ${props => props.theme.size.s};
+  font-weight: 600;
+  width: 100%;
+  &.active {
+    color: ${props => props.theme.color.base};
+    background-color: ${props => props.theme.color.bgLighter};
+  }
+`
+
 const Background = styled.div`
   z-index: ${props => props.theme.zIndex.ml};
   transition: background-color ${props => props.theme.value.transition};
   background-color: ${props => props.theme.color.bgDark};
-  transition: opacity 2s;
   position: absolute;
   top: 0;
   left: 0;
@@ -108,7 +132,6 @@ export default styled(TheNavBarMobile)`
   z-index: ${props => props.theme.zIndex.xxl};
   transition: all .4s;
   transform: ${({ isOpen }) => (isOpen ? 'translateX(0%)' : 'translateX(-100%)')};
-
 `
 
 TheNavBarMobile.propTypes = {

@@ -14,11 +14,11 @@ class BaseBreadcrumb extends Component {
   }
 
   componentDidMount = () => {
-    this.refBreadcrumb.current.scrollLeft = '9999'
+    this.refBreadcrumb.current.scrollLeft = '999'
   }
 
   componentDidUpdate = () => {
-    this.refBreadcrumb.current.scrollLeft = '9999'
+    this.refBreadcrumb.current.scrollLeft = '999'
   }
 
   getPathFromTitle = (title) => {
