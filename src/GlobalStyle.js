@@ -24,6 +24,12 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     width: 100%;
     background-color: ${props => props.theme.color.bg};
+    z-index: ${props => props.theme.zIndex.s};
+  }
+
+  #portal {
+    position: fixed;
+    z-index: ${props => props.theme.zIndex.l};
   }
 
   a {

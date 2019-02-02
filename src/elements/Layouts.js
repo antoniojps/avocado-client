@@ -9,6 +9,12 @@ const CONTAINER_MODIFIERS = {
   `,
 }
 
+export const Row = styled.section`
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+`
+
 export const Container = styled.div`
     background: ${props => props.theme.color.bgLighter};
     box-shadow: 0 2px 3px 0 rgba(10,10,10,0.10), 0 0 0 1px rgba(10,10,10,0.10);

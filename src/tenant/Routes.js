@@ -7,6 +7,7 @@ import PageDocsComponents from 'docs/PageComponents'
 import PageDocsStore from 'docs/PageStore'
 import PageResources from 'resources/PageResources'
 import PageGather from 'user/PageGather'
+import PageLogin from 'user/PageLogin'
 import PageIndex from './PageIndex'
 
 const routesConfig = {
@@ -48,6 +49,11 @@ const routesConfig = {
     component: PageResources,
     key: 'resources',
     name: 'Resources',
+  },
+  login: {
+    component: PageLogin,
+    key: 'login',
+    name: 'Login',
   },
 }
 

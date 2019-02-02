@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import withTenant from 'tenant/withTenant'
 import { withRouter } from 'react-router-dom'
-import { Container, Title, P } from 'elements'
+import {
+  Container,
+  Title,
+  P,
+  Row,
+} from 'elements'
 import { above } from 'utilities'
 import { routes } from 'tenant/Routes'
 import {
@@ -269,11 +274,6 @@ const Footer = styled.footer`
   color: ${props => props.theme.color.baseInverse};
   padding: ${props => props.theme.spacing.base};
   margin-top: auto;
-`
-const Row = styled.section`
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1200px;
 `
 
 export default withRouter(withTenant(styled(BasePage)`

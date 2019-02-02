@@ -10,6 +10,7 @@ import { BaseBreakpoints, TheNavList } from 'ui'
 import { routes } from 'tenant/Routes'
 import { generateMainNavList } from 'utilities'
 import TheNavIcon from './TheNavIcon'
+import TheNavBarMobile from './TheNavBarMobile'
 
 class TheNavBar extends Component {
   state = {
@@ -17,10 +18,11 @@ class TheNavBar extends Component {
   }
 
   openNavMobile = () => {
-    const { isNavOpen } = this.state
-    if (isNavOpen) console.log('close nav')
-    else console.log('open nav')
     this.setState(({ isNavOpen }) => ({ isNavOpen: !isNavOpen }))
+  }
+
+  handleMobileClose = () => {
+    this.setState(() => ({ isNavOpen: false }))
   }
 
   getNavList = () => generateMainNavList(routes)
@@ -41,6 +43,10 @@ class TheNavBar extends Component {
               ))}
               />
             </NavBar.Icon>
+            <BaseBreakpoints render={({ md }) => (!md && (
+              <TheNavBarMobile isOpen={isNavOpen} onClose={this.handleMobileClose} />
+            ))}
+            />
             <BaseBreakpoints render={({ md }) => md && (
               <NavBar.Breadcrumb modifiers={['small', 'inverse']}>
                 {children}
