@@ -5,7 +5,6 @@ const axios = ax.create({
   baseURL: `${getApiUrl()}`,
 })
 export const queryCurrentTenant = () => axios.get('/tenant');
-export const queryCurrentTenantRoles = () => axios.get('/roles');
 export const queryDomainAlreadyExists = fqdn => axios.post('/checkDomain', {
   fqdn,
 })
@@ -21,16 +20,8 @@ export const queryPutTenant = ({
     'Content-type': 'application/x-www-form-urlencoded',
   },
 })
-export const queryPutRole = ({ id, permissions }) => axios.put(`/roles/${id}`, {
-  permissions,
-}, {
-  Headers: {
-    'Content-type': 'application/x-www-form-urlencoded',
-  },
-})
 
 export const queryDeleteTenant = () => axios.delete('tenant');
-
 
 // fqdn is the subdomain
 export const createTenant = ({
@@ -48,3 +39,15 @@ export const createTenant = ({
   password_confirmation,
   fqdn,
 })
+
+
+export const queryCurrentTenantRoles = () => axios.get('/roles');
+export const queryPostRole = name => axios.post('/roles', { name })
+export const queryPutRole = ({ id, permissions }) => axios.put(`/roles/${id}`, {
+  permissions,
+}, {
+  Headers: {
+    'Content-type': 'application/x-www-form-urlencoded',
+  },
+})
+export const queryDeleteRole = id => axios.delete(`/roles/${id}`)

@@ -15,6 +15,14 @@ import {
   PUT_ROLE_SUCCESS,
   PUT_ROLE_FAILURE,
 
+  POST_ROLE_LOADING,
+  POST_ROLE_SUCCESS,
+  POST_ROLE_FAILURE,
+
+  DELETE_ROLE_LOADING,
+  DELETE_ROLE_SUCCESS,
+  DELETE_ROLE_FAILURE,
+
 } from './actions'
 
 const initialState = {
@@ -29,6 +37,8 @@ const initialState = {
   tenantRolesFailure: false,
   rolePutLoading: false,
   rolePutFailure: false,
+  roleDeleteLoading: false,
+  roleDeleteFailure: false,
 }
 
 export default function (state = initialState, action) {
@@ -111,7 +121,41 @@ export default function (state = initialState, action) {
     return {
       ...state,
       rolePutLoading: false,
-      tenantFailure: data.response,
+      rolePutFailure: data.response,
+    }
+  case POST_ROLE_LOADING:
+    return {
+      ...state,
+      rolePostLoading: true,
+    }
+  case POST_ROLE_SUCCESS:
+    return {
+      ...state,
+      rolePostLoading: false,
+      roles: [...state.roles, data.role],
+    }
+  case POST_ROLE_FAILURE:
+    return {
+      ...state,
+      rolePostLoading: false,
+      rolePostFailure: data.response,
+    }
+  case DELETE_ROLE_LOADING:
+    return {
+      ...state,
+      roleDeleteLoading: true,
+    }
+  case DELETE_ROLE_SUCCESS:
+    return {
+      ...state,
+      roleDeleteLoading: false,
+      roles: state.roles.filter(({ id }) => id != data.id),
+    }
+  case DELETE_ROLE_FAILURE:
+    return {
+      ...state,
+      roleDeleteLoading: false,
+      roleDeleteFailure: data.response,
     }
   default:
     return state

@@ -2,10 +2,11 @@ import React from 'react'
 import withTenant from 'tenant/withTenant'
 import { BaseLoader } from 'ui'
 import {
-  Tag, Subtitle,
+  Tag, Subtitle, P,
 } from 'elements'
 import styled from 'styled-components'
 import EditPermissionsModal from './EditPermissionsModal'
+import AddRoleForm from './AddRoleForm'
 
 // TODO: Handling de erros
 const handleError = (errors) => 'error';
@@ -22,6 +23,7 @@ const renderPermissions = (roles, allPermissions) => roles.map(({ id, name, perm
       <EditPermissionsModal role={{ id, name, permissions }} allPermissions={allPermissions} />
     </RoleNameContainer>
     {permissions.map(perm => <Tag modifiers="gray" key={perm}>{perm}</Tag>)}
+    {(!permissions || permissions.length) === 0 && <P>Role doesn't have permissions</P>}
   </RoleContainer>
 ))
 const ListRoles = ({
@@ -29,7 +31,12 @@ const ListRoles = ({
 }) => {
   if (tenantRolesFailure) return handleError(tenantRolesFailure)
   if (!roles || !permissions) return handleLoading(getRoles)
-  return renderPermissions(roles, permissions);
+  return (
+    <>
+      {renderPermissions(roles, permissions)}
+      <AddRoleForm />
+    </>
+  );
 }
 
 const RoleNameContainer = styled.div`

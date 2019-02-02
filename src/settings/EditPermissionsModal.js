@@ -53,13 +53,22 @@ class EditPermissionsModal extends Component {
     ))
   }
 
+  handleDelete = (e, id) => {
+    e.preventDefault();
+    const { deleteRole } = this.props;
+    deleteRole(id);
+  }
+
   render() {
-    const { role: { name } } = this.props;
+    const { role: { name, id } } = this.props;
     return (
       <BaseToggle>
         {({ isOn, toggle }) => (
           <>
-            <Button modifiers={['small', 'right']} onClick={toggle}>Permissions</Button>
+            <div style={{ float: 'right', display: 'flex' }}>
+              {![1, 2, 3].includes(id) && <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, id)}>Delete</Button>}
+              {![1].includes(id) && <Button modifiers={['small']} onClick={toggle}>Permissions</Button>}
+            </div>
             <BaseModal toggle={toggle} isOn={isOn}>
               <Title modifiers="small">
                 Modify permissions of role
@@ -76,6 +85,5 @@ class EditPermissionsModal extends Component {
     )
   }
 }
-
 
 export default withTenant(EditPermissionsModal)

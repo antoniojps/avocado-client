@@ -2,19 +2,14 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 import BaseForm, { inputTypes } from 'ui/BaseForm';
 import PropTypes from 'prop-types'
-import { BaseFormInput, BaseLoader } from 'ui'
+import { BaseFormInput } from 'ui'
 import { Button } from 'elements'
-import illustrationSuccess from 'assets/success.svg'
 import BaseFormSelect from 'ui/BaseFormSelect';
 import BaseFormFile from 'ui/BaseFormFile';
 import withTenant from 'tenant/withTenant'
 
 class FormWorkSpaceSettings extends Component {
   state = {
-    tenant: null,
-    loading: false,
-    failure: false,
-    reddirectUrl: null,
     options: [
       { id: 0, value: 'Select theme', disabled: true },
       { id: 1, value: 'Default' },
@@ -22,7 +17,7 @@ class FormWorkSpaceSettings extends Component {
     ],
   }
 
-  onSubmit = ({ COMPANY, SELECT, TEXTAREA }, actions) => {
+  onSubmit = ({ COMPANY, SELECT, TEXTAREA }) => {
     const { putTenant } = this.props;
     putTenant({
       name: COMPANY,
@@ -35,24 +30,11 @@ class FormWorkSpaceSettings extends Component {
     <Button type="submit" modifiers="primary">Submit preferences</Button>
   )
 
-  renderLoader = () => (
-    <BaseLoader message="Updating preferences..." />
-  )
-
   handleReddirect = (e) => {
     e.preventDefault();
     const { reddirectUrl } = this.state;
     window.location.replace(reddirectUrl);
   }
-
-  renderSucces = () => (
-    <Success>
-      <Button pulse modifiers={['primary']} onClick={this.handleReddirect}>
-        Go to your workspace and login
-      </Button>
-      <img src={illustrationSuccess} alt="success arrow illustration" />
-    </Success>
-  )
 
   renderInput = ({ field, form: { touched, errors }, ...props }) => (
     <BaseFormInput
@@ -89,7 +71,6 @@ class FormWorkSpaceSettings extends Component {
   )
 
   render() {
-    const { tenant, loading } = this.state
     const {
       COMPANY, TEXTAREA, SELECT,
     } = inputTypes
@@ -148,21 +129,9 @@ class FormWorkSpaceSettings extends Component {
     }
 
     return (
-      <>
-        {(!tenant && !loading)
-          && (
-            <Form>
-              <BaseForm form={form} />
-            </Form>
-          )
-        }
-        {loading
-          && this.renderLoader()
-        }
-        {tenant
-          && this.renderSucces()
-        }
-      </>
+      <Form>
+        <BaseForm form={form} />
+      </Form>
     );
   }
 }
@@ -173,16 +142,6 @@ const Form = styled.div`
   justify-content: center
   `
 
-const Success = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  img {
-    animation: ${props => props.theme.animation.pop} 1s ease;
-    padding-top: ${props => props.theme.spacing.base};
-  }
-`
 
 FormWorkSpaceSettings.propTypes = {
   handleSubdomainChange: PropTypes.func,

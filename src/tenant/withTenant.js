@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-  getTenant, putTenant, getRoles, putRole,
+  getTenant, putTenant, getRoles, putRole, postRole, deleteRole,
 } from './actions'
 
 const mapStateToProps = ({
@@ -15,6 +15,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   putTenant,
   putRole,
   getRoles,
+  postRole,
+  deleteRole,
 }, dispatch)
 
 
