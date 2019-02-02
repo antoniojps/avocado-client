@@ -1,81 +1,62 @@
 import React, { Component } from 'react'
-import { BasePage } from 'ui'
-import { Button } from 'elements'
+import { BasePage, BaseSearch } from 'ui'
+import { Button, Container, Title } from 'elements'
+import BaseList from 'ui/BaseList';
+import PropTypes from 'prop-types'
 import withUnits from './withUnits';
-import ListUnits from './ListUnits';
-import withFeedback from './withFeedback';
-
-const List = withFeedback(ListUnits);
 
 class PageUnits extends Component {
-  componentDidMount() {
-    const { getUnits } = this.props;
-    getUnits({ page: 1 });
+  state = {
+    search: '',
   }
 
-  handleClick = () => alert('add unit')
+  handleClick = () => console.log('handle add click')
+
+
+  handleSearch = (search) => {
+    this.setState({ search }, () => this.fetchUnits({ search, update: true }))
+  }
+
+  fetchUnits = ({ update }) => {
+    const { search } = this.state
+    const {
+      getUnits, isLoading, hasMore, current_page,
+    } = this.props;
+    const page = update ? 1 : current_page + 1
+    if (!isLoading && (hasMore || page === 1)) getUnits({ search, page })
+  }
 
   render() {
+    const { list } = this.props
     return (
       <BasePage
-        page={{
-          title: 'Units',
-        }}
+        page={{ title: 'Units' }}
         sideHeader={(
-          <Button modifiers={['primary']} onClick={this.handleClick}>Add unit</Button>
+          <>
+            <Button modifiers={['primary']} onClick={this.handleClick}>Add unit</Button>
+            <BaseSearch onChange={this.handleSearch} />
+          </>
         )}
       >
-        <List {...this.props} />
+        <BaseList {...this.props} context="units" fetchList={() => this.fetchUnits} loadMore={this.fetchUnits}>
+          {list.map(({ name, id }) => <Container key={id}><Title>{`${id} and ${name}`}</Title></Container>)}
+        </BaseList>
       </BasePage>
     )
   }
+}
 
-
-  //   const {
-  //     list, isloading, hasMore, error,
-  //   } = this.props;
-  //   if (error) return 'something went wrong';
-  //   if (isloading) return 'loading';
-
-
-  //   return (
-  //     <div>HELLO</div>
-  //     // <InfiniteScroll
-  //     //   pageStart={0}
-  //     //   loadMore={loadFunc}
-  //     //   hasMore={true || false}
-  //     //   loader={<div className="loader" key={0}>Loading ...</div>}
-  //     // >
-  //     //   {items}
-  //     // </InfiniteScroll>
-  //   )
-  // }
+PageUnits.propTypes = {
+  getUnits: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  current_page: PropTypes.number,
+  list: PropTypes.arrayOf(PropTypes.shape({})),
+  hasMore: PropTypes.bool,
+}
+PageUnits.defaultProps = {
+  isLoading: false,
+  current_page: 0,
+  list: [],
+  hasMore: false,
 }
 export default withUnits(PageUnits)
-
-
-// import React, { Component } from 'react'
-// import { BasePage } from 'ui'
-// import { Title, P, Button } from 'elements'
-
-// export default class PageResources extends Component {
-//   handleClick = () => alert('add resource')
-
-//   render() {
-//     return (
-//       <BasePage
-//         page={{
-//           title: 'Resources',
-//         }}
-//         sideHeader={(
-//           <Button modifiers={['primary']} onClick={this.handleClick}>Add resource</Button>
-//         )}
-//       >
-//         <Title>
-//           Recursos humanos
-//         </Title>
-//         <P>Recursos humanos teste</P>
-//       </BasePage>
-//     )
-//   }
-// }
