@@ -1,7 +1,7 @@
 import ax from 'axios'
 import { getApiUrl } from 'utilities'
 
-const axios = ax.create({
+export const axios = ax.create({
   baseURL: `${getApiUrl()}`,
 })
 export const queryCurrentTenant = () => axios.get('/tenant');
@@ -51,3 +51,12 @@ export const queryPutRole = ({ id, permissions }) => axios.put(`/roles/${id}`, {
   },
 })
 export const queryDeleteRole = id => axios.delete(`/roles/${id}`)
+
+
+/** reusable */
+export const fetch = ({ url, search, page }) => axios.get(url, {
+  params: {
+    page,
+    search,
+  },
+})
