@@ -4,7 +4,7 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 function* fetch({
   payload, callFunction, counterName,
 }) {
-  yield put({ type: `FETCH_${counterName}_LOADING` })
+  yield put({ type: `FETCH_${counterName}_LOADING`, data: payload })
   try {
     const { data } = yield call(callFunction, payload)
     yield put({ type: `FETCH_${counterName}_SUCCESS`, data })
