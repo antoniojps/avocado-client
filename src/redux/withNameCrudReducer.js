@@ -1,15 +1,14 @@
 const initialState = {
   list: [],
-  isLoading: true,
+  isLoading: false,
   current_page: 1,
   hasMore: true,
   total: null,
   per_page: null,
   error: false,
-  search: '',
 };
 export default (counterName = '') => (state = initialState, {
-  type, data, reset, search,
+  type, data,
 }) => {
   switch (type) {
   case `FETCH_${counterName}_SUCCESS`:
@@ -31,8 +30,7 @@ export default (counterName = '') => (state = initialState, {
     }
 
   case `FETCH_${counterName}_LOADING`:
-
-      return { ...state, isLoading: true, error: false, list: data.reset ? [] : state.list, search: data.search }// eslint-disable-line
+      return { ...state, isLoading: true }// eslint-disable-line
   default:
     return state;
   }
