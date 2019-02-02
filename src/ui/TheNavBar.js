@@ -43,10 +43,7 @@ class TheNavBar extends Component {
               ))}
               />
             </NavBar.Icon>
-            <BaseBreakpoints render={({ md }) => (!md && (
-              <TheNavBarMobile isOpen={isNavOpen} onClose={this.handleMobileClose} />
-            ))}
-            />
+            <TheNavBarMobile isOpen={isNavOpen} onClose={this.handleMobileClose} />
             <BaseBreakpoints render={({ md }) => md && (
               <NavBar.Breadcrumb modifiers={['small', 'inverse']}>
                 {children}
