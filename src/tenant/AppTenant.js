@@ -6,8 +6,10 @@ import {
 import GlobalStyle from 'GlobalStyle'
 import withAuth from 'user/withAuth'
 import { ThemeProvider } from 'styled-components'
-import { theme, history } from 'utilities'
+import { theme, themeDark, history } from 'utilities'
 import Routes from 'tenant/Routes'
+import { flow } from 'lodash'
+import withTenant from './withTenant';
 
 class AppTenant extends Component {
   componentWillMount() {
@@ -17,8 +19,13 @@ class AppTenant extends Component {
   }
 
   render() {
+    const { tenant } = this.props
+    let themesId = null;
+    if (tenant) {
+      themesId = tenant.themes_id;
+    }
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={themesId === 2 ? themeDark : theme}>
         <>
           <Router>
             <Routes />
@@ -35,4 +42,4 @@ AppTenant.propTypes = {
 }
 
 
-export default withAuth(AppTenant)
+export default flow([withTenant, withAuth])(AppTenant)

@@ -4,6 +4,10 @@ const textsPT = {
     length: 'O nome da empresa deve ter, pelo menos, 2 caracteres.',
     string: 'O nome da empresa é inválido.',
   },
+  role: {
+    length: 'O nome da role deve ter, pelo menos, 2 caracteres.',
+    string: 'O nome da role é inválido.',
+  },
   firstName: {
     length: 'O primeiro nome deve ter, pelo menos, 2 caracteres.',
     string: 'O primeiro nome é inválido.',
@@ -39,6 +43,9 @@ const textsPT = {
   select: {
     empty: 'Tem de selecionar um valor.',
   },
+  textarea: {
+    length: 'A descrição só pode ter um máximo de 200 caracteres.',
+  },
 }
 
 const textsEN = {
@@ -46,6 +53,10 @@ const textsEN = {
   company: {
     length: 'The Company name must have, at least, 2 characters.',
     string: 'The Company name is invalid',
+  },
+  role: {
+    length: 'The Role name must have, at least, 2 characters.',
+    string: 'The Role name is invalid',
   },
   firstName: {
     length: 'The first name must have, at least, 2 characters.',
@@ -81,6 +92,9 @@ const textsEN = {
   },
   select: {
     empty: 'You must select one value.',
+  },
+  textarea: {
+    length: 'The description must have 500 characters maximum.',
   },
 }
 

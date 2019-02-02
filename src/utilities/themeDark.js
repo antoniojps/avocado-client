@@ -35,11 +35,6 @@ const value = {
   transition: '150ms',
 }
 
-const width = {
-  s: '300px',
-  m: '600px',
-}
-
 const size = {
   base: rem('16px'),
   xxxs: rem('12px'),
@@ -70,14 +65,9 @@ const spacing = {
 }
 
 const zIndex = {
-  negative: -10,
   s: 0,
   m: 10,
   l: 20,
-  ml: 30,
-  xl: 40,
-  xxl: 50,
-  above: 100,
 }
 
 const colorBorder = color.border
@@ -115,7 +105,7 @@ const animation = {
   `,
 }
 
-export const theme = {
+export const themeDark = {
   color,
   gradient,
   spacing,
@@ -124,5 +114,4 @@ export const theme = {
   zIndex,
   mixin,
   animation,
-  width,
 }

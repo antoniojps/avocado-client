@@ -17,34 +17,16 @@ const INPUT_MODIFIERS = {
   `,
 }
 
-const Input = styled.input`
+const Input = styled.select`
   display: block;
   width: 100%;
+  -webkit-appearance: none;
   padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.s};
   margin-bottom: ${props => props.theme.spacing.xxs};
   border-radius: ${props => props.theme.value.borderRadius};
   ${props => props.theme.mixin.border({ size: '1px', color: props.theme.color.borderBtn })};
   background-color: ${props => props.theme.color.bgLighter};
-  color: ${props => props.theme.color.base};
-  &::placeholder{
-    color: ${props => props.theme.color.baseLighter};
-  }
-  ${applyStyleModifiers(INPUT_MODIFIERS)};
-  &:focus {
-    ${props => props.theme.mixin.outline()};
-  }
-`
-
-const TextArea = styled.textarea`
-  display: block;
-  width: 100%;
-  height: 150px;
-  padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.s};
-  margin-bottom: ${props => props.theme.spacing.xxs};
-  border-radius: ${props => props.theme.value.borderRadius};
-  ${props => props.theme.mixin.border({ size: '1px', color: props.theme.color.borderBtn })};
-  background-color: ${props => props.theme.color.bgLighter};
-  color: ${props => props.theme.color.base};
+  color: ${props => props.theme.color.baseLighter};
   &::placeholder{
     color: ${props => props.theme.color.baseLighter};
   }
@@ -93,26 +75,29 @@ const renderError = (error) => {
   )
 }
 
-const BaseFormInput = (props) => {
+const BaseFormSelect = (props) => {
   const {
-    touched, error, type, label,
+    touched, error, options, initial, value, label,
   } = props
   const errorElement = renderError(error)
   const modifiersFromProps = generateModifiersFromProps({ touched, error })
+
   return (
     <Wrapper>
       {label && <P>{label}</P>}
-      {type === 'TEXTAREA'
-        ? <TextArea {...props} modifiers={modifiersFromProps} />
-        : <Input {...props} modifiers={modifiersFromProps} />
-      }
+      <Input {...props} label={label} modifiers={modifiersFromProps} value={value || initial}>
+        {options.map(({
+          id, value, disabled,
+        }) => <option key={id} disabled={disabled} value={id}>{value}</option>
+        )}
+      </Input>
       {touched && errorElement}
       <Input.Spacing />
     </Wrapper>
   )
 }
 
-BaseFormInput.propTypes = {
+BaseFormSelect.propTypes = {
   placeholder: PropTypes.string.isRequired,
   error: PropTypes.string,
   touched: PropTypes.bool,
@@ -122,10 +107,10 @@ BaseFormInput.propTypes = {
   ]),
 }
 
-BaseFormInput.defaultProps = {
+BaseFormSelect.defaultProps = {
   error: null,
   modifiers: [],
   touched: false,
 }
 
-export default BaseFormInput
+export default BaseFormSelect

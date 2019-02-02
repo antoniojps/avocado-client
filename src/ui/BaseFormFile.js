@@ -3,7 +3,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from 'react-spring'
 import { applyStyleModifiers } from 'styled-components-modifiers'
-import { P } from 'elements'
 
 const INPUT_MODIFIERS = {
   hover: ({ theme }) => `
@@ -20,12 +19,13 @@ const INPUT_MODIFIERS = {
 const Input = styled.input`
   display: block;
   width: 100%;
+  -webkit-appearance: none;
   padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.s};
   margin-bottom: ${props => props.theme.spacing.xxs};
   border-radius: ${props => props.theme.value.borderRadius};
   ${props => props.theme.mixin.border({ size: '1px', color: props.theme.color.borderBtn })};
   background-color: ${props => props.theme.color.bgLighter};
-  color: ${props => props.theme.color.base};
+  color: ${props => props.theme.color.baseLighter};
   &::placeholder{
     color: ${props => props.theme.color.baseLighter};
   }
@@ -33,29 +33,33 @@ const Input = styled.input`
   &:focus {
     ${props => props.theme.mixin.outline()};
   }
-`
-
-const TextArea = styled.textarea`
-  display: block;
-  width: 100%;
-  height: 150px;
-  padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.s};
-  margin-bottom: ${props => props.theme.spacing.xxs};
-  border-radius: ${props => props.theme.value.borderRadius};
-  ${props => props.theme.mixin.border({ size: '1px', color: props.theme.color.borderBtn })};
-  background-color: ${props => props.theme.color.bgLighter};
-  color: ${props => props.theme.color.base};
-  &::placeholder{
-    color: ${props => props.theme.color.baseLighter};
-  }
-  ${applyStyleModifiers(INPUT_MODIFIERS)};
-  &:focus {
-    ${props => props.theme.mixin.outline()};
-  }
+  visibility: hidden
 `
 
 Input.Spacing = styled.span`
   margin-bottom: ${props => props.theme.spacing.xs};
+`
+
+const Button = styled.button`
+    display: block;
+    width: 100%;
+    -webkit-appearance: none;
+    padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.s};
+    margin-bottom: ${props => props.theme.spacing.xxs};
+    border-radius: ${props => props.theme.value.borderRadius};
+    ${props => props.theme.mixin.border({ size: '1px', color: props.theme.color.borderBtn })};
+    background-color: ${props => props.theme.color.bgLighter};
+    color: ${props => props.theme.color.baseLighter};
+    &::placeholder{
+    color: ${props => props.theme.color.baseLighter};
+    }
+    ${applyStyleModifiers(INPUT_MODIFIERS)};
+    &:focus {
+    ${props => props.theme.mixin.outline()};
+    }
+    margin-top: -55px;
+    text-align: left;
+    cursor: pointer;
 `
 
 const Error = styled.div`
@@ -93,26 +97,27 @@ const renderError = (error) => {
   )
 }
 
-const BaseFormInput = (props) => {
+const BaseFormFile = (props) => {
   const {
-    touched, error, type, label,
+    touched, error,
   } = props
   const errorElement = renderError(error)
   const modifiersFromProps = generateModifiersFromProps({ touched, error })
+  let inputElement = null;
+
   return (
     <Wrapper>
-      {label && <P>{label}</P>}
-      {type === 'TEXTAREA'
-        ? <TextArea {...props} modifiers={modifiersFromProps} />
-        : <Input {...props} modifiers={modifiersFromProps} />
-      }
+      <Input ref={input => inputElement = input} type="file" {...props} modifiers={modifiersFromProps} accept="image/png, image/jpeg" />
       {touched && errorElement}
+      <Button onClick={() => inputElement.click()}>
+        Upload a logo
+      </Button>
       <Input.Spacing />
     </Wrapper>
   )
 }
 
-BaseFormInput.propTypes = {
+BaseFormFile.propTypes = {
   placeholder: PropTypes.string.isRequired,
   error: PropTypes.string,
   touched: PropTypes.bool,
@@ -122,10 +127,10 @@ BaseFormInput.propTypes = {
   ]),
 }
 
-BaseFormInput.defaultProps = {
+BaseFormFile.defaultProps = {
   error: null,
   modifiers: [],
   touched: false,
 }
 
-export default BaseFormInput
+export default BaseFormFile

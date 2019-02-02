@@ -8,6 +8,8 @@ import PageDocsStore from 'docs/PageStore'
 import PageResources from 'resources/PageResources'
 import PageGather from 'user/PageGather'
 import PageLogin from 'user/PageLogin'
+import PageSettings from 'settings/PageSettings'
+import PageRoles from 'settings/PageRoles'
 import PageIndex from './PageIndex'
 
 const routesConfig = {
@@ -54,6 +56,19 @@ const routesConfig = {
     component: PageLogin,
     key: 'login',
     name: 'Login',
+  },
+  settings: {
+    index: {
+      component: PageSettings,
+      key: 'settings',
+      exact: true,
+      name: 'Settings',
+    },
+    roles: {
+      component: PageRoles,
+      key: 'roles',
+      name: 'Roles',
+    },
   },
 }
 

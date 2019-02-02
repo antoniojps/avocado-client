@@ -1,25 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getTenant, putTenant } from './actions'
+import {
+  getTenant, putTenant, getRoles, putRole, postRole, deleteRole,
+} from './actions'
 
 const mapStateToProps = ({
-  tenant: {
-    tenant,
-    tenantLoading,
-    tenantFailure,
-  },
-}) => ({
   tenant,
-  tenantLoading,
-  tenantFailure,
+}) => ({
+  ...tenant,
 })
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getTenant,
   putTenant,
+  putRole,
+  getRoles,
+  postRole,
+  deleteRole,
 }, dispatch)
 
-const editTenant = tenant => editTenant(tenant);
 
 export const Tenant = (WrappedComponent) => {
   const hocComponent = ({ ...props }) => <WrappedComponent {...props} />
