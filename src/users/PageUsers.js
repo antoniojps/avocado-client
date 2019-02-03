@@ -12,10 +12,7 @@ class PageUsers extends Component {
   }
 
   componentDidMount() {
-    const params = new URLSearchParams(this.props.location.search);
-    const search = params.get('search');
-    console.log('got search', search);
-    if (search) this.fetchUsers({ search, update: true })
+    this.fetchUsers({ update: true });
   }
 
   handleClick = () => console.log('handle add click')
@@ -36,10 +33,13 @@ class PageUsers extends Component {
       getUsers, isLoading, hasMore, current_page,
     } = this.props;
     const searchParams = this.getSearchParam();
-
-    if (firstSearch && searchParams) {
-      getUsers({ search: searchParams, page: 1 })
-      setTimeout(this.setState({ firstSearch: false, search: searchParams }), 200)
+    if (firstSearch) {
+      if (searchParams) {
+        getUsers({ search: searchParams, page: 1 })
+      } else {
+        getUsers({ page: 1 })
+      }
+      this.setState({ firstSearch: false, search: searchParams })
     }
     const page = update ? 1 : current_page + 1
     if (!isLoading && (hasMore || page === 1) && !firstSearch) getUsers({ search, page })
@@ -53,11 +53,11 @@ class PageUsers extends Component {
         sideHeader={(
           <>
             <Button modifiers={['primary']} onClick={this.handleClick}>Add team members</Button>
-            <BaseSearch onChange={this.handleSearch} />
+            <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
           </>
         )}
       >
-        <BaseList {...this.props} context="user" fetchList={() => this.fetchUsers} loadMore={this.fetchUsers}>
+        <BaseList {...this.props} context="users" fetchList={() => this.fetchUsers} loadMore={this.fetchUsers}>
           {list.map(({ name, id }) => <Container key={id}><Title>{`${id} and ${name}`}</Title></Container>)}
         </BaseList>
       </BasePage>

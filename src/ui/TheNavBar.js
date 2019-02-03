@@ -11,6 +11,7 @@ import { routes } from 'tenant/Routes'
 import { generateMainNavList } from 'utilities'
 import TheNavIcon from './TheNavIcon'
 import TheNavBarMobile from './TheNavBarMobile'
+import GlobalSearch from '../globalSearch/GlobalSearch';
 
 class TheNavBar extends Component {
   state = {
@@ -31,6 +32,7 @@ class TheNavBar extends Component {
     const list = this.getNavList()
     const { children } = this.props
     const { isNavOpen } = this.state
+
     return (
       <>
         <NavBar>
@@ -52,17 +54,14 @@ class TheNavBar extends Component {
             />
           </NavBar.Left>
           <NavBar.Right>
-            <BaseBreakpoints render={({ md }) => (md
-              ? (
-                <Button modifiers={['primary', 'noMargin', 'important']}>
+            <BaseBreakpoints render={({ md }) => (
+              <>
+                <GlobalSearch />
+                <Button modifiers={md ? ['primary', 'noMargin', 'important'] : ['primary', 'noMargin', 'important', 'small']}>
                   Login
                 </Button>
-              )
-              : (
-                <Button modifiers={['primary', 'noMargin', 'important', 'small']}>
-                  Login
-                </Button>
-              ))
+              </>
+            )
             }
             />
           </NavBar.Right>

@@ -8,6 +8,11 @@ import withResources from './withResources';
 class PageResources extends Component {
   state = {
     search: '',
+    firstSearch: true,
+  }
+
+  componentDidMount() {
+    this.fetchResources({ update: true });
   }
 
   handleClick = () => console.log('handle add click')
@@ -28,10 +33,13 @@ class PageResources extends Component {
       getResources, isLoading, hasMore, current_page,
     } = this.props;
     const searchParams = this.getSearchParam();
-
-    if (firstSearch && searchParams) {
-      getResources({ search: searchParams, page: 1 })
-      setTimeout(this.setState({ firstSearch: false, search: searchParams }), 200)
+    if (firstSearch) {
+      if (searchParams) {
+        getResources({ search: searchParams, page: 1 })
+      } else {
+        getResources({ page: 1 })
+      }
+      this.setState({ firstSearch: false, search: searchParams })
     }
     const page = update ? 1 : current_page + 1
     if (!isLoading && (hasMore || page === 1) && !firstSearch) getResources({ search, page })
@@ -45,7 +53,7 @@ class PageResources extends Component {
         sideHeader={(
           <>
             <Button modifiers={['primary']} onClick={this.handleClick}>Add resource</Button>
-            <BaseSearch onChange={this.handleSearch} />
+            <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
           </>
         )}
       >

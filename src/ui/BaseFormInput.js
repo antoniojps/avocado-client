@@ -15,6 +15,9 @@ const INPUT_MODIFIERS = {
   valid: ({ theme }) => `
     border: 1px solid ${theme.color.success};
   `,
+  noMargin: () => `
+    margin: 0
+  `,
 }
 
 const Input = styled.input`

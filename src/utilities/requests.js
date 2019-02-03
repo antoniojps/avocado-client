@@ -16,10 +16,10 @@ export const queryPutTenant = ({
   themes_id,
   logo,
 }, {
-  Headers: {
-    'Content-type': 'application/x-www-form-urlencoded',
-  },
-})
+    Headers: {
+      'Content-type': 'application/x-www-form-urlencoded',
+    },
+  })
 
 export const queryDeleteTenant = () => axios.delete('tenant');
 
@@ -46,10 +46,10 @@ export const queryPostRole = name => axios.post('/roles', { name })
 export const queryPutRole = ({ id, permissions }) => axios.put(`/roles/${id}`, {
   permissions,
 }, {
-  Headers: {
-    'Content-type': 'application/x-www-form-urlencoded',
-  },
-})
+    Headers: {
+      'Content-type': 'application/x-www-form-urlencoded',
+    },
+  })
 export const queryDeleteRole = id => axios.delete(`/roles/${id}`)
 
 
@@ -57,6 +57,11 @@ export const queryDeleteRole = id => axios.delete(`/roles/${id}`)
 export const fetch = ({ url, search, page }) => axios.get(url, {
   params: {
     page,
+    search,
+  },
+})
+export const globalSearch = (search) => axios.get('/search', {
+  params: {
     search,
   },
 })

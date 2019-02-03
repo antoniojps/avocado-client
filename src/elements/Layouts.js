@@ -33,3 +33,7 @@ export const CenterDiv = styled.div`
   transform: -moz-translate(-50%, -50%);
   transform: -ms-translate(-50%, -50%);
 `
+/** Dont blame me, component is external and dont supports theme provider */
+export const PopUp = styled(Container)`
+  
+`

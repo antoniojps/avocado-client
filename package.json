@@ -18,6 +18,7 @@
     "react-scripts": "2.1.2",
     "react-spring": "^7.2.9",
     "react-syntax-highlighter": "^10.1.2",
+    "react-tiny-popover": "^3.4.2",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",
     "redux-logger": "^3.0.6",

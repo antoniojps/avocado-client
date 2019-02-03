@@ -8,10 +8,14 @@ import withUnits from './withUnits';
 class PageUnits extends Component {
   state = {
     search: '',
+    firstSearch: true,
+  }
+
+  componentDidMount() {
+    this.fetchUnits({ update: true });
   }
 
   handleClick = () => console.log('handle add click')
-
 
   handleSearch = (search) => {
     this.setState({ search }, () => this.fetchUnits({ search, update: true }))
@@ -29,10 +33,13 @@ class PageUnits extends Component {
       getUnits, isLoading, hasMore, current_page,
     } = this.props;
     const searchParams = this.getSearchParam();
-
-    if (firstSearch && searchParams) {
-      getUnits({ search: searchParams, page: 1 })
-      setTimeout(this.setState({ firstSearch: false, search: searchParams }), 200)
+    if (firstSearch) {
+      if (searchParams) {
+        getUnits({ search: searchParams, page: 1 })
+      } else {
+        getUnits({ page: 1 })
+      }
+      this.setState({ firstSearch: false, search: searchParams })
     }
     const page = update ? 1 : current_page + 1
     if (!isLoading && (hasMore || page === 1) && !firstSearch) getUnits({ search, page })
@@ -46,7 +53,7 @@ class PageUnits extends Component {
         sideHeader={(
           <>
             <Button modifiers={['primary']} onClick={this.handleClick}>Add unit</Button>
-            <BaseSearch onChange={this.handleSearch} />
+            <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
           </>
         )}
       >

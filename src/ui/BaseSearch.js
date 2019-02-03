@@ -7,14 +7,18 @@ class BaseSearch extends Component {
     super(props);
     this.state = {
       typingTimeout: 0,
+      value: props.value || '',
     }
   }
 
   handleChange = e => {
     e.preventDefault();
+
     const { value } = e.target;
+    this.setState({ value });
     const { onChange } = this.props;
     const { typingTimeout } = this.state;
+
 
     if (typingTimeout) clearTimeout(typingTimeout);
 
@@ -24,8 +28,9 @@ class BaseSearch extends Component {
   }
 
   render() {
-    const { placeholder } = this.props;
-    return <BaseFormInput placeholder={placeholder} onChange={this.handleChange} />
+    const { placeholder, modifiers } = this.props;
+    const { value } = this.state;
+    return <BaseFormInput placeholder={placeholder} modifiers={modifiers} onChange={this.handleChange} value={value} />
   }
 }
 BaseSearch.propTypes = {
