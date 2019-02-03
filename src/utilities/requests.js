@@ -1,12 +1,12 @@
 import ax from 'axios'
-import { getApiUrl, getTokenFromLocalStorage } from 'utilities'
+import { getApiUrl, getToken } from 'utilities'
 
 function setupConfig() {
   const config = {
     baseURL: `${getApiUrl()}`,
   }
 
-  const token = getTokenFromLocalStorage()
+  const token = getToken()
   if (token) {
     config.headers = {
       Authorization: `Bearer ${token}`,
@@ -15,9 +15,7 @@ function setupConfig() {
   return config
 }
 
-const config = setupConfig()
-
-export const axios = ax.create(config)
+export const axios = ax.create(setupConfig())
 
 export const queryCurrentTenant = () => axios.get('/tenant');
 export const queryDomainAlreadyExists = fqdn => axios.post('/checkDomain', {
@@ -68,6 +66,7 @@ export const queryPutRole = ({ id, permissions }) => axios.put(`/roles/${id}`, {
 export const queryDeleteRole = id => axios.delete(`/roles/${id}`)
 
 export const login = ({ email, password }) => axios.post('/login', { email, password })
+export const queryWarmup = () => axios.get('/warmup')
 
 /** reusable */
 export const fetch = ({ url, search, page }) => axios.get(url, {

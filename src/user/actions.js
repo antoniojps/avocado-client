@@ -3,16 +3,26 @@ export const LOGIN_USER = 'LOGIN_USER'
 export const LOGIN_USER_LOADING = 'LOGIN_USER_LOADING'
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS'
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE'
+export const FETCH_WARMUP = 'FETCH_WARMUP'
+export const FETCH_WARMUP_LOADING = 'FETCH_WARMUP_LOADING'
+export const FETCH_WARMUP_FAILURE = 'FETCH_WARMUP_FAILURE'
+export const FETCH_WARMUP_SUCCESS = 'FETCH_WARMUP_SUCCESS'
 
-export function updateGatherRedirect(url) {
+export const updateGatherRedirect = (url) => {
   let path = url
+  const invalid = ['/gather', '/login']
   // prevent looping to /gather
-  if (url === '/gather') path = '/'
+  if (invalid.includes(url)) path = '/'
   return {
     type: UPDATE_GATHER_REDIRECT,
     data: path,
   }
 }
+
+export const fetchWarmup = (data) => ({
+  type: FETCH_WARMUP,
+  data,
+})
 
 export const login = (data) => ({
   type: LOGIN_USER,
