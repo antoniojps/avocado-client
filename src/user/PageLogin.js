@@ -23,6 +23,7 @@ class PageLogin extends Component {
   redirectAuthenticatedUser = () => {
     const { userAuthenticated, history } = this.props
     if (userAuthenticated) {
+      console.log('LOGIN: Redirect to /gather')
       history.push('/gather')
     }
   }

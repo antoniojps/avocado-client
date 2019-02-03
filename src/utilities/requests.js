@@ -15,6 +15,12 @@ function setupConfig() {
   return config
 }
 
+// needs to be invoked before use get the updated token
+// example: axiosWithAuth().get('/endpoint)
+// this way setupConfig is invoked before the request and gets updated
+const axiosWithAuth = () => ax.create(setupConfig())
+
+// without auth header just use
 export const axios = ax.create(setupConfig())
 
 export const queryCurrentTenant = () => axios.get('/tenant');
@@ -66,7 +72,7 @@ export const queryPutRole = ({ id, permissions }) => axios.put(`/roles/${id}`, {
 export const queryDeleteRole = id => axios.delete(`/roles/${id}`)
 
 export const login = ({ email, password }) => axios.post('/login', { email, password })
-export const queryWarmup = () => axios.get('/warmup')
+export const queryWarmup = () => axiosWithAuth().get('/warmup')
 
 /** reusable */
 export const fetch = ({ url, search, page }) => axios.get(url, {

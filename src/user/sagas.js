@@ -20,8 +20,9 @@ function* loginUser(action) {
   yield put({ type: LOGIN_USER_LOADING })
   try {
     const { data } = yield call(login, { email, password })
-    yield put({ type: LOGIN_USER_SUCCESS, data })
     addToken(data.token)
+    console.log('SAGA LOGIN: save token to db')
+    yield put({ type: LOGIN_USER_SUCCESS, data })
   } catch (err) {
     yield put({ type: LOGIN_USER_FAILURE, data: err })
   }

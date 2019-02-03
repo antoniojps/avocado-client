@@ -60,6 +60,7 @@ class PageGather extends Component {
     const token = getToken()
 
     if (!token) {
+      console.log('GATHER: Redirect to /login')
       history.push('/login')
     } else this.handleWarmupRequest()
   }
