@@ -8,7 +8,7 @@ import rootSaga from 'redux/rootSaga'
 
 const isProductionEnv = process.env.NODE_ENV === 'production'
 const localStorageConfig = {
-  states: ['user'],
+  states: ['docs'],
   disableWarnings: true,
 }
 

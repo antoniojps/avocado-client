@@ -3,6 +3,9 @@ import {
   LOGIN_USER_LOADING,
   LOGIN_USER_FAILURE,
   LOGIN_USER_SUCCESS,
+  FETCH_WARMUP_LOADING,
+  FETCH_WARMUP_FAILURE,
+  FETCH_WARMUP_SUCCESS,
 } from './actions'
 
 const initState = {
@@ -12,6 +15,9 @@ const initState = {
   userFailure: false,
   userAuthenticated: false,
   userToken: null,
+  warmup: null,
+  warmupLoading: false,
+  warmupFailure: false,
 }
 
 export default function (state = initState, action) {
@@ -21,6 +27,27 @@ export default function (state = initState, action) {
     return {
       ...state,
       gatherRedirect: data,
+    }
+  case FETCH_WARMUP_LOADING:
+    return {
+      ...state,
+      warmup: null,
+      warmupLoading: true,
+      warmupFailure: false,
+    }
+  case FETCH_WARMUP_SUCCESS:
+    return {
+      ...state,
+      warmup: data.data,
+      warmupLoading: false,
+      warmupFailure: false,
+    }
+  case FETCH_WARMUP_FAILURE:
+    return {
+      ...state,
+      warmup: null,
+      warmupLoading: false,
+      warmupFailure: data,
     }
   case LOGIN_USER_LOADING:
     return {
@@ -44,7 +71,7 @@ export default function (state = initState, action) {
       ...state,
       user: null,
       userLoading: false,
-      userFailure: data,
+      userFailure: data.response.data,
       userAuthenticated: false,
     }
   default: {

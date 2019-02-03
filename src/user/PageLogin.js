@@ -15,14 +15,17 @@ class PageLogin extends Component {
     this.redirectAuthenticatedUser()
   }
 
-  componentDidUpdate = () => {
-    this.redirectAuthenticatedUser()
+  componentDidUpdate = (prevProps) => {
+    const { userAuthenticated } = this.props
+    if (prevProps.userAuthenticated !== userAuthenticated) this.redirectAuthenticatedUser()
   }
 
   redirectAuthenticatedUser = () => {
-    const { userAuthenticated, history, gatherRedirect } = this.props
-    const path = gatherRedirect === '/login' ? '/' : gatherRedirect
-    if (userAuthenticated) history.push(path)
+    const { userAuthenticated, history } = this.props
+    if (userAuthenticated) {
+      console.log('LOGIN: Redirect to /gather')
+      history.push('/gather')
+    }
   }
 
   onSubmit = ({ EMAIL: email, PASSWORD: password }) => {
@@ -34,12 +37,10 @@ class PageLogin extends Component {
   renderSubmitButton = () => {
     const { userLoading, userFailure } = this.props
     if (userFailure && !userLoading) {
-      let msg
-      const { response: data } = userFailure
-      if (data) msg = data.msg || 'Something went wrong...'
+      const { msg } = userFailure
       return (
         <>
-          <Error>{msg}</Error>
+          <Error>{msg || 'Something went wrong'}</Error>
           <Button type="submit" modifiers="primary" isLoading={userLoading}>Login</Button>
         </>
       )
@@ -163,6 +164,7 @@ const Wrapper = styled.div`
 PageLogin.propTypes = {
   userLoading: PropTypes.bool.isRequired,
   userAuthenticated: PropTypes.bool.isRequired,
+  userFailure: PropTypes.bool.isRequired,
   history: PropTypes.shape({}).isRequired,
   gatherRedirect: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired,

@@ -1,57 +1,91 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { getMainUrl } from 'utilities'
+import { getMainUrl, getToken } from 'utilities'
 import { BaseLoader } from 'ui'
 import { CenterDiv } from 'elements'
 import { withRouter } from 'react-router-dom'
 import withAuth from 'user/withAuth'
 import withTenant from 'tenant/withTenant'
+import { isEqual } from 'lodash'
 
 class PageGather extends Component {
-  componentDidMount() {
+  componentDidMount = () => {
     const { getTenant } = this.props
     getTenant()
   }
 
-  componentDidUpdate() {
-    this.handleTenantVerification()
-    this.handleAuthVerification()
-    this.handleSuccess()
+  componentDidUpdate = (prevProps) => {
+    const { tenantLoading, warmupLoading } = this.props
+    const tenantUpdated = this.deepCompareTenant(prevProps)
+    if (tenantUpdated && !tenantLoading) this.handleTenantVerification()
+
+    const warmupUpdated = this.deepCompareWarmup(prevProps)
+    if (warmupUpdated && !warmupLoading) this.handleWarmupVerifications()
   }
 
+  deepCompareTenant = (prevProps) => {
+    const { tenant: tenantPrev, tenantFailure: tenantFailurePrev, tenantLoading: tenantLoadingPrev } = prevProps
+    const { tenant: tenantNext, tenantFailure: tenantFailureNext, tenantLoading: tenantLoadingNext } = this.props
+
+    const prevTenant = { tenant: tenantPrev, tenantFailure: tenantFailurePrev, tenantLoading: tenantLoadingPrev }
+    const nextTenant = { tenant: tenantNext, tenantFailure: tenantFailureNext, tenantLoading: tenantLoadingNext }
+    const isDifferent = !isEqual(prevTenant, nextTenant)
+    return isDifferent
+  }
+
+  deepCompareWarmup = (prevProps) => {
+    const { warmup: warmupPrev, warmupFailure: warmupFailurePrev, warmupLoading: warmupLoadingPrev } = prevProps
+    const { warmup: warmupNext, warmupFailure: warmupFailureNext, warmupLoading: warmupLoadingNext } = this.props
+
+    const prevWarmup = { warmup: warmupPrev, warmupFailure: warmupFailurePrev, warmupLoading: warmupLoadingPrev }
+    const nextWarmup = { warmup: warmupNext, warmupFailure: warmupFailureNext, warmupLoading: warmupLoadingNext }
+    const isDifferent = !isEqual(prevWarmup, nextWarmup)
+    return isDifferent
+  }
+
+
   handleTenantVerification = () => {
-    const { tenantFailure, tenantLoading } = this.props
+    const {
+      tenant, tenantFailure, tenantLoading,
+    } = this.props
     const tenantFail = !tenantLoading && tenantFailure
-    // fail
+    const tenantSuccess = !tenantLoading && tenant
     if (tenantFail) this.goToMainWebsite()
+    if (tenantSuccess) this.handleAuthVerification()
   }
 
   handleAuthVerification = () => {
-    const {
-      userAuthenticated,
-      userLoading,
-      history,
-    } = this.props
+    const { history } = this.props
+    const token = getToken()
 
-    // fail
-    if (!userAuthenticated && !userLoading) history.push('/login')
+    if (!token) {
+      console.log('GATHER: Redirect to /login')
+      history.push('/login')
+    } else this.handleWarmupRequest()
+  }
+
+  // validates token and fetches current user data
+  handleWarmupRequest = () => {
+    const { fetchWarmup } = this.props
+    fetchWarmup()
+  }
+
+  handleWarmupVerifications = () => {
+    const {
+      warmup, warmupFailure, warmupLoading, history,
+    } = this.props
+    if (warmupLoading) return;
+    if (warmupFailure) {
+      history.push('/login')
+    }
+    if (warmup) this.handleSuccess()
   }
 
   handleSuccess = () => {
-    const {
-      userAuthenticated,
-      userLoading,
-      tenant,
-      tenantLoading,
-      history,
-      gatherRedirect,
-    } = this.props
-
-    const isTenantValid = (tenant && !tenantLoading)
-    const isAuthenticated = (userAuthenticated && !userLoading)
-
-    if (isTenantValid && isAuthenticated) history.push(gatherRedirect)
+    const { gatherRedirect, history } = this.props
+    console.log(gatherRedirect)
+    history.push(gatherRedirect)
   }
 
   goToMainWebsite = () => {
@@ -88,12 +122,20 @@ PageGather.propTypes = {
     PropTypes.shape({}),
   ]).isRequired,
   tenantLoading: PropTypes.bool.isRequired,
+  fetchWarmup: PropTypes.func.isRequired,
+  warmup: PropTypes.shape({}),
+  warmupLoading: PropTypes.bool.isRequired,
+  warmupFailure: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.shape({}),
+  ]).isRequired,
   gatherRedirect: PropTypes.string.isRequired,
   history: PropTypes.shape({}).isRequired,
 }
 
 PageGather.defaultProps = {
   tenant: null,
+  warmup: null,
 }
 
 export default withRouter(withAuth(withTenant(PageGather)))
