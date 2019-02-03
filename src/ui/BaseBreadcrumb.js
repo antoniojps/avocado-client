@@ -110,6 +110,7 @@ const Breadcrumb = styled.div`
   display: flex;
   align-items: center;
   overflow-x: auto;
+  overflow-y: hidden;
   text-align: center;
   white-space: nowrap;
   ${applyStyleModifiers(BREADCRUMB_MODIFIERS)};

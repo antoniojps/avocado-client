@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Spring } from 'react-spring'
 import { P } from 'elements'
+import { transparentize } from 'polished'
 
 export default class BaseLoader extends Component {
   state = {
@@ -85,3 +86,50 @@ BaseLoader.defaultProps = {
   message: null,
   center: true,
 }
+
+export const BaseLoading = () => (
+  <Loading>
+    <Loading.Spinner>
+      <div className="double-bounce1" />
+      <div className="double-bounce2" />
+    </Loading.Spinner>
+  </Loading>
+)
+
+
+const Loading = styled.div`
+  position: absolute;
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-radius: ${props => props.theme.value.borderRadius};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+`
+Loading.Spinner = styled.div`
+  width: 40px;
+  height: 100%;
+  position: relative;
+
+  .double-bounce1, .double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: ${props => transparentize(0.5, props.theme.color.bgLighter)};
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    animation: ${props => props.theme.animation.bounce} 2.0s infinite ease-in-out;
+  }
+
+  .double-bounce2 {
+    animation-delay: -1.0s;
+    background-color: ${props => transparentize(0.1, props.theme.color.bgLighter)};
+  }
+`

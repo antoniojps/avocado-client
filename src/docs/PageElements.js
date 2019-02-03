@@ -75,6 +75,18 @@ const PageElements = () => (
       <Button modifiers={['danger', 'small']}>
           Danger Small
       </Button>
+      <br />
+      <Button isLoading>
+          Base
+      </Button>
+      <br />
+      <Button modifiers="primary" isLoading>
+          Primary
+      </Button>
+      <br />
+      <Button modifiers="danger" isLoading>
+          Danger
+      </Button>
     </Container>
     <SyntaxHighlighter>
       {`import { Button } from 'elements'
@@ -89,7 +101,12 @@ const PageElements = () => (
 
 <Button modifiers={['primary', 'small']}>
   Primary Small
-</Button>`}
+</Button>
+
+<Button isLoading>
+    Base
+</Button>
+`}
     </SyntaxHighlighter>
     <Title>
         Tags

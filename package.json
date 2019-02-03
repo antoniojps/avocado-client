@@ -21,6 +21,7 @@
     "react-tiny-popover": "^3.4.2",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",
+    "redux-localstorage-simple": "^2.1.4",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.0",
     "ssh-deploy-release": "^2.3.4",

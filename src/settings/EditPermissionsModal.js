@@ -44,12 +44,12 @@ class EditPermissionsModal extends Component {
     const { allPermissions } = this.props;
     const { rolePermissions } = this.state;
     return allPermissions.map(perm => (
-      <>
+      <div key={perm}>
         <div><P>{perm}</P></div>
         <div>
           <BaseSwitch key={perm} modifiers="noMargin" isChecked={rolePermissions.includes(perm)} onChange={() => this.handlePermissionChange(perm)} />
         </div>
-      </>
+      </div>
     ))
   }
 

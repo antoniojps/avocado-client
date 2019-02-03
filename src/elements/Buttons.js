@@ -4,6 +4,7 @@ import Ink from 'react-ink'
 import { applyStyleModifiers } from 'styled-components-modifiers'
 import { darken } from 'polished'
 import PropTypes from 'prop-types'
+import { BaseLoading } from 'ui/BaseLoader'
 
 const BUTTON_MODIFIERS = {
   small: ({ theme }) => `
@@ -40,7 +41,7 @@ const BUTTON_MODIFIERS = {
   secondary: ({ theme }) => `
     background-color: ${theme.color.baseInverse};
     color: ${theme.color.primaryDarker};
-    border: 2px solid ${theme.color.primaryDarker};
+    border: 1px solid ${theme.color.primaryDarker};
     &:hover {
       background-color: ${darken(0.03, theme.color.baseInverse)};
       border: 1px solid ${darken(0.03, theme.color.primaryDarker)};
@@ -113,16 +114,19 @@ export const Button = ({
   pulse,
   className,
   type,
+  isLoading,
 }) => (
   <StyledButton
     type={type}
     pulse={pulse}
+    isLoading={isLoading}
     modifiers={modifiers}
-    onClick={onClick}
+    onClick={isLoading ? () => { } : onClick}
     className={className}
   >
     {children}
     <Ink />
+    {isLoading && <BaseLoading />}
   </StyledButton>
 )
 
@@ -132,6 +136,7 @@ Button.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string,
   ]),
+  isLoading: PropTypes.bool,
   onClick: PropTypes.func,
   pulse: PropTypes.bool,
   className: PropTypes.string,
@@ -145,4 +150,5 @@ Button.defaultProps = {
   pulse: false,
   className: '',
   type: 'button',
+  isLoading: false,
 }

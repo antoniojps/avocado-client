@@ -15,20 +15,43 @@ class PageGather extends Component {
   }
 
   componentDidUpdate() {
-    this.handleTenantVerifications()
+    this.handleTenantVerification()
+    this.handleAuthVerification()
+    this.handleSuccess()
   }
 
-  handleTenantVerifications = () => {
+  handleTenantVerification = () => {
+    const { tenantFailure, tenantLoading } = this.props
+    const tenantFail = !tenantLoading && tenantFailure
+    // fail
+    if (tenantFail) this.goToMainWebsite()
+  }
+
+  handleAuthVerification = () => {
     const {
-      tenant, tenantFailure, tenantLoading,
+      userAuthenticated,
+      userLoading,
+      history,
+    } = this.props
+
+    // fail
+    if (!userAuthenticated && !userLoading) history.push('/login')
+  }
+
+  handleSuccess = () => {
+    const {
+      userAuthenticated,
+      userLoading,
+      tenant,
+      tenantLoading,
       history,
       gatherRedirect,
     } = this.props
 
-    // fail
-    if (!tenantLoading && tenantFailure) this.goToMainWebsite()
-    // success
-    if (!tenantLoading && tenant) history.push(gatherRedirect)
+    const isTenantValid = (tenant && !tenantLoading)
+    const isAuthenticated = (userAuthenticated && !userLoading)
+
+    if (isTenantValid && isAuthenticated) history.push(gatherRedirect)
   }
 
   goToMainWebsite = () => {

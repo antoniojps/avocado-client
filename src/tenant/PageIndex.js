@@ -9,9 +9,8 @@ import {
 import withTenant from 'tenant/withTenant'
 
 const PageIndex = (props) => {
-  let name
   const { tenant } = props
-  if (tenant) name = tenant.name || 'Tenant Website'
+  const name = (tenant && tenant.name) || 'Tenant website'
   return (
     <BasePage page={{
       title: name,
