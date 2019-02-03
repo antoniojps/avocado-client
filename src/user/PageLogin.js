@@ -34,7 +34,9 @@ class PageLogin extends Component {
   renderSubmitButton = () => {
     const { userLoading, userFailure } = this.props
     if (userFailure && !userLoading) {
-      const { msg } = userFailure
+      let msg
+      const { response: data } = userFailure
+      if (data) msg = data.msg || 'Something went wrong...'
       return (
         <>
           <Error>{msg}</Error>

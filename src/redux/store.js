@@ -15,8 +15,9 @@ const localStorageConfig = {
 // saga is passed to function because it needs to be used in setupStore
 // after the createStore function
 function setupEnhancers(saga) {
-  const middleware = [saga]
-  if (!isProductionEnv) middleware.push(logger)
+  const middleware = [saga, logger]
+  // logger for dev env
+  // if (!isProductionEnv) middleware.push(logger)
 
   const enhancers = applyMiddleware(
     ...middleware,

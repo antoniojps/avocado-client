@@ -44,7 +44,7 @@ export default function (state = initState, action) {
       ...state,
       user: null,
       userLoading: false,
-      userFailure: data.response.data,
+      userFailure: data,
       userAuthenticated: false,
     }
   default: {
