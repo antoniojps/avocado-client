@@ -40,7 +40,6 @@ export default (context = '') => (state = initialState, {
     /** POST  */
 
   case `POST_${context}_SUCCESS`:
-    console.log('data', [data, ...state.list]);
     return {
       ...state, isPostLoading: false, list: [data, ...state.list], closeModal: true,
     }
@@ -50,6 +49,7 @@ export default (context = '') => (state = initialState, {
     /** PUT  */
 
   case `PUT_${context}_SUCCESS`:
+    console.log('data is', data);
     return {
       ...state,
       isPutLoading: false,

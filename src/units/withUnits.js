@@ -3,7 +3,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   getUnits,
+  deleteUnit,
+  postUnit,
+  putUnit,
 } from './actions'
+
 
 const mapStateToProps = ({
   units,
@@ -12,6 +16,9 @@ const mapStateToProps = ({
 })
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getUnits,
+  deleteUnit,
+  postUnit,
+  putUnit,
 }, dispatch)
 
 

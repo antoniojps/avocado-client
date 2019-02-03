@@ -4,9 +4,9 @@ import { BaseFormInput, BaseFormSelect, BaseLoader } from 'ui'
 import BaseForm, { inputTypes } from 'ui/BaseForm';
 import { fetch } from 'utilities/requests'
 import PropTypes from 'prop-types'
-import withResources from './withResources'
+import withUnits from './withUnits'
 
-class ResourceCreateFrom extends Component {
+class UnitCreateFrom extends Component {
   constructor(props) {
     super(props);
     const { types } = this.props;
@@ -18,7 +18,7 @@ class ResourceCreateFrom extends Component {
   async componentDidMount() {
     const { options } = this.state;
     if (!options) {
-      const { data: { data: options } } = await fetch({ url: 'resourcetype' });
+      const { data: { data: options } } = await fetch({ url: 'unittype' });
       this.setState({ options })
     }
   }
@@ -30,9 +30,9 @@ class ResourceCreateFrom extends Component {
 
   renderSubmitButton = () => {
     const { isPostLoading, isPutLoading, type } = this.props;
-    if (!isPostLoading && !isPutLoading) return <Button type="submit" modifiers="primary">Submit Resource</Button>
+    if (!isPostLoading && !isPutLoading) return <Button type="submit" modifiers="primary">Submit Unit</Button>
     return (
-      <BaseLoader message={type === 'Add' ? 'Adding resource....' : 'Editing resource....'} />
+      <BaseLoader message={type === 'Add' ? 'Adding unit....' : 'Editing unit....'} />
     )
   }
 
@@ -54,7 +54,6 @@ class ResourceCreateFrom extends Component {
           {...field}
           {...props}
           type={props.type}
-          autoComplete="username"
           touched={touched[field.name]}
           error={errors[field.name]}
           options={[{ id: 0, value: 'Select type', selected: true }, ...options.map(({ id, name }) => ({ id, value: name }))]}
@@ -65,31 +64,31 @@ class ResourceCreateFrom extends Component {
     return null
   }
 
-  onSubmit = ({ RESOURCE_NAME, TEXTAREA, SELECT }) => {
+  onSubmit = ({ UNIT_NAME, TEXTAREA, SELECT }) => {
     const {
-      postResource, type, resource, putResource,
+      postUnit, type, unit, putUnit,
     } = this.props;
     if (type === 'Add') {
-      postResource({
-        name: RESOURCE_NAME,
+      postUnit({
+        name: UNIT_NAME,
         description: TEXTAREA,
-        resource_type_id: +SELECT === 0 ? null : SELECT,
+        unit_type_id: +SELECT === 0 ? null : SELECT,
       })
     } else {
-      putResource({
-        id: resource.id,
-        name: RESOURCE_NAME,
+      putUnit({
+        id: unit.id,
+        name: UNIT_NAME,
         description: TEXTAREA,
-        resource_type_id: +SELECT === 0 ? null : SELECT,
+        unit_type_id: +SELECT === 0 ? null : SELECT,
       })
     }
   }
 
   render() {
     const {
-      RESOURCE_NAME, TEXTAREA, SELECT,
+      UNIT_NAME, TEXTAREA, SELECT,
     } = inputTypes
-    const { resource } = this.props
+    const { unit } = this.props
     const { isPostLoading, type } = this.props;
     const form = {
       name: 'Tenant edit form',
@@ -97,21 +96,21 @@ class ResourceCreateFrom extends Component {
       onSubmit: (values, actions) => !isPostLoading && this.onSubmit(values, actions),
       inputs: [
         {
-          id: RESOURCE_NAME,
-          name: RESOURCE_NAME,
-          type: RESOURCE_NAME,
-          initialValue: resource ? resource.name : '',
+          id: UNIT_NAME,
+          name: UNIT_NAME,
+          type: UNIT_NAME,
+          initialValue: unit ? unit.name : '',
           validation: true,
           required: true,
-          placeholder: 'Resource name',
-          label: 'Resource name',
+          placeholder: 'Unit name',
+          label: 'Unit name',
           component: this.renderInput,
         },
         {
           id: TEXTAREA,
           name: TEXTAREA,
           type: TEXTAREA,
-          initialValue: resource ? resource.description : '',
+          initialValue: unit ? unit.description : '',
           validation: true,
           required: false,
           placeholder: 'Description',
@@ -122,7 +121,7 @@ class ResourceCreateFrom extends Component {
           id: SELECT,
           name: SELECT,
           type: SELECT,
-          initialValue: resource && resource.type ? resource.type.id : 0,
+          initialValue: unit && unit.type ? unit.type.id : 0,
           validation: true,
           required: true,
           placeholder: 'Type',
@@ -135,29 +134,29 @@ class ResourceCreateFrom extends Component {
 
     return (
       <>
-        <Title>{`${type} resource`}</Title>
+        <Title>{`${type} unit`}</Title>
         <BaseForm form={form} />
       </>
     );
   }
 }
 
-ResourceCreateFrom.propTypes = {
+UnitCreateFrom.propTypes = {
   isPutLoading: PropTypes.bool.isRequired,
   isPostLoading: PropTypes.bool.isRequired,
-  resource: PropTypes.shape({}),
-  postResource: PropTypes.func.isRequired,
-  putResource: PropTypes.func.isRequired,
+  unit: PropTypes.shape({}),
+  postUnit: PropTypes.func.isRequired,
+  putUnit: PropTypes.func.isRequired,
   type: PropTypes.oneOf(['Add', 'Edit']),
   closeModal: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   types: PropTypes.arrayOf(PropTypes.shape({})),
 }
 
-ResourceCreateFrom.defaultProps = {
-  resource: null,
+UnitCreateFrom.defaultProps = {
+  unit: null,
   type: 'Add',
   types: null,
 }
 
-export default withResources(ResourceCreateFrom)
+export default withUnits(UnitCreateFrom)

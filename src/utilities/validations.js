@@ -8,6 +8,10 @@ const textsPT = {
     length: 'O nome do recurso deve ter, pelo menos, 2 caracteres.',
     string: 'O nome do recurso é inválido.',
   },
+  unit_name: {
+    length: 'O nome da unidade deve ter, pelo menos, 2 caracteres.',
+    string: 'O nome da unidade é inválido.',
+  },
   role: {
     length: 'O nome da role deve ter, pelo menos, 2 caracteres.',
     string: 'O nome da role é inválido.',
@@ -61,6 +65,10 @@ const textsEN = {
   resource_name: {
     length: 'The Resource name must have, at least, 2 characters.',
     string: 'The Resource name is invalid',
+  },
+  unit_name: {
+    length: 'The Unit name must have, at least, 2 characters.',
+    string: 'The Unit name is invalid',
   },
   role: {
     length: 'The Role name must have, at least, 2 characters.',
