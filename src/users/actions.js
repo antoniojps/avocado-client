@@ -10,5 +10,5 @@ export const getUsers = ({ search = '', page = 1, reset = false }) => ({
     reset,
   },
   callFunction: fetch,
-  counterName: 'USERS',
+  context: 'USERS',
 })

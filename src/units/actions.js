@@ -10,5 +10,5 @@ export const getUnits = ({ search = '', page = 1, reset = false }) => ({
     reset,
   },
   callFunction: fetch,
-  counterName: 'UNITS',
+  context: 'UNITS',
 })

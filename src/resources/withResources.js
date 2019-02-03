@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   getResources,
+  deleteResource,
 } from './actions'
 
 const mapStateToProps = ({
@@ -12,6 +13,7 @@ const mapStateToProps = ({
 })
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getResources,
+  deleteResource,
 }, dispatch)
 
 
