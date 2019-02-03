@@ -59,19 +59,6 @@ const routesConfig = {
     key: 'login',
     name: 'Login',
   },
-  settings: {
-    index: {
-      component: PageSettings,
-      key: 'settings',
-      exact: true,
-      name: 'Settings',
-    },
-    roles: {
-      component: PageRoles,
-      key: 'roles',
-      name: 'Roles',
-    },
-  },
   units: {
     component: PageUnits,
     key: 'units',
@@ -85,6 +72,19 @@ const routesConfig = {
     exact: true,
     name: 'Team',
 
+  },
+  settings: {
+    index: {
+      component: PageSettings,
+      key: 'settings',
+      exact: true,
+      name: 'Settings',
+    },
+    roles: {
+      component: PageRoles,
+      key: 'roles',
+      name: 'Roles',
+    },
   },
 }
 

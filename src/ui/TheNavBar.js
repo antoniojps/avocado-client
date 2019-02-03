@@ -8,7 +8,6 @@ import {
 import { BaseBreakpoints, TheNavList } from 'ui'
 import { routes } from 'tenant/Routes'
 import { generateMainNavList } from 'utilities'
-import GlobalSearch from 'globalSearch/GlobalSearch';
 import TheNavIcon from './TheNavIcon'
 import TheNavBarMobile from './TheNavBarMobile'
 
@@ -40,8 +39,8 @@ class TheNavBar extends Component {
               <BaseBreakpoints render={({ md }) => (md ? (
                 <Icon icon="logo" height={40} />
               ) : (
-                  <TheNavIcon onClick={this.openNavMobile} isOpen={isNavOpen} />
-                ))}
+                <TheNavIcon onClick={this.openNavMobile} isOpen={isNavOpen} />
+              ))}
               />
             </NavBar.Icon>
             <TheNavBarMobile isOpen={isNavOpen} onClose={this.handleMobileClose} />
@@ -98,7 +97,7 @@ NavBar.Icon = styled.div`
   padding-right: ${props => props.theme.spacing.base};
 `
 
-NavBar.Breadcrumb = styled(Title) `
+NavBar.Breadcrumb = styled(Title)`
   padding: 0;
 `
 

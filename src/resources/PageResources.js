@@ -15,10 +15,16 @@ class PageResources extends Component {
     this.fetchResources({ update: true });
   }
 
-  handleClick = () => console.log('handle add click')
+  handleAdd = () => console.log('handle add click')
 
   handleSearch = (search) => {
     this.setState({ search }, () => this.fetchResources({ search, update: true }))
+  }
+
+  handleDelete = (e, id) => {
+    e.preventDefault()
+    const { deleteResource } = this.props;
+    deleteResource(id)
   }
 
   getSearchParam = () => {
@@ -52,13 +58,18 @@ class PageResources extends Component {
         page={{ title: 'Resources' }}
         sideHeader={(
           <>
-            <Button modifiers={['primary']} onClick={this.handleClick}>Add resource</Button>
+            <Button modifiers={['primary']} onClick={this.handleAdd}>Add resource</Button>
             <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
           </>
         )}
       >
         <BaseList {...this.props} context="resources" fetchList={() => this.fetchResources} loadMore={this.fetchResources}>
-          {list.map(({ name, id }) => <Container key={id}><Title>{`${id} and ${name}`}</Title></Container>)}
+          {list.map(({ name, id }) => (
+            <Container key={id}>
+              <Title>{`${id} and ${name}`}</Title>
+              <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, id)}>Delete</Button>
+            </Container>
+          ))}
         </BaseList>
       </BasePage>
     )
@@ -67,6 +78,7 @@ class PageResources extends Component {
 
 PageResources.propTypes = {
   getResources: PropTypes.func.isRequired,
+  deleteResource: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   current_page: PropTypes.number,
   list: PropTypes.arrayOf(PropTypes.shape({})),
