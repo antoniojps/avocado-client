@@ -1,9 +1,24 @@
 import ax from 'axios'
-import { getApiUrl } from 'utilities'
+import { getApiUrl, getTokenFromLocalStorage } from 'utilities'
 
-export const axios = ax.create({
-  baseURL: `${getApiUrl()}`,
-})
+function setupConfig() {
+  const config = {
+    baseURL: `${getApiUrl()}`,
+  }
+
+  const token = getTokenFromLocalStorage()
+  if (token) {
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+    }
+  }
+  return config
+}
+
+const config = setupConfig()
+
+export const axios = ax.create(config)
+
 export const queryCurrentTenant = () => axios.get('/tenant');
 export const queryDomainAlreadyExists = fqdn => axios.post('/checkDomain', {
   fqdn,
