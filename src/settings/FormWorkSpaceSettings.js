@@ -30,12 +30,6 @@ class FormWorkSpaceSettings extends Component {
     <Button type="submit" modifiers="primary">Submit preferences</Button>
   )
 
-  handleReddirect = (e) => {
-    e.preventDefault();
-    const { reddirectUrl } = this.state;
-    window.location.replace(reddirectUrl);
-  }
-
   renderInput = ({ field, form: { touched, errors }, ...props }) => (
     <BaseFormInput
       {...field}

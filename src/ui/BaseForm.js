@@ -21,6 +21,7 @@ export const inputTypes = {
   SELECT: 'SELECT',
   FILE: 'FILE',
   ROLE: 'ROLE',
+  RESOURCE_NAME: 'RESOURCE_NAME',
 }
 
 class Form extends Component {
@@ -64,7 +65,7 @@ class Form extends Component {
 
   generateInputError = async ({ input, values, language }) => {
     const {
-      EMAIL, FIRST_NAME, LAST_NAME, PHONE, AGE, SUBDOMAIN, ADDRESS, PASSWORD, REPEAT_PASSWORD, SELECT, COMPANY, TEXTAREA, ROLE,
+      EMAIL, FIRST_NAME, LAST_NAME, PHONE, AGE, SUBDOMAIN, ADDRESS, PASSWORD, REPEAT_PASSWORD, SELECT, COMPANY, TEXTAREA, ROLE, RESOURCE_NAME,
     } = inputTypes
     const validations = texts(language)
     const { workspace, workspaceFailure } = this.state
@@ -88,6 +89,14 @@ class Form extends Component {
         }
         if (typeof values[COMPANY] !== 'string' || /\d/.test(values[COMPANY])) {
           return validations.company.string
+        }
+        break;
+      case RESOURCE_NAME:
+        if (values[RESOURCE_NAME].length < 2) {
+          return validations.resource_name.length;
+        }
+        if (typeof values[RESOURCE_NAME] !== 'string' || /\d/.test(values[RESOURCE_NAME])) {
+          return validations.resource_name.string
         }
         break;
       case FIRST_NAME:

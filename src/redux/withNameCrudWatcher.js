@@ -15,7 +15,7 @@ function* fetch({
 function* post({ payload, callFunction, context }) {
   yield put({ type: `POST_${context}_LOADING` });
   try {
-    const { data } = yield call(callFunction, payload);
+    const { data: { data } } = yield call(callFunction, payload);
     yield put({ type: `POST_${context}_SUCCESS`, data })
   } catch (err) {
     yield put({ type: `POST_${context}_FAILURE`, data: err })
@@ -25,7 +25,7 @@ function* post({ payload, callFunction, context }) {
 function* update({ payload, callFunction, context }) {
   yield put({ type: `PUT_${context}_LOADING` });
   try {
-    const { data } = yield call(callFunction, payload);
+    const { data: { data } } = yield call(callFunction, payload);
     yield put({ type: `PUT_${context}_SUCCESS`, data })
   } catch (err) {
     yield put({ type: `PUT_${context}_FAILURE`, data: err })
@@ -33,7 +33,6 @@ function* update({ payload, callFunction, context }) {
 }
 
 function* destroy({ payload, callFunction, context }) {
-  console.log('chegou');
   yield put({ type: `DELETE_${context}_LOADING` });
   try {
     const { data } = yield call(callFunction, payload);

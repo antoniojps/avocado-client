@@ -1,21 +1,30 @@
 import React, { Component } from 'react'
-import { BasePage, BaseSearch } from 'ui'
+import {
+  BasePage, BaseSearch, BaseToggle, BaseModal,
+} from 'ui'
 import { Button, Container, Title } from 'elements'
 import BaseList from 'ui/BaseList';
 import PropTypes from 'prop-types'
+import { fetch } from 'utilities/requests'
 import withResources from './withResources';
+import ResourceCreateFrom from './ResourceCreateFrom';
 
 class PageResources extends Component {
-  state = {
-    search: '',
-    firstSearch: true,
+  constructor(props) {
+    super(props)
+    this.state = {
+      search: '',
+      firstSearch: true,
+      resourceTypes: null,
+    }
+    this.toggleRef = React.createRef();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.fetchResources({ update: true });
+    const { data: { data } } = await fetch({ url: 'resourcetype' });
+    this.setState({ resourceTypes: data })
   }
-
-  handleAdd = () => console.log('handle add click')
 
   handleSearch = (search) => {
     this.setState({ search }, () => this.fetchResources({ search, update: true }))
@@ -27,6 +36,30 @@ class PageResources extends Component {
     deleteResource(id)
   }
 
+  renderAction = (type = 'Add', resource = null) => {
+    const { resourceTypes } = this.state;
+    return (
+      <BaseToggle ref={this.toggleRef}>
+        {({ isOn, toggle }) => (
+          <>
+            <Button modifiers={type === 'Add' ? ['primary'] : ['primary', 'small']} onClick={toggle}>
+              {`${type} resource`}
+            </Button>
+            <BaseModal toggle={toggle} isOn={isOn}>
+              <ResourceCreateFrom
+                types={resourceTypes}
+                onSubmit={toggle}
+                type={type}
+                resource={resource}
+              />
+            </BaseModal>
+          </>
+        )}
+      </BaseToggle>
+    )
+  }
+
+
   getSearchParam = () => {
     const { location: { search: localSearch } } = this.props;
     const params = new URLSearchParams(localSearch);
@@ -36,7 +69,7 @@ class PageResources extends Component {
   fetchResources = ({ update }) => {
     const { search, firstSearch } = this.state
     const {
-      getResources, isLoading, hasMore, current_page,
+      getResources, isLoading, hasMore, current_page, // eslint-disable-line
     } = this.props;
     const searchParams = this.getSearchParam();
     if (firstSearch) {
@@ -47,7 +80,7 @@ class PageResources extends Component {
       }
       this.setState({ firstSearch: false, search: searchParams })
     }
-    const page = update ? 1 : current_page + 1
+    const page = update ? 1 : current_page + 1// eslint-disable-line
     if (!isLoading && (hasMore || page === 1) && !firstSearch) getResources({ search, page })
   }
 
@@ -58,16 +91,17 @@ class PageResources extends Component {
         page={{ title: 'Resources' }}
         sideHeader={(
           <>
-            <Button modifiers={['primary']} onClick={this.handleAdd}>Add resource</Button>
+            {this.renderAction('Add')}
             <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
           </>
         )}
       >
         <BaseList {...this.props} context="resources" fetchList={() => this.fetchResources} loadMore={this.fetchResources}>
-          {list.map(({ name, id }) => (
-            <Container key={id}>
-              <Title>{`${id} and ${name}`}</Title>
-              <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, id)}>Delete</Button>
+          {list.map((resource) => (
+            <Container key={resource.id}>
+              <Title>{`${resource.id} and ${resource.name}`}</Title>
+              {this.renderAction('Edit', resource)}
+              <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, resource.id)}>Delete</Button>
             </Container>
           ))}
         </BaseList>
@@ -83,6 +117,7 @@ PageResources.propTypes = {
   current_page: PropTypes.number,
   list: PropTypes.arrayOf(PropTypes.shape({})),
   hasMore: PropTypes.bool,
+  location: PropTypes.shape({}).isRequired,
 }
 PageResources.defaultProps = {
   isLoading: false,

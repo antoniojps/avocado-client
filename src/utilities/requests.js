@@ -79,6 +79,8 @@ export const fetch = ({ url, search, page }) => axios.get(url, {
 
 export const post = ({ url, data }) => axios.post(url, data);
 
+export const put = ({ url, data }) => axios.put(`${url}/${data.id}`, data);
+
 export const destroy = ({ url, id }) => axios.delete(`${url}${id}`);
 
 export const globalSearch = (search) => axios.get('/search', {

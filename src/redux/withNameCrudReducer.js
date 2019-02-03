@@ -9,6 +9,7 @@ const initialState = {
   total: null,
   per_page: null,
   error: false,
+  closeModal: false,
 };
 export default (context = '') => (state = initialState, {
   type, data,
@@ -39,20 +40,24 @@ export default (context = '') => (state = initialState, {
     /** POST  */
 
   case `POST_${context}_SUCCESS`:
-    return { ...state, isPostLoading: false, list: [data, ...state.list] }
+    console.log('data', [data, ...state.list]);
+    return {
+      ...state, isPostLoading: false, list: [data, ...state.list], closeModal: true,
+    }
   case `POST_${context}_LOADING`:
-    return { ...state, isPostLoading: true }
+    return { ...state, isPostLoading: true, closeModal: false }
 
     /** PUT  */
 
   case `PUT_${context}_SUCCESS`:
     return {
       ...state,
-      isPutLoading: true,
+      isPutLoading: false,
       list: state.list.map(row => (row.id === data.id ? data : row)),
+      closeModal: true,
     }
   case `PUT_${context}_LOADING`:
-    return { ...state, isPutLoading: false }
+    return { ...state, isPutLoading: true, closeModal: false }
 
     /** DELETE  */
 

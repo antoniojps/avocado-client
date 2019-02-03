@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux'
 import {
   getResources,
   deleteResource,
+  postResource,
+  putResource,
 } from './actions'
 
 const mapStateToProps = ({
@@ -14,6 +16,8 @@ const mapStateToProps = ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getResources,
   deleteResource,
+  postResource,
+  putResource,
 }, dispatch)
 
 

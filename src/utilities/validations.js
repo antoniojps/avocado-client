@@ -4,6 +4,10 @@ const textsPT = {
     length: 'O nome da empresa deve ter, pelo menos, 2 caracteres.',
     string: 'O nome da empresa é inválido.',
   },
+  resource_name: {
+    length: 'O nome do recurso deve ter, pelo menos, 2 caracteres.',
+    string: 'O nome do recurso é inválido.',
+  },
   role: {
     length: 'O nome da role deve ter, pelo menos, 2 caracteres.',
     string: 'O nome da role é inválido.',
@@ -53,6 +57,10 @@ const textsEN = {
   company: {
     length: 'The Company name must have, at least, 2 characters.',
     string: 'The Company name is invalid',
+  },
+  resource_name: {
+    length: 'The Resource name must have, at least, 2 characters.',
+    string: 'The Resource name is invalid',
   },
   role: {
     length: 'The Role name must have, at least, 2 characters.',
