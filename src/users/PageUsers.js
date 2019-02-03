@@ -1,25 +1,64 @@
 import React, { Component } from 'react'
-import { BasePage, BaseSearch } from 'ui'
+import {
+  BasePage, BaseSearch, BaseToggle, BaseModal,
+} from 'ui'
 import { Button, Container, Title } from 'elements'
 import BaseList from 'ui/BaseList';
 import PropTypes from 'prop-types'
+// import { fetch } from 'utilities/requests'
 import withUsers from './withUsers';
+// import UserCreateFrom from './UserCreateForm';
 
 class PageUsers extends Component {
-  state = {
-    search: '',
-    firstSearch: true,
+  constructor(props) {
+    super(props)
+    this.state = {
+      search: '',
+      firstSearch: true,
+      // userTypes: null,
+    }
+    this.toggleRef = React.createRef();
   }
 
-  componentDidMount() {
-    this.fetchUsers({ update: true });
-  }
-
-  handleClick = () => console.log('handle add click')
+  // async componentDidMount() {
+  //   this.fetchUsers({ update: true });
+  //   const { data: { data } } = await fetch({ url: 'usertype' });
+  //   this.setState({ userTypes: data })
+  // }
 
   handleSearch = (search) => {
     this.setState({ search }, () => this.fetchUsers({ search, update: true }))
   }
+
+  handleDelete = (e, id) => {
+    e.preventDefault()
+    const { deleteUser } = this.props;
+    deleteUser(id)
+  }
+
+  renderAction = (type = 'Add', user = null) => 
+    // const { userTypes } = this.state;
+     (
+      <BaseToggle ref={this.toggleRef}>
+        {({ isOn, toggle }) => (
+          <>
+            <Button modifiers={type === 'Add' ? ['primary'] : ['primary', 'small']} onClick={toggle}>
+              {`${type} user`}
+            </Button>
+            <BaseModal toggle={toggle} isOn={isOn}>
+              {/* <UserCreateFrom
+                types={userTypes}
+                onSubmit={toggle}
+                type={type}
+                user={user}
+              /> */}
+            </BaseModal>
+          </>
+        )}
+      </BaseToggle>
+    )
+  
+
 
   getSearchParam = () => {
     const { location: { search: localSearch } } = this.props;
@@ -30,7 +69,7 @@ class PageUsers extends Component {
   fetchUsers = ({ update }) => {
     const { search, firstSearch } = this.state
     const {
-      getUsers, isLoading, hasMore, current_page,
+      getUsers, isLoading, hasMore, current_page, // eslint-disable-line
     } = this.props;
     const searchParams = this.getSearchParam();
     if (firstSearch) {
@@ -41,7 +80,7 @@ class PageUsers extends Component {
       }
       this.setState({ firstSearch: false, search: searchParams })
     }
-    const page = update ? 1 : current_page + 1
+    const page = update ? 1 : current_page + 1// eslint-disable-line
     if (!isLoading && (hasMore || page === 1) && !firstSearch) getUsers({ search, page })
   }
 
@@ -49,16 +88,22 @@ class PageUsers extends Component {
     const { list } = this.props
     return (
       <BasePage
-        page={{ title: 'Team' }}
+        page={{ title: 'Users' }}
         sideHeader={(
           <>
-            <Button modifiers={['primary']} onClick={this.handleClick}>Add team members</Button>
+            {/* {this.renderAction('Add')} */}
             <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
           </>
         )}
       >
         <BaseList {...this.props} context="users" fetchList={() => this.fetchUsers} loadMore={this.fetchUsers}>
-          {list.map(({ name, id }) => <Container key={id}><Title>{`${id} and ${name}`}</Title></Container>)}
+          {list.map((user) => (
+            <Container key={user.id}>
+              <Title>{`${user.id} and ${user.name}`}</Title>
+              {/* {this.renderAction('Edit', user)} */}
+              <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, user.id)}>Delete</Button>
+            </Container>
+          ))}
         </BaseList>
       </BasePage>
     )
@@ -67,10 +112,12 @@ class PageUsers extends Component {
 
 PageUsers.propTypes = {
   getUsers: PropTypes.func.isRequired,
+  deleteUser: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   current_page: PropTypes.number,
   list: PropTypes.arrayOf(PropTypes.shape({})),
   hasMore: PropTypes.bool,
+  location: PropTypes.shape({}).isRequired,
 }
 PageUsers.defaultProps = {
   isLoading: false,
