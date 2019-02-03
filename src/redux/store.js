@@ -7,28 +7,23 @@ import rootReducer from 'redux/rootReducer'
 import rootSaga from 'redux/rootSaga'
 
 const isProductionEnv = process.env.NODE_ENV === 'production'
-
-function setupPreloadedState() {
-  return load({
-    states: ['user'],
-  })
+const localStorageConfig = {
+  states: ['user'],
+  disableWarnings: true,
 }
 
 // saga is passed to function because it needs to be used in setupStore
 // after the createStore function
 function setupEnhancers(saga) {
   const middleware = [saga]
-  // logger for dev env
   if (!isProductionEnv) middleware.push(logger)
 
   const enhancers = applyMiddleware(
     ...middleware,
-    save({
-      states: ['user'],
-    })
+    save(localStorageConfig)
   )
   if (!isProductionEnv) return composeWithDevTools(enhancers)
-  return applyMiddleware(enhancers)
+  return enhancers
 }
 
 function setupStore() {
@@ -36,7 +31,7 @@ function setupStore() {
 
   const store = createStore(
     rootReducer,
-    setupPreloadedState(),
+    load(localStorageConfig),
     setupEnhancers(saga),
   )
 
