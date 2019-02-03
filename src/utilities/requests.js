@@ -1,9 +1,24 @@
 import ax from 'axios'
-import { getApiUrl } from 'utilities'
+import { getApiUrl, getTokenFromLocalStorage } from 'utilities'
 
-export const axios = ax.create({
-  baseURL: `${getApiUrl()}`,
-})
+function setupConfig() {
+  const config = {
+    baseURL: `${getApiUrl()}`,
+  }
+
+  const token = getTokenFromLocalStorage()
+  if (token) {
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+    }
+  }
+  return config
+}
+
+const config = setupConfig()
+
+export const axios = ax.create(config)
+
 export const queryCurrentTenant = () => axios.get('/tenant');
 export const queryDomainAlreadyExists = fqdn => axios.post('/checkDomain', {
   fqdn,
@@ -16,10 +31,10 @@ export const queryPutTenant = ({
   themes_id,
   logo,
 }, {
-    Headers: {
-      'Content-type': 'application/x-www-form-urlencoded',
-    },
-  })
+  Headers: {
+    'Content-type': 'application/x-www-form-urlencoded',
+  },
+})
 
 export const queryDeleteTenant = () => axios.delete('tenant');
 
@@ -46,10 +61,10 @@ export const queryPostRole = name => axios.post('/roles', { name })
 export const queryPutRole = ({ id, permissions }) => axios.put(`/roles/${id}`, {
   permissions,
 }, {
-    Headers: {
-      'Content-type': 'application/x-www-form-urlencoded',
-    },
-  })
+  Headers: {
+    'Content-type': 'application/x-www-form-urlencoded',
+  },
+})
 export const queryDeleteRole = id => axios.delete(`/roles/${id}`)
 
 export const login = ({ email, password }) => axios.post('/login', { email, password })

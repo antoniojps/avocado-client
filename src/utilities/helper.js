@@ -235,3 +235,12 @@ export const getChildrenFromPath = (path, routes) => {
   if (children.length === 0) return null
   return children
 }
+
+// get jwt token from localstorage
+export const getTokenFromLocalStorage = () => {
+  const localStorageKey = 'redux_localstorage_simple_user'
+  const userStore = JSON.parse(localStorage.getItem(localStorageKey))
+  if (!userStore) return null
+  if (!userStore.userToken) return null
+  return userStore.userToken
+}
