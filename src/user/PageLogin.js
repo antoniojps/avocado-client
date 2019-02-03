@@ -8,6 +8,7 @@ import { BaseFormInput, BaseLoader } from 'ui'
 import withAuth from 'user/withAuth'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { above } from 'utilities'
 
 class PageLogin extends Component {
   componentDidMount = () => {
@@ -141,12 +142,19 @@ const Wrapper = styled.div`
     padding: ${props => props.theme.spacing.base};
     width: 100%;
     height: 100%;
+    display: flex;
+    ${above.md`
+      align-items: center;
+    `}
     ${props => props.theme.gradient.bg()};
     ${Container} {
-      max-width: ${props => props.theme.width.m};
       margin-left: auto;
       margin-right: auto;
-      margin-top: ${props => props.theme.spacing.xxl};
+      width: 100%;
+      ${above.md`
+        width: ${props => props.theme.width.m};
+        transform: translateY(-20%);
+      `}
     }
 `
 
