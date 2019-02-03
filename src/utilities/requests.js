@@ -52,6 +52,7 @@ export const queryPutRole = ({ id, permissions }) => axios.put(`/roles/${id}`, {
 })
 export const queryDeleteRole = id => axios.delete(`/roles/${id}`)
 
+export const login = ({ email, password }) => axios.post('/login', { email, password })
 
 /** reusable */
 export const fetch = ({ url, search, page }) => axios.get(url, {

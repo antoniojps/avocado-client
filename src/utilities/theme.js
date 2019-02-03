@@ -102,9 +102,9 @@ const mixin = {
 
 const animation = {
   pulse: keyframes`
-  0% {transform: scale(0.94);}
-  50% {transform: scale(1);}
-  100% {transform: scale(0.94);}
+    0% {transform: scale(0.94);}
+    50% {transform: scale(1);}
+    100% {transform: scale(0.94);}
   `,
   pop: keyframes`
     0% {
@@ -112,6 +112,13 @@ const animation = {
       transform: scale(0);
     }
     100% {transform: scale(1);}
+  `,
+  bounce: keyframes`
+    0%, 100% {
+      transform: scale(0.0);
+    } 50% {
+      transform: scale(1.0);
+    }
   `,
 }
 

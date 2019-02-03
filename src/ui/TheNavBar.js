@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import {
   Icon,
   Title,
-  Button,
 } from 'elements'
 import { BaseBreakpoints, TheNavList } from 'ui'
 import { routes } from 'tenant/Routes'
@@ -52,19 +51,7 @@ class TheNavBar extends Component {
             />
           </NavBar.Left>
           <NavBar.Right>
-            <BaseBreakpoints render={({ md }) => (md
-              ? (
-                <Button modifiers={['primary', 'noMargin', 'important']}>
-                  Login
-                </Button>
-              )
-              : (
-                <Button modifiers={['primary', 'noMargin', 'important', 'small']}>
-                  Login
-                </Button>
-              ))
-            }
-            />
+            User
           </NavBar.Right>
         </NavBar>
         <BaseBreakpoints render={({ md }) => (md
