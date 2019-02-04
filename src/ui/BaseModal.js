@@ -84,7 +84,8 @@ const TheModal = ({
 )
 
 const Modal = styled.div`
-  position: absolute;
+  position: fixed;
+  overflow-y: scroll;
   width: 100vw;
   height: 100vh;
   top: 0;
