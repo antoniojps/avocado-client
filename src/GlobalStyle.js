@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #portal {
-    position: fixed;
+    position: absolute;
     z-index: ${props => props.theme.zIndex.l};
   }
 

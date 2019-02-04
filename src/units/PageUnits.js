@@ -90,21 +90,21 @@ class PageUnits extends Component {
       <BasePage
         page={{ title: 'Units' }}
         sideHeader={(
-          <>
-            {this.renderAction('Add')}
-            <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
-          </>
+          <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
         )}
       >
-        <BaseList {...this.props} context="units" fetchList={() => this.fetchUnits} loadMore={this.fetchUnits}>
-          {list.map((unit) => (
-            <Container key={unit.id}>
-              <Title>{`${unit.id} and ${unit.name}`}</Title>
-              {this.renderAction('Edit', unit)}
-              <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, unit.id)}>Delete</Button>
-            </Container>
-          ))}
-        </BaseList>
+        <>
+          {this.renderAction('Add')}
+          <BaseList {...this.props} context="units" fetchList={() => this.fetchUnits} loadMore={this.fetchUnits}>
+            {list.map((unit) => (
+              <Container key={unit.id}>
+                <Title>{`${unit.id} and ${unit.name}`}</Title>
+                {this.renderAction('Edit', unit)}
+                <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, unit.id)}>Delete</Button>
+              </Container>
+            ))}
+          </BaseList>
+        </>
       </BasePage>
     )
   }

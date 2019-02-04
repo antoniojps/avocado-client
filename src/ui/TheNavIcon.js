@@ -12,7 +12,7 @@ class TheNavIcon extends Component {
   render() {
     const { isOpen } = this.props
     return (
-      <Icon onClick={this.handleClick}>
+      <Icon onClick={this.handleClick} isOpen={isOpen}>
         <Icon.LineTop isOpen={isOpen} />
         <Icon.LineBottom isOpen={isOpen} />
       </Icon>
@@ -37,7 +37,7 @@ const Icon = styled.div`
   padding: ${props => props.theme.spacing.xxs} ${props => props.theme.spacing.s};
   padding-left: ${props => props.theme.spacing.base};
   padding-top: ${props => props.theme.spacing.base};
-  z-index: ${props => props.theme.zIndex.above};
+  z-index: ${({ isOpen, theme }) => (isOpen ? theme.zIndex.above : theme.zIndex.m)};
   position: relative;
 `
 

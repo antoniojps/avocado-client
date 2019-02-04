@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { BaseFormInput } from 'ui'
+import { Input } from 'elements'
 import PropTypes from 'prop-types'
+import { BaseBreakpoints } from 'ui'
 
 class BaseSearch extends Component {
   constructor(props) {
@@ -30,15 +31,41 @@ class BaseSearch extends Component {
   render() {
     const { placeholder, modifiers } = this.props;
     const { value } = this.state;
-    return <BaseFormInput placeholder={placeholder} modifiers={modifiers} onChange={this.handleChange} value={value} />
+    const modifiersWithNoMargin = ['noMargin', ...modifiers]
+    return (
+      <BaseBreakpoints render={({ md }) => (
+        <>
+          {md
+            ? (
+              <Input
+                placeholder={placeholder}
+                modifiers={modifiersWithNoMargin}
+                onChange={this.handleChange}
+                value={value}
+              />
+            )
+            : (
+              <Input
+                placeholder={placeholder}
+                modifiers={modifiers}
+                onChange={this.handleChange}
+                value={value}
+              />
+            )}
+        </>
+      )}
+      />
+    )
   }
 }
 BaseSearch.propTypes = {
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  modifiers: PropTypes.arrayOf(PropTypes.string),
 }
 BaseSearch.defaultProps = {
   placeholder: 'Search',
+  modifiers: [],
 }
 
 

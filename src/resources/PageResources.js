@@ -90,21 +90,21 @@ class PageResources extends Component {
       <BasePage
         page={{ title: 'Resources' }}
         sideHeader={(
-          <>
-            {this.renderAction('Add')}
-            <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
-          </>
+          <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
         )}
       >
-        <BaseList {...this.props} context="resources" fetchList={() => this.fetchResources} loadMore={this.fetchResources}>
-          {list.map((resource) => (
-            <Container key={resource.id}>
-              <Title>{`${resource.id} and ${resource.name}`}</Title>
-              {this.renderAction('Edit', resource)}
-              <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, resource.id)}>Delete</Button>
-            </Container>
-          ))}
-        </BaseList>
+        <>
+          {this.renderAction('Add')}
+          <BaseList {...this.props} context="resources" fetchList={() => this.fetchResources} loadMore={this.fetchResources}>
+            {list.map((resource) => (
+              <Container key={resource.id}>
+                <Title>{`${resource.id} and ${resource.name}`}</Title>
+                {this.renderAction('Edit', resource)}
+                <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, resource.id)}>Delete</Button>
+              </Container>
+            ))}
+          </BaseList>
+        </>
       </BasePage>
     )
   }
