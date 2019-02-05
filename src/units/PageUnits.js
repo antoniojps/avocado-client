@@ -98,6 +98,7 @@ class PageUnits extends Component {
         sideHeader={(
           <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
         )}
+        wrapContainer={false}
       >
         <>
           {this.renderAction('Add')}

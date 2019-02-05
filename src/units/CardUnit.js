@@ -5,7 +5,6 @@ import { BaseToggleAnimated } from 'ui'
 import {
   Title, Icon, Container, P,
 } from 'elements'
-import { above } from 'utilities'
 import CardUnitRiskFactor from './CardUnitRiskFactor'
 
 class CardUnit extends Component {

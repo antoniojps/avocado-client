@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Popover from 'react-tiny-popover'
-import { BaseBreakpoints, BaseSearch, BaseLoader } from 'ui'
+import { BaseSearch, BaseLoader } from 'ui'
 import { PopUp } from 'elements'
 import { ThemeProvider } from 'styled-components'
 import { theme, globalSearch } from 'utilities'
@@ -10,14 +10,25 @@ import SearchResults from './SearchResults';
 class GlobalSearch extends Component {
   state = {
     isPopoverOpen: false,
-    data: {},
+    data: {
+      users: null,
+      resources: null,
+      units: null,
+    },
     isLoading: false,
+    error: null,
   }
 
   getResults = async search => {
-    this.setState({ isLoading: true });
-    const { data } = await globalSearch(search);
-    this.setState({ isLoading: false, data: data.data });
+    this.setState(() => ({ isLoading: true }));
+    try {
+      const { data } = await globalSearch(search);
+      console.log(data)
+      if (typeof data !== 'object') throw new Error('Data is not valid type')
+      this.setState(() => ({ isLoading: false, data: data.data, error: null }));
+    } catch (error) {
+      this.setState(() => ({ isLoading: false, data: {}, error }))
+    }
   }
 
   handleSearch = search => {
@@ -40,9 +51,11 @@ class GlobalSearch extends Component {
 
   render() {
     const {
-      isPopoverOpen, isLoading, data, data: { users, units, resources },
+      isPopoverOpen, isLoading, data, error,
     } = this.state;
-
+    const users = data && (data.users || null)
+    const units = data && (data.units || null)
+    const resources = data && (data.resources || null)
     return (
       <div>
         <Popover
@@ -55,19 +68,14 @@ class GlobalSearch extends Component {
               <PopUp>
                 {isLoading && <BaseLoader message="Loading results..." />}
                 {(!isLoading && !this.checkData(users, units, resources)) && <div>No results found</div>}
-                {!isLoading && <SearchResults data={data} />}
+                {(!isLoading && !error) && <SearchResults data={data} />}
               </PopUp>
             </ThemeProvider>
           )}
         >
-          <BaseBreakpoints render={({ md }) => (
-            <>
-              <BaseSearch onChange={search => this.handleSearch(search)} modifiers={['noMargin']}>
-                Serch
-              </BaseSearch>
-            </>
-          )}
-          />
+          <BaseSearch onChange={search => this.handleSearch(search)} modifiers={['noMargin']}>
+            Serch
+          </BaseSearch>
 
         </Popover>
       </div>

@@ -112,7 +112,7 @@ class UnitCreateFrom extends Component {
           type: TEXTAREA,
           initialValue: unit ? unit.description : '',
           validation: true,
-          required: false,
+          required: true,
           placeholder: 'Description',
           label: 'Description',
           component: this.renderInput,

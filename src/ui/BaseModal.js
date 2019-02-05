@@ -106,7 +106,7 @@ Modal.Container = styled(Container)`
   margin-right: auto;
   margin: ${props => props.theme.spacing.base} auto;
   ${above.sm`
-    margin: ${props => props.theme.spacing.xxl} auto;
+    margin: ${props => props.theme.spacing.l} auto;
   `}
 `
 
@@ -125,7 +125,7 @@ Modal.Header.Content = styled.div`
   display: flex;
   justify-content: space-between;
   ${above.sm`
-    margin: ${props => props.theme.spacing.xxl} auto;
+    margin: ${props => props.theme.spacing.l} auto;
     max-width: ${props => props.theme.width.m};
     justify-content: flex-end;
   `}

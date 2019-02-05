@@ -49,9 +49,9 @@ const renderBaseTabs = ({ history }) => {
   )
 }
 
-const renderMainContent = ({ children, page }) => {
-  const { subtitle, description, wrapContainer } = page
-  const renderContainer = () => (wrapContainer ? (
+const renderMainContent = ({ children, page, wrapContainer }) => {
+  const { subtitle, description } = page
+  const renderContainer = () => (wrapContainer === true ? (
     <Container>
       {children}
     </Container>
@@ -86,6 +86,7 @@ const BasePageMain = ({
   children,
   page,
   sideHeader,
+  wrapContainer,
   history,
 }) => {
   const hasTabs = getTabsFromPath(history.location.pathname)
@@ -110,7 +111,7 @@ const BasePageMain = ({
               }
             </Main.Header>
             <BaseBreakpoints render={({ md }) => !md
-            && renderMainContent({ children, page })
+            && renderMainContent({ children, page, wrapContainer })
             }
             />
           </Container>
@@ -124,7 +125,7 @@ const BasePageMain = ({
             }
             <BaseBreakpoints render={({ md }) => md
             && renderMainContent(
-              { children, page }
+              { children, page, wrapContainer }
             )
             }
             />
@@ -141,13 +142,13 @@ BasePageMain.propTypes = {
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     description: PropTypes.string,
-    wrapContainer: PropTypes.bool,
   }),
   sideHeader: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
   ]),
   history: PropTypes.shape({}).isRequired,
+  wrapContainer: PropTypes.bool,
 }
 
 BasePageMain.defaultProps = {
@@ -156,6 +157,7 @@ BasePageMain.defaultProps = {
     wrapContainer: true,
   },
   sideHeader: null,
+  wrapContainer: true,
 }
 
 

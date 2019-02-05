@@ -9,12 +9,14 @@ const BasePage = ({
   children,
   page,
   sideHeader,
+  wrapContainer,
   className,
 }) => (
   <div className={className}>
     <TheMain
       page={page}
       sideHeader={sideHeader}
+      wrapContainer={wrapContainer}
     >
       {children}
     </TheMain>
@@ -33,12 +35,14 @@ BasePage.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.string.isRequired,
+  wrapContainer: PropTypes.bool,
 }
 
 BasePage.defaultProps = {
   page: {
     title: 'Titulo',
   },
+  wrapContainer: true,
   sideHeader: null,
 }
 
