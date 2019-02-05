@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Title } from 'elements'
-import { BaseFormInput, BaseFormSelect, BaseLoader } from 'ui'
+import { BaseFormInput, BaseFormSelect } from 'ui'
 import BaseForm, { inputTypes } from 'ui/BaseForm';
-import { fetch } from 'utilities/requests'
+import { fetch } from 'utilities'
 import PropTypes from 'prop-types'
 import withUnits from './withUnits'
 
@@ -30,9 +30,18 @@ class UnitCreateFrom extends Component {
 
   renderSubmitButton = () => {
     const { isPostLoading, isPutLoading, type } = this.props;
-    if (!isPostLoading && !isPutLoading) return <Button type="submit" modifiers="primary">Submit Unit</Button>
+    const isLoading = isPostLoading || isPutLoading
+    if (!isLoading) {
+      return (
+        <Button type="submit" modifiers="primary">
+        Submit Unit
+        </Button>
+      )
+    }
     return (
-      <BaseLoader message={type === 'Add' ? 'Adding unit....' : 'Editing unit....'} />
+      <Button type="submit" modifiers="primary">
+        {type === 'Add' ? 'Adding unit....' : 'Editing unit....'}
+      </Button>
     )
   }
 
