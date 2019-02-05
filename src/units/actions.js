@@ -19,7 +19,7 @@ export const postUnit = data => ({
   type: 'POST_UNITS',
   payload: {
     data,
-    url: 'resource',
+    url: 'unit',
   },
   callFunction: post,
   context: 'UNITS',

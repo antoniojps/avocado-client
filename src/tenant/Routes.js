@@ -13,6 +13,7 @@ import PageRoles from 'settings/PageRoles'
 import PageIndex from './PageIndex'
 import PageUnits from '../units/PageUnits';
 import PageUsers from '../users/PageUsers';
+import PageCalendar from '../calendar/PageCalendar';
 
 const routesConfig = {
   index: {
@@ -48,6 +49,11 @@ const routesConfig = {
     component: PageGather,
     key: 'gather',
     name: 'Gather',
+  },
+  calendar: {
+    component: PageCalendar,
+    key: 'calendar',
+    name: 'Calendar',
   },
   resources: {
     component: PageResources,

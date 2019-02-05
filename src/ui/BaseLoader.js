@@ -87,15 +87,27 @@ BaseLoader.defaultProps = {
   center: true,
 }
 
-export const BaseLoading = () => (
-  <Loading>
-    <Loading.Spinner>
+export const BaseLoading = ({ className, width, height }) => (
+  <Loading className={className}>
+    <Loading.Spinner width={width} height={height}>
       <div className="double-bounce1" />
       <div className="double-bounce2" />
     </Loading.Spinner>
   </Loading>
 )
 
+
+BaseLoading.propTypes = {
+  className: PropTypes.string,
+  width: PropTypes.string,
+  height: PropTypes.string,
+}
+
+BaseLoading.defaultProps = {
+  className: null,
+  width: '40px',
+  height: '100%',
+}
 
 const Loading = styled.div`
   position: absolute;
@@ -111,8 +123,8 @@ const Loading = styled.div`
   cursor: default;
 `
 Loading.Spinner = styled.div`
-  width: 40px;
-  height: 100%;
+  width: ${props => props.width};
+  height: ${props => props.height};
   position: relative;
 
   .double-bounce1, .double-bounce2 {
