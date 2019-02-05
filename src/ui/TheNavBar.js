@@ -8,6 +8,7 @@ import {
 import { BaseBreakpoints, TheNavList } from 'ui'
 import { routes } from 'tenant/Routes'
 import { generateMainNavList } from 'utilities'
+import GlobalSearch from 'globalSearch/GlobalSearch'
 import TheNavIcon from './TheNavIcon'
 import TheNavBarMobile from './TheNavBarMobile'
 
@@ -52,6 +53,9 @@ class TheNavBar extends Component {
             />
           </NavBar.Left>
           <NavBar.Right>
+
+
+            <GlobalSearch />
             User
           </NavBar.Right>
         </NavBar>

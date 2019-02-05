@@ -11,6 +11,7 @@ const BUTTON_MODIFIERS = {
     padding: ${theme.spacing.xxxs} ${theme.spacing.xxms};
   `,
   right: () => 'float: right',
+  leftMargin: ({ theme }) => `margin-left: ${theme.spacing.xxs}`,
   noMargin: () => `
     margin: 0;
   `,

@@ -23,13 +23,13 @@ const axiosWithAuth = () => ax.create(setupConfig())
 // without auth header just use
 export const axios = ax.create(setupConfig())
 
-export const queryCurrentTenant = () => axios.get('/tenant');
-export const queryDomainAlreadyExists = fqdn => axios.post('/checkDomain', {
+export const queryCurrentTenant = () => axiosWithAuth().get('/tenant');
+export const queryDomainAlreadyExists = fqdn => axiosWithAuth().post('/checkDomain', {
   fqdn,
 })
 export const queryPutTenant = ({
   name, description, themes_id, logo,// eslint-disable-line
-}) => axios.put('/tenant', {
+}) => axiosWithAuth().put('/tenant', {
   name,
   description,
   themes_id,
@@ -40,7 +40,7 @@ export const queryPutTenant = ({
   },
 })
 
-export const queryDeleteTenant = () => axios.delete('tenant');
+export const queryDeleteTenant = () => axiosWithAuth().delete('tenant');
 
 // fqdn is the subdomain
 export const createTenant = ({
@@ -50,7 +50,7 @@ export const createTenant = ({
   password,
   password_confirmation, // eslint-disable-line
   fqdn,
-}) => axios.post('/tenant', {
+}) => axiosWithAuth().post('/tenant', {
   company,
   name,
   email,
@@ -60,35 +60,35 @@ export const createTenant = ({
 })
 
 
-export const queryCurrentTenantRoles = () => axios.get('/roles');
-export const queryPostRole = name => axios.post('/roles', { name })
-export const queryPutRole = ({ id, permissions }) => axios.put(`/roles/${id}`, {
+export const queryCurrentTenantRoles = () => axiosWithAuth().get('/roles');
+export const queryPostRole = name => axiosWithAuth().post('/roles', { name })
+export const queryPutRole = ({ id, permissions }) => axiosWithAuth().put(`/roles/${id}`, {
   permissions,
 }, {
   Headers: {
     'Content-type': 'application/x-www-form-urlencoded',
   },
 })
-export const queryDeleteRole = id => axios.delete(`/roles/${id}`)
+export const queryDeleteRole = id => axiosWithAuth().delete(`/roles/${id}`)
 
-export const login = ({ email, password }) => axios.post('/login', { email, password })
+export const login = ({ email, password }) => axiosWithAuth().post('/login', { email, password })
 export const queryWarmup = () => axiosWithAuth().get('/warmup')
 
 /** reusable */
-export const fetch = ({ url, search, page }) => axios.get(url, {
+export const fetch = ({ url, search, page }) => axiosWithAuth().get(url, {
   params: {
     page,
     search,
   },
 })
 
-export const post = ({ url, data }) => axios.post(url, data);
+export const post = ({ url, data }) => axiosWithAuth().post(url, data);
 
-export const put = ({ url, data }) => axios.put(`${url}/${data.id}`, data);
+export const put = ({ url, data }) => axiosWithAuth().put(`${url}/${data.id}`, data);
 
-export const destroy = ({ url, id }) => axios.delete(`${url}${id}`);
+export const destroy = ({ url, id }) => axiosWithAuth().delete(`${url}${id}`);
 
-export const globalSearch = (search) => axios.get('/search', {
+export const globalSearch = (search) => axiosWithAuth().get('/search', {
   params: {
     search,
   },
