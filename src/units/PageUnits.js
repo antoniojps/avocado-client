@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import {
   BasePage, BaseSearch, BaseToggle, BaseModal,
 } from 'ui'
-import { Button, Container, Title } from 'elements'
+import { Button } from 'elements'
 import BaseList from 'ui/BaseList';
 import PropTypes from 'prop-types'
 import { fetch } from 'utilities/requests'
 import withUnits from './withUnits';
 import UnitCreateFrom from './UnitCreateForm';
+import CardUnit from './CardUnit'
 
 class PageUnits extends Component {
   constructor(props) {
@@ -36,14 +37,19 @@ class PageUnits extends Component {
     deleteUnit(id)
   }
 
+  computedModifiers = (type = 'Add') => {
+    if (type === 'Add') return ['primary']
+    return ['small']
+  }
+
   renderAction = (type = 'Add', unit = null) => {
     const { unitTypes } = this.state;
     return (
       <BaseToggle ref={this.toggleRef}>
         {({ isOn, toggle }) => (
           <>
-            <Button modifiers={type === 'Add' ? ['primary'] : ['primary', 'small']} onClick={toggle}>
-              {`${type} unit`}
+            <Button modifiers={this.computedModifiers(type)} onClick={toggle}>
+              {`${type}`}
             </Button>
             <BaseModal toggle={toggle} isOn={isOn}>
               <UnitCreateFrom
@@ -88,7 +94,7 @@ class PageUnits extends Component {
     const { list } = this.props
     return (
       <BasePage
-        page={{ title: 'Units' }}
+        page={{ title: 'Units', wrapContainer: false }}
         sideHeader={(
           <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
         )}
@@ -97,11 +103,13 @@ class PageUnits extends Component {
           {this.renderAction('Add')}
           <BaseList {...this.props} context="units" fetchList={() => this.fetchUnits} loadMore={this.fetchUnits}>
             {list.map((unit) => (
-              <Container key={unit.id}>
-                <Title>{`${unit.id} and ${unit.name}`}</Title>
-                {this.renderAction('Edit', unit)}
-                <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, unit.id)}>Delete</Button>
-              </Container>
+              <CardUnit
+                key={unit.id}
+                unit={unit}
+                renderEdit={this.renderAction('Edit', unit)}
+                renderDelete={<Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, unit.id)}>Delete</Button>
+                }
+              />
             ))}
           </BaseList>
         </>

@@ -50,7 +50,13 @@ const renderBaseTabs = ({ history }) => {
 }
 
 const renderMainContent = ({ children, page }) => {
-  const { subtitle, description } = page
+  const { subtitle, description, wrapContainer } = page
+  const renderContainer = () => (wrapContainer ? (
+    <Container>
+      {children}
+    </Container>
+  ) : children);
+
   return (
     <Main.Content>
       {subtitle
@@ -67,9 +73,7 @@ const renderMainContent = ({ children, page }) => {
         )}
       <BaseBreakpoints render={({ md }) => (md
         ? (
-          <Container>
-            {children}
-          </Container>
+          renderContainer()
         )
         : children
       )}
@@ -137,6 +141,7 @@ BasePageMain.propTypes = {
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     description: PropTypes.string,
+    wrapContainer: PropTypes.bool,
   }),
   sideHeader: PropTypes.oneOfType([
     PropTypes.string,
@@ -148,6 +153,7 @@ BasePageMain.propTypes = {
 BasePageMain.defaultProps = {
   page: {
     title: 'Titulo',
+    wrapContainer: true,
   },
   sideHeader: null,
 }

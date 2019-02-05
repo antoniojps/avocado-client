@@ -84,7 +84,43 @@ const BaseIcon = ({
   case 'close':
     return (
       <svg width={getWidth(24, 22, height)} height={height} viewBox="0 0 24 22" xmlns="http://www.w3.org/2000/svg">
-        <path d="M11.764 9.05L20.792.92A1.5 1.5 0 1 1 22.8 3.15l-8.795 7.919 8.795 7.918a1.5 1.5 0 1 1-2.008 2.23l-9.028-8.13-9.029 8.13a1.5 1.5 0 0 1-2.007-2.23l8.794-7.918L.728 3.15A1.5 1.5 0 1 1 2.735.92l9.029 8.13z" fill={iconColor} fillRule="evenodd"/>
+        <path d="M11.764 9.05L20.792.92A1.5 1.5 0 1 1 22.8 3.15l-8.795 7.919 8.795 7.918a1.5 1.5 0 1 1-2.008 2.23l-9.028-8.13-9.029 8.13a1.5 1.5 0 0 1-2.007-2.23l8.794-7.918L.728 3.15A1.5 1.5 0 1 1 2.735.92l9.029 8.13z" fill={iconColor} fillRule="evenodd" />
+      </svg>
+    )
+  case 'unit':
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" width={getWidth(24, 24, height)} height={height} viewBox="0 0 24 24">
+        <g fill={iconColor} fillRule="evenodd">
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path d="M20 4H4v2h16V4zm1 10v-2l-1-5H4l-1 5v2h1v6h10v-6h4v6h2v-6h1zm-9 4H6v-4h6v4z" />
+        </g>
+      </svg>
+    )
+  case 'expandMore':
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" width={getWidth(24, 24, height)} height={height} viewBox="0 0 24 24">
+        <g fill={iconColor} fillRule="evenodd">
+          <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
+          <path d="M0 0h24v24H0z" fill="none" />
+        </g>
+      </svg>
+    )
+  case 'expandLess':
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" width={getWidth(24, 24, height)} height={height} viewBox="0 0 24 24">
+        <g fill={iconColor} fillRule="evenodd">
+          <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z" />
+          <path d="M0 0h24v24H0z" fill="none" />
+        </g>
+      </svg>
+    )
+  case 'risk':
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" width={getWidth(24, 24, height)} height={height} viewBox="0 0 24 24">
+        <g fill={iconColor} fillRule="evenodd">
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
+        </g>
       </svg>
     )
   default:
@@ -100,6 +136,9 @@ BaseIcon.propTypes = {
     'chevron-right',
     'edit',
     'close',
+    'unit',
+    'expandLess', 'expandMore',
+    'risk',
   ]).isRequired,
   color: PropTypes.string,
   height: PropTypes.number,
