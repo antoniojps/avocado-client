@@ -88,8 +88,8 @@ const BaseFormSelect = (props) => {
       <Input {...props} label={label} modifiers={modifiersFromProps} value={value || initial}>
         {options.map(({
           id, value, disabled,
-        }) => <option key={id} disabled={disabled} value={id}>{value}</option>
-        )}
+        }) => <option key={id} disabled={disabled} value={id}>{value}</option>)
+        }
       </Input>
       {touched && errorElement}
       <Input.Spacing />
@@ -105,12 +105,23 @@ BaseFormSelect.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.string,
   ]),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+      ]),
+      value: PropTypes.string,
+      disabled: PropTypes.bool,
+    })
+  ),
 }
 
 BaseFormSelect.defaultProps = {
   error: null,
   modifiers: [],
   touched: false,
+  options: [],
 }
 
 export default BaseFormSelect

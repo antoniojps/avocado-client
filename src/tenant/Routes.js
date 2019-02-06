@@ -10,10 +10,11 @@ import PageGather from 'user/PageGather'
 import PageLogin from 'user/PageLogin'
 import PageSettings from 'settings/PageSettings'
 import PageRoles from 'settings/PageRoles'
+import PageUnits from 'units/PageUnits';
+import PageUsers from 'users/PageUsers';
+import PageInvite from 'users/PageInvite';
+import PageCalendar from 'calendar/PageCalendar';
 import PageIndex from './PageIndex'
-import PageUnits from '../units/PageUnits';
-import PageUsers from '../users/PageUsers';
-import PageCalendar from '../calendar/PageCalendar';
 
 const routesConfig = {
   index: {
@@ -70,14 +71,20 @@ const routesConfig = {
     key: 'units',
     exact: true,
     name: 'Units',
-
   },
   team: {
-    component: PageUsers,
-    key: 'team',
-    exact: true,
-    name: 'Team',
-
+    index: {
+      component: PageUsers,
+      key: 'team',
+      exact: true,
+      name: 'Team',
+    },
+    invite: {
+      component: PageInvite,
+      key: 'teamInvite',
+      exact: true,
+      name: 'Invite',
+    },
   },
   settings: {
     index: {

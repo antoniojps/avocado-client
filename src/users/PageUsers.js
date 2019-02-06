@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import {
   BasePage, BaseSearch, BaseToggle, BaseModal,
 } from 'ui'
-import { Button, Container, Title } from 'elements'
+import { Button } from 'elements'
 import BaseList from 'ui/BaseList';
 import PropTypes from 'prop-types'
 // import { fetch } from 'utilities/requests'
 import withUsers from './withUsers';
 // import UserCreateFrom from './UserCreateForm';
+import CardTeam from './CardTeam'
 
 class PageUsers extends Component {
   constructor(props) {
@@ -36,28 +37,25 @@ class PageUsers extends Component {
     deleteUser(id)
   }
 
-  renderAction = (type = 'Add', user = null) => 
-    // const { userTypes } = this.state;
-     (
-      <BaseToggle ref={this.toggleRef}>
-        {({ isOn, toggle }) => (
-          <>
-            <Button modifiers={type === 'Add' ? ['primary'] : ['primary', 'small']} onClick={toggle}>
-              {`${type} user`}
-            </Button>
-            <BaseModal toggle={toggle} isOn={isOn}>
-              {/* <UserCreateFrom
+  renderAction = (type = 'Add', user = null) => (
+    <BaseToggle ref={this.toggleRef}>
+      {({ isOn, toggle }) => (
+        <>
+          <Button modifiers={type === 'Add' ? ['primary'] : ['primary', 'small']} onClick={toggle}>
+            {`${type} user`}
+          </Button>
+          <BaseModal toggle={toggle} isOn={isOn}>
+            {/* <UserCreateFrom
                 types={userTypes}
                 onSubmit={toggle}
                 type={type}
                 user={user}
               /> */}
-            </BaseModal>
-          </>
-        )}
-      </BaseToggle>
-    )
-  
+          </BaseModal>
+        </>
+      )}
+    </BaseToggle>
+  )
 
 
   getSearchParam = () => {
@@ -88,21 +86,26 @@ class PageUsers extends Component {
     const { list } = this.props
     return (
       <BasePage
-        page={{ title: 'Users' }}
+        page={{
+          title: 'Manage',
+          subtitle: 'Manage the team',
+          description: 'Search your team or remove someone from the workspace',
+        }}
         sideHeader={(
           <>
             {/* {this.renderAction('Add')} */}
             <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
           </>
         )}
+        wrapContainer={false}
       >
         <BaseList {...this.props} context="users" fetchList={() => this.fetchUsers} loadMore={this.fetchUsers}>
-          {list.map((user) => (
-            <Container key={user.id}>
-              <Title>{`${user.id} and ${user.name}`}</Title>
-              {/* {this.renderAction('Edit', user)} */}
-              <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, user.id)}>Delete</Button>
-            </Container>
+          {list.map((team) => (
+            <CardTeam
+              renderDelete={<Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, team.id)}>Delete</Button>}
+              key={team.id}
+              team={team}
+            />
           ))}
         </BaseList>
       </BasePage>

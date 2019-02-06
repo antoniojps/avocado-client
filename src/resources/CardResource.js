@@ -35,7 +35,7 @@ class CardResource extends Component {
         <Card.Resource onClick={this.onCollapse}>
           <Card.Container>
             <Card.Section>
-              <Icon icon="unit" />
+              <Icon icon="resources" />
               <Title modifiers={['noMargin']}>
                 {name}
               </Title>

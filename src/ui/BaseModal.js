@@ -1,29 +1,17 @@
 import React from 'react'
 import PropTypes, { element } from 'prop-types'
-import { ThePortal, BaseBreadcrumb, BaseBreakpoints } from 'ui'
+import { ThePortal, BaseBreadcrumb } from 'ui'
 import { Container, Icon } from 'elements'
 import styled, { withTheme } from 'styled-components'
-import { transparentize } from 'polished'
-import { above } from 'utilities'
 import { Transition } from 'react-spring'
 
 const BaseModal = ({
   children, toggle, isOn, theme,
 }) => (
   <ThePortal>
-    <BaseBreakpoints render={({ sm }) => (sm
-      ? (
-        <TheModalDesktop isOn={isOn} toggle={toggle} theme={theme}>
-          {children}
-        </TheModalDesktop>
-      )
-      : (
-        <TheModalMobile isOn={isOn} toggle={toggle} theme={theme}>
-          {children}
-        </TheModalMobile>
-      )
-    )}
-    />
+    <TheModalMobile isOn={isOn} toggle={toggle} theme={theme}>
+      {children}
+    </TheModalMobile>
   </ThePortal>
 )
 
@@ -45,23 +33,23 @@ const TheModalMobile = ({
   </Transition>
 )
 
-const TheModalDesktop = ({
-  isOn, toggle, theme, children,
-}) => (
-  <Transition
-    items={isOn}
-    from={{ opacity: 0 }}
-    enter={{ opacity: 1 }}
-    leave={{ opacity: 0 }}
-  >
-    {isOn => isOn && (props => (
-      <TheModal style={props} toggle={toggle} theme={theme}>
-        {children}
-      </TheModal>
-    ))
-    }
-  </Transition>
-)
+// const TheModalDesktop = ({
+//   isOn, toggle, theme, children,
+// }) => (
+//   <Transition
+//     items={isOn}
+//     from={{ opacity: 0 }}
+//     enter={{ opacity: 1 }}
+//     leave={{ opacity: 0 }}
+//   >
+//     {isOn => isOn && (props => (
+//       <TheModal style={props} toggle={toggle} theme={theme}>
+//         {children}
+//       </TheModal>
+//     ))
+//     }
+//   </Transition>
+// )
 
 const TheModal = ({
   children, toggle, theme, style,
@@ -69,11 +57,7 @@ const TheModal = ({
   <Modal style={style}>
     <Modal.Header onClick={toggle}>
       <Modal.Header.Content>
-        <BaseBreakpoints render={({ sm }) => (sm
-          ? null
-          : (<BaseBreadcrumb modifiers="inverse" className="modal__breadcrumb" />)
-        )}
-        />
+        <BaseBreadcrumb modifiers="inverse" className="modal__breadcrumb" />
         <Icon icon="close" color={theme.color.baseInverse} />
       </Modal.Header.Content>
     </Modal.Header>
@@ -93,9 +77,6 @@ const Modal = styled.div`
   background-color: ${props => props.theme.color.bgPrimary};
   padding: ${props => props.theme.spacing.base};
   padding-top: ${props => props.theme.spacing.l};
-  ${above.sm`
-    background-color: ${props => transparentize(0.8, props.theme.color.bgDark)};
-  `}
 `
 
 Modal.Container = styled(Container)`
@@ -105,9 +86,6 @@ Modal.Container = styled(Container)`
   margin-left: auto;
   margin-right: auto;
   margin: ${props => props.theme.spacing.base} auto;
-  ${above.sm`
-    margin: ${props => props.theme.spacing.l} auto;
-  `}
 `
 
 Modal.Header = styled.div`
@@ -124,17 +102,13 @@ Modal.Header.Content = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  ${above.sm`
-    margin: ${props => props.theme.spacing.l} auto;
-    max-width: ${props => props.theme.width.m};
-    justify-content: flex-end;
-  `}
 `
 
 BaseModal.propTypes = {
   children: element.isRequired,
   toggle: PropTypes.func,
   isOn: PropTypes.bool,
+  theme: PropTypes.shape({}).isRequired,
 }
 BaseModal.defaultProps = {
   isOn: false,

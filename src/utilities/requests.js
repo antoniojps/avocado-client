@@ -59,6 +59,7 @@ export const createTenant = ({
   fqdn,
 })
 
+export const inviteUser = ({ name, email, role }) => axiosWithAuth().post('/invite', { name, email, role })
 
 export const queryCurrentTenantRoles = () => axiosWithAuth().get('/roles');
 export const queryPostRole = name => axiosWithAuth().post('/roles', { name })
