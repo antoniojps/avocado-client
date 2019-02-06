@@ -7,53 +7,94 @@ import { BaseModal } from 'ui'
 import { transparentize } from 'polished'
 import styled, { withTheme } from 'styled-components'
 import { Button, Subtitle } from 'elements'
-import events from './events'
+import { fetchEvents } from 'utilities/requests';
+import AddEventForm from './AddEventForm';
+
 
 const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
 
-
 class Calendar extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      events: [],
-      isLoading: true,
-      activeTab: 'week',
-      modalAddOpen: false,
-      addStart: null,
-      addEnd: null,
-    }
+  state = {
+    events: [],
+    isLoading: true,
+    activeTab: 'week',
+    modalAddOpen: false,
+    addStart: null,
+    addEnd: null,
+    currentMonth: null,
   }
 
+  onChange = e => {
+    console.log('change', e)
+  }
+
+
   async componentDidMount() {
-    await new Promise((res) => setTimeout(() => {
-      res();
-    }, 1000))
+    const start = moment().startOf('month').subtract(10, 'days').unix() // current begin of week timestampt
+    const end = moment().endOf('month').add(10, 'days').unix() // current end of week timestampt
+    const currentMonth = moment().format('M')
+
+    let { data: { data: events } } = await fetchEvents({ start, end });
+
+    events = events.map(event => (
+      {
+        ...event,
+        start: new Date(event.start),
+        end: new Date(event.end),
+      }
+    ))
+    console.log('events', events);
     this.setState({
       events,
       isLoading: false,
+      currentMonth,
     })
   }
 
-  onNavigate = (e, b) => console.log('initial day', e, 'context', b)
+  onNavigate = async (e) => {
+    const { currentMonth } = this.state;
+    console.log(moment(e).format('M'), currentMonth)
+    if (moment(e).format('M') !== currentMonth) {
+      const start = moment(e).startOf('month').subtract(10, 'days').unix() // current begin of week timestampt
+      const end = moment(e).endOf('month').add(10, 'days').unix()
+      this.setState({ isLoading: true });
+      let { data: { data: events } } = await fetchEvents({ start, end });
+      events = events.map(event => (
+        {
+          ...event,
+          start: new Date(event.start),
+          end: new Date(event.end),
+        }
+      ))
+      this.setState({
+        currentMonth,
+        events,
+        isLoading: false,
+      })
+    }
+  }
 
-  getCustomBar = ({ label, onNavigate }) => (
-    <>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <div>
-          <Button onClick={() => onNavigate('PREV')}>Back</Button>
-          <Button modifiers="leftMargin" onClick={() => onNavigate('TODAY')}>Today</Button>
-          <Button modifiers="leftMargin" onClick={() => onNavigate('NEXT')}>Next</Button>
+
+  getCustomBar = ({ label, onNavigate }) => {
+    const { activeTab } = this.state
+    return (
+      <>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
+            <Button onClick={() => onNavigate('PREV')}>Back</Button>
+            <Button modifiers="leftMargin" onClick={() => onNavigate('TODAY')}>Today</Button>
+            <Button modifiers="leftMargin" onClick={() => onNavigate('NEXT')}>Next</Button>
+          </div>
+          <Subtitle>{label}</Subtitle>
+          <div>
+            <Button modifiers="leftMargin" modifiers={activeTab === 'month' ? ['primary', 'leftMargin'] : 'leftMargin'} onClick={() => this.setState({ activeTab: 'month' })}>Month</Button>
+            <Button modifiers="leftMargin" modifiers={activeTab === 'week' ? ['primary', 'leftMargin'] : 'leftMargin'} onClick={() => this.setState({ activeTab: 'week' })}>Week</Button>
+            <Button modifiers="leftMargin" modifiers={activeTab === 'day' ? ['primary', 'leftMargin'] : 'leftMargin'} onClick={() => this.setState({ activeTab: 'day' })}>Day</Button>
+          </div>
         </div>
-        <Subtitle>{label}</Subtitle>
-        <div>
-          <Button modifiers="leftMargin" onClick={() => this.setState({ activeTab: 'month' })}>Month</Button>
-          <Button modifiers="leftMargin" onClick={() => this.setState({ activeTab: 'week' })}>Week</Button>
-          <Button modifiers="leftMargin" onClick={() => this.setState({ activeTab: 'day' })}>Day</Button>
-        </div>
-      </div>
-    </>
-  )
+      </>
+    )
+  }
 
   handleSelect = ({ start, end }) => {
     this.setState({ addStart: start, addEnd: end }, () => this.toggleModal())
@@ -68,8 +109,7 @@ class Calendar extends Component {
     return (
       <>
         <BaseModal isOn={modalAddOpen} toggle={this.toggleModal}>
-          <div>{addStart && addStart.toString()}</div>
-          <div>{addEnd && addEnd.toString()}</div>
+          <AddEventForm {...{ addStart, addEnd, onChange: this.onChange }} />
         </BaseModal>
         <div style={{ position: 'relative', height: activeTab === 'month' ? '900px' : '100%' }}>
           {isLoading && <Loader width="20%" height="20%" />}
@@ -79,6 +119,8 @@ class Calendar extends Component {
             events={events}
             tooltipAccessor={() => null}
             defaultView={activeTab}
+            onNavigate={this.onNavigate}
+            onView={this.onView}
             view={activeTab}
             scrollToTime={new Date(1970, 1, 1, 6)}
             onSelectEvent={event => alert(event.title)}
@@ -107,7 +149,6 @@ class Calendar extends Component {
                 };
               }
             }
-            defaultDate={new Date(2015, 3, 12)}
           />
         </div>
 

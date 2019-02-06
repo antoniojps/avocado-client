@@ -18,7 +18,7 @@ function setupConfig() {
 // needs to be invoked before use get the updated token
 // example: axiosWithAuth().get('/endpoint)
 // this way setupConfig is invoked before the request and gets updated
-const axiosWithAuth = () => ax.create(setupConfig())
+export const axiosWithAuth = () => ax.create(setupConfig())
 
 // without auth header just use
 export const axios = ax.create(setupConfig())
@@ -91,5 +91,11 @@ export const destroy = ({ url, id }) => axiosWithAuth().delete(`${url}${id}`);
 export const globalSearch = (search) => axiosWithAuth().get('/search', {
   params: {
     search,
+  },
+})
+
+export const fetchEvents = search => axiosWithAuth().get('/event', {
+  params: {
+    ...search,
   },
 })

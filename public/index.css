@@ -13,3 +13,16 @@
     min-height: 0;
     border-bottom: 1px solid #DDD;
   }
+  .react-datetime-picker{
+    display: block!important;
+    width: 100%!important;  
+    background: #FFFFFF;
+
+  }
+  .react-datetime-picker__wrapper {
+    padding: 0.55rem 1.25rem;
+    border: 1px solid #DDDDDD!important;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+  

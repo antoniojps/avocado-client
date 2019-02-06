@@ -49,20 +49,20 @@ export default class PageComponents extends Component {
       }}
       >
         <Title>
-            Input
+          Input
         </Title>
         <BaseSearch onChange={this.handleChange} />
-        <BaseFormInput placeholder="Name" />
+        <BaseFormInput placeholder="Name" type="date" />
         <BaseFormInput placeholder="Valid" modifiers="valid" />
         <BaseFormInput placeholder="Error" modifiers="error" error="epa ocorreu um grave erro" />
         <Title>
-            Modal
+          Modal
         </Title>
         <BaseToggle>
           {({ isOn, toggle }) => (
             <>
               <Button modifiers="danger" onClick={toggle}>
-                  Click to toggle
+                Click to toggle
               </Button>
               <BaseModal toggle={toggle} isOn={isOn}>
                 <div>Im a modal</div>
@@ -71,7 +71,7 @@ export default class PageComponents extends Component {
           )}
         </BaseToggle>
         <Title>
-            Loader
+          Loader
         </Title>
         <BaseLoader message="Loading something..." />
         <SyntaxHighlighter>
@@ -80,20 +80,20 @@ export default class PageComponents extends Component {
 <BaseLoader message="Loading something..." />`}
         </SyntaxHighlighter>
         <Title>
-            Tabs
+          Tabs
         </Title>
         <P>
-            Horizontal
+          Horizontal
         </P>
         <BaseTabs>
           <BaseTabs.Tab to="/components">
-              Components
+            Components
           </BaseTabs.Tab>
           <BaseTabs.Tab to="/components/tab-2">
-              Tab 2
+            Tab 2
           </BaseTabs.Tab>
           <BaseTabs.Tab to="/components/tab-3">
-              Tab 3
+            Tab 3
           </BaseTabs.Tab>
         </BaseTabs>
         <br />
@@ -113,17 +113,17 @@ export default class PageComponents extends Component {
 </BaseTabs>`}
         </SyntaxHighlighter>
         <P>
-            Vertical
+          Vertical
         </P>
         <BaseTabs orientation="vertical">
           <BaseTabs.Tab to="/components">
-              Components
+            Components
           </BaseTabs.Tab>
           <BaseTabs.Tab to="/components/tab-2">
-              Tab 2
+            Tab 2
           </BaseTabs.Tab>
           <BaseTabs.Tab to="/components/tab-3">
-              Tab 3
+            Tab 3
           </BaseTabs.Tab>
         </BaseTabs>
         <br />
@@ -143,10 +143,10 @@ export default class PageComponents extends Component {
 </BaseTabs>`}
         </SyntaxHighlighter>
         <Title>
-            Switch
+          Switch
         </Title>
         <BaseSwitch isChecked={isChecked} onChange={this.handleSwitchChange}>
-            Switch is
+          Switch is
           {' '}
           {isChecked ? 'on' : 'off'}
         </BaseSwitch>
@@ -181,7 +181,7 @@ class Example extends Component {
             <>
               {isOn && <P>Toggle is on!</P>}
               <Button modifiers="danger" onClick={toggle}>
-                  Click to toggle
+                Click to toggle
               </Button>
             </>
           )}
@@ -201,7 +201,7 @@ class Example extends Component {
 </BaseToggle>`}
         </SyntaxHighlighter>
         <Title>
-            Rater
+          Rater
         </Title>
         <BaseRater
           rating={3}
@@ -224,15 +224,15 @@ class Example extends Component {
 <P>{ratingInfo}</P>`}
         </SyntaxHighlighter>
         <Title>
-            Breadcrumb
+          Breadcrumb
         </Title>
         <P>
           <Link to="/components/tab-2">
-              Click to go to Tab 2
+            Click to go to Tab 2
           </Link>
           {' or '}
           <Link to="/components/tab-3">
-              Click to go to Tab 3
+            Click to go to Tab 3
           </Link>
         </P>
         <BaseBreadcrumb
