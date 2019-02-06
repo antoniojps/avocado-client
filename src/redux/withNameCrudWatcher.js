@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { toast } from 'utilities'
+import { toast, capitalize } from 'utilities'
 
 function* fetch({
   payload, callFunction, context,
@@ -18,7 +18,7 @@ function* post({ payload, callFunction, context }) {
   try {
     const { data: { data } } = yield call(callFunction, payload);
     yield put({ type: `POST_${context}_SUCCESS`, data })
-    toast.success(`${context.toUpperCase()} created`)
+    toast.success(`${capitalize(context)} created`)
   } catch (err) {
     yield put({ type: `POST_${context}_FAILURE`, data: err })
     toast.error(`Error creating ${context.toLowerCase()}`)
@@ -30,7 +30,7 @@ function* update({ payload, callFunction, context }) {
   try {
     const { data: { data } } = yield call(callFunction, payload);
     yield put({ type: `PUT_${context}_SUCCESS`, data })
-    toast.success(`${context.toUpperCase()} updated`)
+    toast.success(`${capitalize(context)} updated`)
   } catch (err) {
     yield put({ type: `PUT_${context}_FAILURE`, data: err })
     toast.error(`Error updating ${context.toLowerCase()}`)
@@ -42,7 +42,7 @@ function* destroy({ payload, callFunction, context }) {
   try {
     const { data } = yield call(callFunction, payload);
     yield put({ type: `DELETE_${context}_SUCCESS`, data })
-    toast.success(`${context.toUpperCase()} deleted`)
+    toast.success(`${capitalize(context)} deleted`)
   } catch (err) {
     yield put({ type: `DELETE_${context}_FAILURE`, data: err })
     toast.error(`Error deleting ${context.toLowerCase()}`)

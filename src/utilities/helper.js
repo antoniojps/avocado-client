@@ -240,3 +240,9 @@ export const getChildrenFromPath = (path, routes) => {
 export const getToken = () => localStorage.getItem('token')
 export const addToken = (token) => localStorage.setItem('token', token)
 export const removeToken = () => localStorage.removeItem('token')
+
+// strings
+export const capitalize = (s) => {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()
+}

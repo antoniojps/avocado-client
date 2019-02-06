@@ -2,9 +2,10 @@ import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller';
 import PropTypes from 'prop-types'
 import { BaseLoader } from 'ui'
+import { P } from 'elements'
 
 const renderError = (error = 'Something went wrong') => <div>{error}</div>
-const renderEndOfResults = () => <div>End of results</div>
+const renderEndOfResults = () => <P>...end of results</P>
 const renderLoading = (context) => <BaseLoader message={`Loading ${context}...`} />
 const renderNoResults = () => <div>We didnt find any results</div>
 

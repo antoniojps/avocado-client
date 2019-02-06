@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import {
   BasePage, BaseSearch, BaseToggle, BaseModal,
 } from 'ui'
-import { Button, Container, Title } from 'elements'
+import { Button } from 'elements'
 import BaseList from 'ui/BaseList';
 import PropTypes from 'prop-types'
 import { fetch } from 'utilities/requests'
 import withResources from './withResources';
 import ResourceCreateFrom from './ResourceCreateFrom';
+import CardResource from './CardResource'
 
 class PageResources extends Component {
   constructor(props) {
@@ -36,14 +37,19 @@ class PageResources extends Component {
     deleteResource(id)
   }
 
+  computedModifiers = (type = 'Add') => {
+    if (type === 'Add') return ['primary']
+    return ['small']
+  }
+
   renderAction = (type = 'Add', resource = null) => {
     const { resourceTypes } = this.state;
     return (
       <BaseToggle ref={this.toggleRef}>
         {({ isOn, toggle }) => (
           <>
-            <Button modifiers={type === 'Add' ? ['primary'] : ['primary', 'small']} onClick={toggle}>
-              {`${type} resource`}
+            <Button modifiers={this.computedModifiers(type)} onClick={toggle}>
+              {`${type}`}
             </Button>
             <BaseModal toggle={toggle} isOn={isOn}>
               <ResourceCreateFrom
@@ -92,16 +98,18 @@ class PageResources extends Component {
         sideHeader={(
           <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
         )}
+        wrapContainer={false}
       >
         <>
           {this.renderAction('Add')}
           <BaseList {...this.props} context="resources" fetchList={() => this.fetchResources} loadMore={this.fetchResources}>
             {list.map((resource) => (
-              <Container key={resource.id}>
-                <Title>{`${resource.id} and ${resource.name}`}</Title>
-                {this.renderAction('Edit', resource)}
-                <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, resource.id)}>Delete</Button>
-              </Container>
+              <CardResource
+                renderDelete={<Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, resource.id)}>Delete</Button>}
+                renderEdit={this.renderAction('Edit', resource)}
+                key={resource.id}
+                resource={resource}
+              />
             ))}
           </BaseList>
         </>
