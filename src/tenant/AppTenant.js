@@ -10,6 +10,7 @@ import { theme, history } from 'utilities'
 import Routes from 'tenant/Routes'
 import { flow } from 'lodash'
 import { BasePageTheHeader as TheHeader } from 'ui'
+import { ToastContainer } from 'react-toastify';
 import withTenant from './withTenant';
 
 class AppTenant extends Component {
@@ -35,6 +36,7 @@ class AppTenant extends Component {
               <Routes />
             </>
           </Router>
+          <ToastContainer />
           <GlobalStyle />
         </>
       </ThemeProvider>

@@ -3,12 +3,11 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { BaseToggleAnimated } from 'ui'
 import {
-  Title, Icon, Container, P,
+  Title, Icon, Container, P, TagIcon,
 } from 'elements'
 import { above } from 'utilities'
-import CardUnitRiskFactor from './CardUnitRiskFactor'
 
-class CardUnit extends Component {
+class CardResource extends Component {
   state = {
     isExpanded: false,
     collapseIcon: 'expandMore',
@@ -21,47 +20,38 @@ class CardUnit extends Component {
   }
 
   render() {
-    const { unit, renderEdit, renderDelete } = this.props
+    const { resource, renderEdit, renderDelete } = this.props
     const { isExpanded, collapseIcon } = this.state
 
     const {
       name,
-      description,
-      address,
       id,
-      factor,
-    } = unit
+      description,
+      type,
+    } = resource
 
     return (
       <Card>
-        <Card.Unit onClick={this.onCollapse}>
+        <Card.Resource onClick={this.onCollapse}>
           <Card.Container>
             <Card.Section>
               <Icon icon="unit" />
               <Title modifiers={['noMargin']}>
                 {name}
               </Title>
-              {address
-                && (
-                  <P>
-                    {address}
-                  </P>
-                )
-              }
             </Card.Section>
           </Card.Container>
           <Card.CollapseIcon>
             <Icon icon={collapseIcon} />
           </Card.CollapseIcon>
-        </Card.Unit>
+        </Card.Resource>
         <BaseToggleAnimated isOn={isExpanded}>
           <Card.Expanded>
-            {(factor && factor.percent) && (
-              <CardUnitRiskFactor percent={factor.percent} />
+            {description
+              && (<P>{description}</P>)}
+            {type
+            && (<TagIcon icon="risk" name="Risk factor" value="tipo" color="red" />
             )}
-            <P>
-              {description}
-            </P>
             <Footer>
               <Footer.Id>
                 {id}
@@ -84,7 +74,7 @@ const Card = styled(Container)`
   padding: 0;
 `
 
-Card.Unit = styled.div`
+Card.Resource = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -133,8 +123,8 @@ Card.CollapseIcon = styled.div`
 Card.Expanded = styled.div`
   width: 100%;
   padding: ${props => `${props.theme.spacing.xms} ${props.theme.spacing.base}`};
-  padding-top: 0;
   padding-right: 0;
+  padding-top: 0;
 `
 
 const Footer = styled.div`
@@ -159,13 +149,13 @@ Footer.Actions = styled.div`
   }
 `
 
-CardUnit.propTypes = {
-  unit: PropTypes.shape({}).isRequired,
+CardResource.propTypes = {
+  resource: PropTypes.shape({}).isRequired,
   renderEdit: PropTypes.node.isRequired,
   renderDelete: PropTypes.node.isRequired,
 }
 
-CardUnit.defaultProps = {}
+CardResource.defaultProps = {}
 
 
-export default CardUnit
+export default CardResource

@@ -103,15 +103,18 @@ class PageUnits extends Component {
         <>
           {this.renderAction('Add')}
           <BaseList {...this.props} context="units" fetchList={() => this.fetchUnits} loadMore={this.fetchUnits}>
-            {list.map((unit) => (
-              <CardUnit
-                key={unit.id}
-                unit={unit}
-                renderEdit={this.renderAction('Edit', unit)}
-                renderDelete={<Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, unit.id)}>Delete</Button>
-                }
-              />
-            ))}
+            {list.map((unit) => {
+              if (!unit) return null
+              return (
+                <CardUnit
+                  key={unit.id}
+                  unit={unit}
+                  renderEdit={this.renderAction('Edit', unit)}
+                  renderDelete={<Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, unit.id)}>Delete</Button>
+                  }
+                />
+              )
+            })}
           </BaseList>
         </>
       </BasePage>
