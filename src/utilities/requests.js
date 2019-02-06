@@ -99,3 +99,4 @@ export const fetchEvents = search => axiosWithAuth().get('/event', {
     ...search,
   },
 })
+export const fetchDataAddEvent = () => axiosWithAuth().get('/eventwarmup')

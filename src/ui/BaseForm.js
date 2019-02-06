@@ -19,10 +19,12 @@ export const inputTypes = {
   COMPANY: 'COMPANY',
   TEXTAREA: 'TEXTAREA',
   SELECT: 'SELECT',
+  SELECT_MULTIPLE: 'SELECT_MULTIPLE',
   FILE: 'FILE',
   ROLE: 'ROLE',
   RESOURCE_NAME: 'RESOURCE_NAME',
   UNIT_NAME: 'UNIT_NAME',
+  EVENT_NAME: 'EVENT_NAME',
 }
 
 class Form extends Component {
@@ -66,7 +68,7 @@ class Form extends Component {
 
   generateInputError = async ({ input, values, language }) => {
     const {
-      EMAIL, FIRST_NAME, LAST_NAME, PHONE, AGE, SUBDOMAIN, ADDRESS, PASSWORD, REPEAT_PASSWORD, SELECT, COMPANY, TEXTAREA, ROLE, RESOURCE_NAME, UNIT_NAME,
+      EMAIL, FIRST_NAME, LAST_NAME, PHONE, AGE, SUBDOMAIN, ADDRESS, PASSWORD, REPEAT_PASSWORD, SELECT, SELECT_MULTIPLE, COMPANY, TEXTAREA, ROLE, RESOURCE_NAME, UNIT_NAME, EVENT_NAME,
     } = inputTypes
     const validations = texts(language)
     const { workspace, workspaceFailure } = this.state
@@ -105,6 +107,14 @@ class Form extends Component {
           return validations.resource_name.length;
         }
         if (typeof values[UNIT_NAME] !== 'string' || /\d/.test(values[UNIT_NAME])) {
+          return validations.resource_name.string
+        }
+        break;
+      case EVENT_NAME:
+        if (values[EVENT_NAME].length < 2) {
+          return validations.resource_name.length;
+        }
+        if (typeof values[EVENT_NAME] !== 'string' || /\d/.test(values[EVENT_NAME])) {
           return validations.resource_name.string
         }
         break;
@@ -181,6 +191,10 @@ class Form extends Component {
       case SELECT:
         if (values[SELECT] === 0) { return validations.select.empty }
         break
+      case SELECT_MULTIPLE:
+        console.log('validating', values[SELECT_MULTIPLE]);
+        if (values[SELECT_MULTIPLE].length < 1) { return validations.select.empty }
+        break
       case TEXTAREA:
         if (values[TEXTAREA].length > 500) {
           return validations.textarea.length;
@@ -199,6 +213,7 @@ class Form extends Component {
         onSubmit,
         inputs,
         submitButton,
+        extraFields,
         language,
       },
       className,
@@ -213,16 +228,18 @@ class Form extends Component {
         validate={(values) => this.debouncedValidate({ values, inputs, language })}
         render={(props) => (
           <form className={className} onSubmit={props.handleSubmit}>
+            {extraFields && extraFields}
             {inputs.map(({
-              id, type, name, placeholder, component, label,
+              id, type, name, placeholder, component, label, options, isMulti, gridArea, touchedEnv,
             }) => (
-              <div key={id}>
-                {component
-                  ? <Field type={type} name={name} label={label} placeholder={placeholder} component={component} />
+              <div key={id} style={{ gridArea }}>
+                {component && type
+                  ? <Field type={type} name={name} options={options} label={label} isMulti={isMulti} placeholder={placeholder} touchedEnv={touchedEnv} component={component} />
                   : <Field type={type} name={name} label={label} placeholder={placeholder} />
                 }
               </div>
             ))}
+
             {submitButton || <Button type="submit" modifiers="primary">Submit</Button>}
           </form>
         )}

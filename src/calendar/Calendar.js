@@ -7,7 +7,7 @@ import { BaseModal } from 'ui'
 import { transparentize } from 'polished'
 import styled, { withTheme } from 'styled-components'
 import { Button, Subtitle } from 'elements'
-import { fetchEvents } from 'utilities/requests';
+import { fetchEvents, fetchDataAddEvent } from 'utilities/requests';
 import AddEventForm from './AddEventForm';
 
 
@@ -22,12 +22,8 @@ class Calendar extends Component {
     addStart: null,
     addEnd: null,
     currentMonth: null,
+    dataAdd: null,
   }
-
-  onChange = e => {
-    console.log('change', e)
-  }
-
 
   async componentDidMount() {
     const start = moment().startOf('month').subtract(10, 'days').unix() // current begin of week timestampt
@@ -35,6 +31,7 @@ class Calendar extends Component {
     const currentMonth = moment().format('M')
 
     let { data: { data: events } } = await fetchEvents({ start, end });
+    const { data: dataAdd } = await fetchDataAddEvent();
 
     events = events.map(event => (
       {
@@ -43,17 +40,17 @@ class Calendar extends Component {
         end: new Date(event.end),
       }
     ))
-    console.log('events', events);
+
     this.setState({
       events,
       isLoading: false,
       currentMonth,
+      dataAdd,
     })
   }
 
   onNavigate = async (e) => {
     const { currentMonth } = this.state;
-    console.log(moment(e).format('M'), currentMonth)
     if (moment(e).format('M') !== currentMonth) {
       const start = moment(e).startOf('month').subtract(10, 'days').unix() // current begin of week timestampt
       const end = moment(e).endOf('month').add(10, 'days').unix()
@@ -74,27 +71,29 @@ class Calendar extends Component {
     }
   }
 
-
-  getCustomBar = ({ label, onNavigate }) => {
-    const { activeTab } = this.state
-    return (
-      <>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div>
-            <Button onClick={() => onNavigate('PREV')}>Back</Button>
-            <Button modifiers="leftMargin" onClick={() => onNavigate('TODAY')}>Today</Button>
-            <Button modifiers="leftMargin" onClick={() => onNavigate('NEXT')}>Next</Button>
-          </div>
-          <Subtitle>{label}</Subtitle>
-          <div>
-            <Button modifiers="leftMargin" modifiers={activeTab === 'month' ? ['primary', 'leftMargin'] : 'leftMargin'} onClick={() => this.setState({ activeTab: 'month' })}>Month</Button>
-            <Button modifiers="leftMargin" modifiers={activeTab === 'week' ? ['primary', 'leftMargin'] : 'leftMargin'} onClick={() => this.setState({ activeTab: 'week' })}>Week</Button>
-            <Button modifiers="leftMargin" modifiers={activeTab === 'day' ? ['primary', 'leftMargin'] : 'leftMargin'} onClick={() => this.setState({ activeTab: 'day' })}>Day</Button>
-          </div>
-        </div>
-      </>
-    )
+  getCurrent = context => {
+    const { activeTab } = this.state;
+    return activeTab === context ? ['primary', 'leftMargin'] : 'leftMargin'
   }
+
+  getCustomBar = ({ label, onNavigate }) => (
+    <>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div>
+          <Button onClick={() => onNavigate('PREV')}>Back</Button>
+          <Button modifiers="leftMargin" onClick={() => onNavigate('TODAY')}>Today</Button>
+          <Button modifiers="leftMargin" onClick={() => onNavigate('NEXT')}>Next</Button>
+        </div>
+        <Subtitle>{label}</Subtitle>
+        <div>
+          <Button modifiers={this.getCurrent('month')} onClick={() => this.setState({ activeTab: 'month' })}>Month</Button>
+          <Button modifiers={this.getCurrent('week')} onClick={() => this.setState({ activeTab: 'week' })}>Week</Button>
+          <Button modifiers={this.getCurrent('day')} onClick={() => this.setState({ activeTab: 'day' })}>Day</Button>
+        </div>
+      </div>
+    </>
+  )
+
 
   handleSelect = ({ start, end }) => {
     this.setState({ addStart: start, addEnd: end }, () => this.toggleModal())
@@ -104,12 +103,15 @@ class Calendar extends Component {
 
   render() {
     const {
-      isLoading, events, activeTab, modalAddOpen, addStart, addEnd,
+      isLoading, events, activeTab, modalAddOpen, addStart, addEnd, dataAdd,
     } = this.state
     return (
       <>
         <BaseModal isOn={modalAddOpen} toggle={this.toggleModal}>
-          <AddEventForm {...{ addStart, addEnd, onChange: this.onChange }} />
+          <AddEventForm {...{
+            addStart, addEnd, onChange: this.onChange, isLoading, selectData: dataAdd,
+          }}
+          />
         </BaseModal>
         <div style={{ position: 'relative', height: activeTab === 'month' ? '900px' : '100%' }}>
           {isLoading && <Loader width="40%" height="40%" />}
@@ -120,7 +122,6 @@ class Calendar extends Component {
             tooltipAccessor={() => null}
             defaultView={activeTab}
             onNavigate={this.onNavigate}
-            onView={this.onView}
             view={activeTab}
             scrollToTime={new Date(1970, 1, 1, 6)}
             onSelectEvent={event => alert(event.title)}
