@@ -18,10 +18,10 @@ function* post({ payload, callFunction, context }) {
   try {
     const { data: { data } } = yield call(callFunction, payload);
     yield put({ type: `POST_${context}_SUCCESS`, data })
-    toast.success(`${capitalize(context)} created`)
+    toast.success(`${capitalize(context.slice(0, -1))} created`)
   } catch (err) {
     yield put({ type: `POST_${context}_FAILURE`, data: err })
-    toast.error(`Error creating ${context.toLowerCase()}`)
+    toast.warning(`Error creating ${context.toLowerCase().slice(0, -1)}`)
   }
 }
 
@@ -30,10 +30,10 @@ function* update({ payload, callFunction, context }) {
   try {
     const { data: { data } } = yield call(callFunction, payload);
     yield put({ type: `PUT_${context}_SUCCESS`, data })
-    toast.success(`${capitalize(context)} updated`)
+    toast.success(`${capitalize(context.slice(0, -1))} updated`)
   } catch (err) {
     yield put({ type: `PUT_${context}_FAILURE`, data: err })
-    toast.error(`Error updating ${context.toLowerCase()}`)
+    toast.warning(`Error updating ${context.toLowerCase().slice(0, -1)}`)
   }
 }
 
@@ -42,10 +42,10 @@ function* destroy({ payload, callFunction, context }) {
   try {
     const { data } = yield call(callFunction, payload);
     yield put({ type: `DELETE_${context}_SUCCESS`, data })
-    toast.success(`${capitalize(context)} deleted`)
+    toast.error(`${capitalize(context.slice(0, -1))} deleted`)
   } catch (err) {
     yield put({ type: `DELETE_${context}_FAILURE`, data: err })
-    toast.error(`Error deleting ${context.toLowerCase()}`)
+    toast.warning(`Error deleting ${context.toLowerCase().slice(0, -1)}`)
   }
 }
 

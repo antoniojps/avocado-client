@@ -72,7 +72,7 @@ class Calendar extends Component {
           <div>{addEnd && addEnd.toString()}</div>
         </BaseModal>
         <div style={{ position: 'relative', height: activeTab === 'month' ? '900px' : '100%' }}>
-          {isLoading && <Loader width="20%" height="20%" />}
+          {isLoading && <Loader width="40%" height="40%" />}
           <BigCalendar
             selectable
             localizer={localizer}
