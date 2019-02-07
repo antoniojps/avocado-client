@@ -12,6 +12,12 @@ const TITLE_MODIFIERS = {
     padding: 0;
     margin: 0;
   `,
+  small: ({ theme }) => `
+    font-size: ${theme.size.xs};
+    margin-top: 0;
+  `,
+
+
 }
 
 export const Title = styled.h1`

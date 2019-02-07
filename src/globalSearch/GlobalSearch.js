@@ -15,12 +15,13 @@ class GlobalSearch extends Component {
       resources: null,
       units: null,
     },
+    currentSearch: null,
     isLoading: false,
     error: null,
   }
 
   getResults = async search => {
-    this.setState(() => ({ isLoading: true }));
+    this.setState(() => ({ isLoading: true, currentSearch: search }));
     try {
       const { data } = await globalSearch(search);
       console.log(data)
@@ -51,7 +52,7 @@ class GlobalSearch extends Component {
 
   render() {
     const {
-      isPopoverOpen, isLoading, data, error,
+      isPopoverOpen, isLoading, data, error, currentSearch,
     } = this.state;
     const users = data && (data.users || null)
     const units = data && (data.units || null)
@@ -68,7 +69,7 @@ class GlobalSearch extends Component {
               <PopUp>
                 {isLoading && <BaseLoader message="Loading results..." />}
                 {(!isLoading && !this.checkData(users, units, resources)) && <div>No results found</div>}
-                {(!isLoading && !error) && <SearchResults data={data} />}
+                {(!isLoading && !error) && <SearchResults data={data} currentSearch={currentSearch} />}
               </PopUp>
             </ThemeProvider>
           )}

@@ -177,7 +177,7 @@ class AddEventForm extends Component {
           id: 'UNIT',
           name: 'UNIT',
           type: SELECT_MULTIPLE,
-          initialValue: selectedEvent ? { value: selectedEvent.unit_id.id, label: selectedEvent.unit_id.name } : '',
+          initialValue: (selectedEvent && selectedEvent.unit) ? { value: selectedEvent.unit_id.id, label: selectedEvent.unit_id.name } : '',
           validation: true,
           // required: true,
           placeholder: 'Unit',
