@@ -7,8 +7,9 @@ import { BaseModal } from 'ui'
 import { transparentize } from 'polished'
 import styled, { withTheme } from 'styled-components'
 import { Button, Subtitle } from 'elements'
-import { fetchEvents, fetchDataAddEvent } from 'utilities/requests';
-import AddEventForm from './AddEventForm';
+import { fetchEvents, fetchDataAddEvent } from 'utilities/requests'
+import { toast } from 'utilities'
+import AddEventForm from './AddEventForm'
 
 
 const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
@@ -23,15 +24,25 @@ class Calendar extends Component {
     addEnd: null,
     currentMonth: null,
     dataAdd: null,
+    selectedEvent: null,
   }
 
   async componentDidMount() {
     const start = moment().startOf('month').subtract(10, 'days').unix() // current begin of week timestampt
     const end = moment().endOf('month').add(10, 'days').unix() // current end of week timestampt
     const currentMonth = moment().format('M')
+    let events
+    let dataAdd
 
-    let { data: { data: events } } = await fetchEvents({ start, end });
-    const { data: dataAdd } = await fetchDataAddEvent();
+    try {
+      const { data: { data } } = await fetchEvents({ start, end })
+      events = data
+      const { data: addData } = await fetchDataAddEvent()
+      dataAdd = addData
+    } catch (e) {
+      toast.error('Error fetching events')
+    }
+
 
     events = events.map(event => (
       {
@@ -50,12 +61,19 @@ class Calendar extends Component {
   }
 
   onNavigate = async (e) => {
-    const { currentMonth } = this.state;
+    const { currentMonth } = this.state
     if (moment(e).format('M') !== currentMonth) {
       const start = moment(e).startOf('month').subtract(10, 'days').unix() // current begin of week timestampt
       const end = moment(e).endOf('month').add(10, 'days').unix()
-      this.setState({ isLoading: true });
-      let { data: { data: events } } = await fetchEvents({ start, end });
+      this.setState({ isLoading: true })
+      let events
+      try {
+        const { data: { data } } = await fetchEvents({ start, end })
+        events = data
+      } catch (e) {
+        toast.error('Error fetching events')
+      }
+
       events = events.map(event => (
         {
           ...event,
@@ -72,7 +90,7 @@ class Calendar extends Component {
   }
 
   getCurrent = context => {
-    const { activeTab } = this.state;
+    const { activeTab } = this.state
     return activeTab === context ? ['primary', 'leftMargin'] : 'leftMargin'
   }
 
@@ -99,18 +117,41 @@ class Calendar extends Component {
     this.setState({ addStart: start, addEnd: end }, () => this.toggleModal())
   }
 
-  toggleModal = () => this.setState({ modalAddOpen: !this.state.modalAddOpen })
+  toggleModal = (e) => {
+    if (e && e.id) {
+      this.setState({
+        selectedEvent: e, addStart: e.start, addEnd: e.end, modalAddOpen: !this.state.modalAddOpen,
+      })
+    } else {
+      this.setState({ selectedEvent: null, modalAddOpen: !this.state.modalAddOpen })
+    }
+  }
+
+  onSubmit = ({ data }) => {
+    this.toggleModal()
+    this.setState({
+      events: [...this.state.events, {
+        ...data,
+        start: new Date(data.start.date),
+        end: new Date(data.end.date),
+      }],
+    })
+  }
 
   render() {
     const {
-      isLoading, events, activeTab, modalAddOpen, addStart, addEnd, dataAdd,
+      isLoading, events, activeTab, modalAddOpen, addStart, addEnd, dataAdd, selectedEvent,
     } = this.state
     return (
       <>
         <BaseModal isOn={modalAddOpen} toggle={this.toggleModal}>
-          <AddEventForm {...{
-            addStart, addEnd, onChange: this.onChange, isLoading, selectData: dataAdd,
-          }}
+          <AddEventForm
+
+            onSubmit={this.onSubmit}
+            selectedEvent={selectedEvent}
+            {...{
+              addStart, addEnd, onChange: this.onChange, isLoading, selectData: dataAdd,
+            }}
           />
         </BaseModal>
         <div style={{ position: 'relative', height: activeTab === 'month' ? '900px' : '100%' }}>
@@ -124,7 +165,7 @@ class Calendar extends Component {
             onNavigate={this.onNavigate}
             view={activeTab}
             scrollToTime={new Date(1970, 1, 1, 6)}
-            onSelectEvent={event => alert(event.title)}
+            onSelectEvent={this.toggleModal}
             step={30}
             onSelectSlot={this.handleSelect}
             components={{
@@ -147,7 +188,7 @@ class Calendar extends Component {
                 return {
                   className: '',
                   style: newStyle,
-                };
+                }
               }
             }
           />

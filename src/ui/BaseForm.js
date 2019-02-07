@@ -68,7 +68,7 @@ class Form extends Component {
 
   generateInputError = async ({ input, values, language }) => {
     const {
-      EMAIL, FIRST_NAME, LAST_NAME, PHONE, AGE, SUBDOMAIN, ADDRESS, PASSWORD, REPEAT_PASSWORD, SELECT, SELECT_MULTIPLE, COMPANY, TEXTAREA, ROLE, RESOURCE_NAME, UNIT_NAME, EVENT_NAME,
+      EMAIL, FIRST_NAME, LAST_NAME, PHONE, AGE, SUBDOMAIN, ADDRESS, PASSWORD, REPEAT_PASSWORD, SELECT, COMPANY, TEXTAREA, ROLE, RESOURCE_NAME, UNIT_NAME, EVENT_NAME,
     } = inputTypes
     const validations = texts(language)
     const { workspace, workspaceFailure } = this.state
@@ -189,12 +189,13 @@ class Form extends Component {
         if (values[PASSWORD] && values[PASSWORD] !== values[REPEAT_PASSWORD]) { return validations.repeat_password.different }
         break
       case SELECT:
+        console.log('validating', values[SELECT]);
         if (values[SELECT] === 0) { return validations.select.empty }
         break
-      case SELECT_MULTIPLE:
-        console.log('validating', values[SELECT_MULTIPLE]);
-        if (values[SELECT_MULTIPLE].length < 1) { return validations.select.empty }
-        break
+        // case SELECT_MULTIPLE:
+        //   console.log('validating', values[SELECT_MULTIPLE]);
+        //   if (values[SELECT_MULTIPLE].length < 1) { return validations.select.empty }
+        //   break
       case TEXTAREA:
         if (values[TEXTAREA].length > 500) {
           return validations.textarea.length;
@@ -212,8 +213,8 @@ class Form extends Component {
       form: {
         onSubmit,
         inputs,
+        deleteButton,
         submitButton,
-        extraFields,
         language,
       },
       className,
@@ -228,19 +229,18 @@ class Form extends Component {
         validate={(values) => this.debouncedValidate({ values, inputs, language })}
         render={(props) => (
           <form className={className} onSubmit={props.handleSubmit}>
-            {extraFields && extraFields}
             {inputs.map(({
-              id, type, name, placeholder, component, label, options, isMulti, gridArea, touchedEnv,
+              id, type, name, placeholder, component, label, options, isMulti, gridColumn, touchedEnv, initialValue,
             }) => (
-              <div key={id} style={{ gridArea }}>
+              <div key={id} style={{ gridColumn }}>
                 {component && type
-                  ? <Field type={type} name={name} options={options} label={label} isMulti={isMulti} placeholder={placeholder} touchedEnv={touchedEnv} component={component} />
+                  ? <Field type={type} name={name} options={options} label={label} initialValue={initialValue} isMulti={isMulti} placeholder={placeholder} touchedEnv={touchedEnv} component={component} />
                   : <Field type={type} name={name} label={label} placeholder={placeholder} />
                 }
               </div>
             ))}
-
             {submitButton || <Button type="submit" modifiers="primary">Submit</Button>}
+            {deleteButton}
           </form>
         )}
       />

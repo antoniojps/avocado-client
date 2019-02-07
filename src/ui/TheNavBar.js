@@ -9,6 +9,8 @@ import { BaseBreakpoints, TheNavList } from 'ui'
 import { routes } from 'tenant/Routes'
 import { generateMainNavList } from 'utilities'
 import GlobalSearch from 'globalSearch/GlobalSearch'
+import Person from 'user/Person';
+import withAuth from 'user/withAuth'
 import TheNavIcon from './TheNavIcon'
 import TheNavBarMobile from './TheNavBarMobile'
 
@@ -29,7 +31,7 @@ class TheNavBar extends Component {
 
   render() {
     const list = this.getNavList()
-    const { children } = this.props
+    const { children, warmup: { name } } = this.props
     const { isNavOpen } = this.state
 
     return (
@@ -56,7 +58,7 @@ class TheNavBar extends Component {
 
 
             <GlobalSearch />
-            User
+            <Person avatar name={name} />
           </NavBar.Right>
         </NavBar>
         <BaseBreakpoints render={({ md }) => (md
@@ -120,4 +122,4 @@ TheNavBar.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default TheNavBar
+export default withAuth(TheNavBar)

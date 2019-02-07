@@ -122,10 +122,10 @@ class PageLogin extends Component {
       <Wrapper>
         <Container>
           <Title modifiers="big">
-          Sonae
+            Sonae
           </Title>
           <P>
-          Workspace
+            Workspace
           </P>
           <Title>
             Login

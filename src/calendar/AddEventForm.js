@@ -3,20 +3,24 @@ import { BaseFormInput, BaseSelect, BaseDateTimePicker } from 'ui'
 import { Title, Button } from 'elements'
 import BaseForm, { inputTypes } from 'ui/BaseForm';
 import styled from 'styled-components'
+import { postEvent, putEvent } from 'utilities/requests';
+import { toast } from 'utilities'
 
 class AddEventForm extends Component {
   constructor(props) {
     super(props)
-    const { addStart, addEnd } = this.props
+    const { addStart, addEnd, selectedEvent } = this.props
     this.state = {
       addStart,
       addEnd,
       touched: false,
+      isLoading: false,
+      selectedEvent,
     }
   }
 
   renderSubmitButton = () => (
-    <div style={{ gridArea: 'btn' }}><Button onClick={this.toggleTouched} type="submit" modifiers="primary">Submit Event</Button></div>
+    <Button isLoading={this.state.isLoading} style={{ gridColumn: '1/3' }} onClick={this.toggleTouched} type="submit" modifiers="primary">{this.state.selectedEvent ? 'Edit Event' : 'Submit Event'}</Button>
   )
 
   toggleTouched = () => this.setState({ touched: true })
@@ -30,19 +34,22 @@ class AddEventForm extends Component {
       touched={touched[field.name]}
       error={errors[field.name]}
     />
-  );
+  )
+
+  renderDelete = () => <Button modifiers={['small', 'danger']}>Delete</Button>
 
   renderInputSelect = ({
-    field, form, form: { touched, errors }, options, touchedEnv, ...props
+    field, initialValue, form, form: { touched, errors }, options, touchedEnv, ...props
   }) => (
     <BaseSelect
       {...field}
       {...props}
       type={props.type}
-      touched={touched[field.name]}
+      // touched={touched[field.name]}
       touchedEnv={touchedEnv}
       error={errors[field.name]}
       options={options}
+      initialValue={initialValue}
       onChange={option => form.setFieldValue(field.name, option)}
       initial={[]}
     />
@@ -53,8 +60,8 @@ class AddEventForm extends Component {
 
   onChangeEnd = addEnd => this.setState({ addEnd })
 
-  renderExtraFields = (addStart, addEnd) => (
-    <>
+  renderExtraFields = (addStart, addEnd) => [
+    (
       <div>
         <BaseDateTimePicker
           label="Date start"
@@ -63,6 +70,8 @@ class AddEventForm extends Component {
           onChange={this.onChangeStart}
         />
       </div>
+    ),
+    (
       <div>
         <BaseDateTimePicker
           label="Date end"
@@ -70,23 +79,62 @@ class AddEventForm extends Component {
           placeholder="Test"
           onChange={this.onChangeEnd}
         />
-      </div>
-    </>
-  )
+      </div>),
+  ]
 
 
-  onSubmit = (values) => {
+  onSubmit = async ({
+    EVENT_NAME, TEXTAREA, PERSON, RESOURCES, UNIT,
+  }) => {
+    const { addEnd, addStart, selectedEvent } = this.state
     this.setState({ touched: true })
-    console.group('Sumbit------->');
-    const { addEnd, addStart } = this.state
-    console.table({ ...values, addEnd, addStart })
-    console.groupEnd('------------->');
+    const { onSubmit } = this.props
+
+    this.setState({
+      isLoading: true,
+    })
+    // try {
+    let data
+    if (selectedEvent && selectedEvent.id) {
+      const { data: gotData } = await putEvent({
+        ...selectedEvent,
+        name: EVENT_NAME,
+        description: TEXTAREA,
+        start_date: addStart,
+        end_date: addEnd,
+        unit_id: UNIT ? UNIT.value : null,
+        users: PERSON ? PERSON.map(person => person.value) : null,
+        resources: RESOURCES ? RESOURCES.map(resource => resource.value) : null,
+      })
+      data = gotData;
+    } else {
+      const { data: gotData } = await postEvent({
+        name: EVENT_NAME,
+        description: TEXTAREA,
+        start_date: addStart,
+        end_date: addEnd,
+        unit_id: UNIT ? UNIT.value : null,
+        users: PERSON ? PERSON.map(person => person.value) : null,
+        resources: RESOURCES ? RESOURCES.map(resource => resource.value) : null,
+
+      })
+      data = gotData;
+    }
+
+    this.setState({ isLoading: false })
+    toast.success('Event added!')
+    onSubmit(data)
+    // } catch (e) {
+    //   toast.error('Error adding event')
+    // }
   }
 
 
   render() {
     const { selectData: { resources, units, users } } = this.props
-    const { addStart, addEnd, touched } = this.state;
+    const {
+      addStart, addEnd, touched, selectedEvent,
+    } = this.state;
     const usersOptions = users.map(({ id: value, name: label }) => ({ value, label }))
     const unitsOptions = units.map(({ id: value, name: label }) => ({ value, label }))
     const resourcesOptions = resources.map(({ id: value, name: label }) => ({ value, label }))
@@ -104,9 +152,9 @@ class AddEventForm extends Component {
           id: EVENT_NAME,
           name: EVENT_NAME,
           type: EVENT_NAME,
-          initialValue: '',
+          initialValue: selectedEvent ? selectedEvent.title : '',
           validation: true,
-          required: true,
+          // required: true,
           placeholder: 'Event name',
           label: 'Event name',
           component: this.renderInput,
@@ -115,9 +163,9 @@ class AddEventForm extends Component {
           id: 'PERSON',
           name: 'PERSON',
           type: SELECT_MULTIPLE,
-          initialValue: '',
+          initialValue: selectedEvent ? selectedEvent.users.map(ev => ({ value: ev.id, label: ev.name })) : '',
           validation: true,
-          required: true,
+          // required: true,
           placeholder: 'Person',
           label: 'Person',
           touchedEnv: touched,
@@ -129,9 +177,9 @@ class AddEventForm extends Component {
           id: 'UNIT',
           name: 'UNIT',
           type: SELECT_MULTIPLE,
-          initialValue: '',
+          initialValue: selectedEvent ? { value: selectedEvent.unit_id.id, label: selectedEvent.unit_id.name } : '',
           validation: true,
-          required: true,
+          // required: true,
           placeholder: 'Unit',
           label: 'Unit',
           isMulti: false,
@@ -143,9 +191,9 @@ class AddEventForm extends Component {
           id: 'RESOURCES',
           name: 'RESOURCES',
           type: SELECT_MULTIPLE,
-          initialValue: '',
+          initialValue: selectedEvent ? selectedEvent.resources.map(ev => ({ value: ev.id, label: ev.name })) : '',
           validation: true,
-          required: true,
+          // required: true,
           touchedEnv: touched,
           placeholder: 'Resources',
           label: 'Resources',
@@ -157,43 +205,39 @@ class AddEventForm extends Component {
           id: TEXTAREA,
           name: TEXTAREA,
           type: TEXTAREA,
-          initialValue: '',
+          initialValue: selectedEvent ? selectedEvent.desc : '',
           validation: true,
           required: false,
           placeholder: 'Description',
           label: 'Description',
           component: this.renderInput,
-          gridArea: 'description',
+          gridColumn: '1/3',
         },
 
       ],
-      extraFields: [
-        this.renderExtraFields(addStart, addEnd),
-      ],
+      deleteButton: selectedEvent ? this.renderDelete() : null,
       submitButton: this.renderSubmitButton(),
     }
 
 
     return (
       <>
-        <Title>Insert new event</Title>
+        <Title>
+          {this.state.selectedEvent ? 'Edit event' : 'Insert new event'}
+        </Title>
+        {this.renderExtraFields(addStart, addEnd)}
         <Form form={form} />
+
       </>
     )
   }
 }
 
 const Form = styled(BaseForm)`
+  width: 100%;
   display: grid;
+  grid-column-gap: 20px;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-  grid-template-areas: 
-    "start end" 
-    "name person"
-    "unit unit"
-    "description description"
-    "btn btn";
-}
 `
 
 export default AddEventForm
