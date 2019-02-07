@@ -5,12 +5,20 @@ import { applyStyleModifiers } from 'styled-components-modifiers'
 import { darken } from 'polished'
 import PropTypes from 'prop-types'
 import { BaseLoading } from 'ui/BaseLoader'
+import { above } from 'utilities'
 
 const BUTTON_MODIFIERS = {
   small: ({ theme }) => `
     padding: ${theme.spacing.xxxs} ${theme.spacing.xxms};
   `,
   right: () => 'float: right',
+  rightTop: () => `
+  ${above.sm`
+  backgroud: red;
+  float: right;
+  top: -70px; 
+`}
+ `,
   leftMargin: ({ theme }) => `margin-left: ${theme.spacing.xxs}`,
   noMargin: () => `
     margin: 0;

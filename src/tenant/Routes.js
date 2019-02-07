@@ -77,15 +77,21 @@ const routesConfig = {
     },
   },
   units: {
-    component: PageUnits,
-    key: 'units',
-    exact: true,
-    name: 'Units',
+    index: {
+      component: PageUnits,
+      key: 'units',
+      exact: true,
+      name: 'Units',
+    },
   },
   resources: {
-    component: PageResources,
-    key: 'resources',
-    name: 'Resources',
+    index: {
+      component: PageResources,
+      key: 'resources',
+      name: 'Resources',
+      exact: true,
+    },
+
   },
   settings: {
     index: {
