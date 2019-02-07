@@ -19,7 +19,7 @@ const CardTeam = (props) => {
       <Card.Team>
         <Card.Container>
           <Card.Section>
-            <Icon icon="resources" />
+            <Icon icon="user" />
             <Title modifiers={['noMargin']}>
               {name}
             </Title>

@@ -60,7 +60,7 @@ export default class BaseLoader extends Component {
         </Spring>
 
         {message
-        && <P>{message}</P>
+          && <P>{message}</P>
         }
 
       </Loader>
@@ -87,9 +87,11 @@ BaseLoader.defaultProps = {
   center: true,
 }
 
-export const BaseLoading = ({ className, width, height }) => (
+export const BaseLoading = ({
+  className, width, height, color,
+}) => (
   <Loading className={className}>
-    <Loading.Spinner width={width} height={height}>
+    <Loading.Spinner width={width} height={height} color={color}>
       <div className="double-bounce1" />
       <div className="double-bounce2" />
     </Loading.Spinner>
@@ -101,12 +103,14 @@ BaseLoading.propTypes = {
   className: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
+  color: PropTypes.string,
 }
 
 BaseLoading.defaultProps = {
   className: null,
   width: '40px',
   height: '100%',
+  color: null,
 }
 
 const Loading = styled.div`
@@ -131,7 +135,7 @@ Loading.Spinner = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: ${props => transparentize(0.5, props.theme.color.bgLighter)};
+    background-color: ${props => props.color || transparentize(0.5, props.theme.color.bgLighter)};
     opacity: 0.6;
     position: absolute;
     top: 0;
@@ -142,6 +146,6 @@ Loading.Spinner = styled.div`
 
   .double-bounce2 {
     animation-delay: -1.0s;
-    background-color: ${props => transparentize(0.1, props.theme.color.bgLighter)};
+    background-color: ${props => props.color || transparentize(0.1, props.theme.color.bgLighter)};
   }
 `

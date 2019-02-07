@@ -4,7 +4,6 @@ import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { BaseLoading } from 'ui/BaseLoader'
 import { BaseModal } from 'ui'
-import { transparentize } from 'polished'
 import styled, { withTheme } from 'styled-components'
 import { Button, Subtitle } from 'elements'
 import { fetchEvents, fetchDataAddEvent } from 'utilities/requests'
@@ -172,6 +171,7 @@ class Calendar extends Component {
     const {
       isLoading, events, activeTab, modalAddOpen, addStart, addEnd, dataAdd, selectedEvent,
     } = this.state
+    const { theme } = this.props
     return (
       <>
         <BaseModal isOn={modalAddOpen} toggle={this.toggleModal}>
@@ -185,7 +185,7 @@ class Calendar extends Component {
           />
         </BaseModal>
         <div style={{ position: 'relative', height: activeTab === 'month' ? '900px' : '100%' }}>
-          {isLoading && <Loader width="40%" height="40%" />}
+          {isLoading && <Loader width="50%" height="50%" color={theme.color.primary} />}
           <BigCalendar
             selectable
             localizer={localizer}
@@ -230,7 +230,6 @@ class Calendar extends Component {
 const Loader = styled(BaseLoading)`
     z-index: 9999;
     position: absolute;
-    background-color: ${props => transparentize(0.9, props.theme.color.bgDark)};
 `
 const mapSizesToProps = ({ width }) => ({
   isMobile: width < 710,
