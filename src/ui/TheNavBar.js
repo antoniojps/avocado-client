@@ -42,8 +42,8 @@ class TheNavBar extends Component {
               <BaseBreakpoints render={({ md }) => (md ? (
                 <Icon icon="logo" height={40} />
               ) : (
-                  <TheNavIcon onClick={this.openNavMobile} isOpen={isNavOpen} />
-                ))}
+                <TheNavIcon onClick={this.openNavMobile} isOpen={isNavOpen} />
+              ))}
               />
             </NavBar.Icon>
             <TheNavBarMobile isOpen={isNavOpen} onClose={this.handleMobileClose} />

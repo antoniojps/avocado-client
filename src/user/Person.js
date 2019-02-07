@@ -1,7 +1,8 @@
 
 import React, { PureComponent } from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider, withTheme } from 'styled-components'
 import { Avatar, Icon } from 'elements';
+import { BaseBreakpoints } from 'ui'
 import Popover from 'react-tiny-popover'
 import { theme } from 'utilities'
 
@@ -29,14 +30,17 @@ class Person extends PureComponent {
         content={(
           <ThemeProvider theme={theme}>
             <ListItem onClick={this.logout}>
-              <Icon icon="logout" height={15} color="#000000" />
+              <Icon icon="logout" height={15} />
               <Logout>Log out</Logout>
             </ListItem>
           </ThemeProvider>
         )}
       >
         <Wrapper onClick={() => this.setState({ isPopoverOpen: !isPopoverOpen })}>
-          {name}
+          <BaseBreakpoints render={({ md }) => (md
+            && name
+          )}
+          />
           {avatar
             && (
               <Avatar>
@@ -44,7 +48,7 @@ class Person extends PureComponent {
               </Avatar>
             )
           }
-          <Icon icon="arrow-down" height={15} color="#ffffff" />
+          <Icon icon="arrow-down" height={16} color="#ffffff" />
         </Wrapper>
       </Popover>
     )
@@ -53,7 +57,7 @@ class Person extends PureComponent {
 
 
 const Wrapper = styled.div`
-    margin-left: 20px;
+    margin-left: ${props => props.theme.spacing.xxs};
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -63,16 +67,16 @@ const ListItem = styled.div`
     cursor:pointer;
     display: flex;
     align-items: center;
-    background: #fff;   
-    padding: .8rem 1.2rem;
-    border-radius: 8px;
-    margin-top: 8px;
+    background: ${props => props.theme.color.bg};
+    padding: ${props => `${props.theme.spacing.xs} ${props.theme.spacing.xms}`};
+    border-radius: ${props => props.theme.value.borderRadius};
+    margin-top: ${props => props.theme.spacing.xxs};
     &:hover {
-    background: #e8e8e8
+    background: ${props => props.theme.color.baseLighter};
     }
 `
 const Logout = styled.div`
-    margin-left: 4px;
+    margin-left: ${props => props.theme.spacing.xxxs};
 `
 
-export default Person;
+export default withTheme(Person);
