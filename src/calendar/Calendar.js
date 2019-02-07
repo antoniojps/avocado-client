@@ -127,15 +127,37 @@ class Calendar extends Component {
     }
   }
 
-  onSubmit = ({ data }) => {
+  onSubmit = ({ data }, isEdit) => {
     this.toggleModal()
+
+    if (isEdit) {
+      this.setState({
+        events: events
+        // events: this.state.events.map(event => data.find(o => o.id === event.id) || event).map(event),
+
+        // [...this.state.events, {
+        //   ...data,
+        //   start: new Date(data.start.date),
+        //   end: new Date(data.end.date),
+        // }],
+      })
+    } else {
+      this.setState({
+        events: [...this.state.events, {
+          ...data,
+          start: new Date(data.start.date),
+          end: new Date(data.end.date),
+        }],
+      })
+    }
+  }
+
+  onDelete = eventId => {
+    const { events } = this.state
     this.setState({
-      events: [...this.state.events, {
-        ...data,
-        start: new Date(data.start.date),
-        end: new Date(data.end.date),
-      }],
+      events: events.filter(({ id }) => eventId !== id),
     })
+    this.toggleModal()
   }
 
   render() {
@@ -146,7 +168,7 @@ class Calendar extends Component {
       <>
         <BaseModal isOn={modalAddOpen} toggle={this.toggleModal}>
           <AddEventForm
-
+            onDelete={this.onDelete}
             onSubmit={this.onSubmit}
             selectedEvent={selectedEvent}
             {...{
@@ -182,9 +204,9 @@ class Calendar extends Component {
                 if (event.mine) {
                   newStyle.backgroundColor = this.props.theme.color.primaryDarker
                 }
-                if (event.allDay) {
-                  newStyle.backgroundColor = this.props.theme.color.primaryDarker
-                }
+                // if (event.allDay) {
+                //   newStyle.backgroundColor = this.props.theme.color.primaryDarker
+                // }
                 return {
                   className: '',
                   style: newStyle,

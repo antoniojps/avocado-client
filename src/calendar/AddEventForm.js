@@ -3,7 +3,7 @@ import { BaseFormInput, BaseSelect, BaseDateTimePicker } from 'ui'
 import { Title, Button } from 'elements'
 import BaseForm, { inputTypes } from 'ui/BaseForm';
 import styled from 'styled-components'
-import { postEvent, putEvent } from 'utilities/requests';
+import { postEvent, putEvent, deleteEvent } from 'utilities/requests';
 import { toast } from 'utilities'
 
 class AddEventForm extends Component {
@@ -36,7 +36,19 @@ class AddEventForm extends Component {
     />
   )
 
-  renderDelete = () => <Button modifiers={['small', 'danger']}>Delete</Button>
+  renderDelete = id => <Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, id)}>Delete</Button>
+
+  handleDelete = async (e, id) => {
+    e.preventDefault()
+    const { onDelete } = this.props;
+    try {
+      await deleteEvent(id)
+      toast.success('Event deleted')
+    } catch (e) {
+      toast.error('Error deleting event')
+    }
+    onDelete(id);
+  }
 
   renderInputSelect = ({
     field, initialValue, form, form: { touched, errors }, options, touchedEnv, ...props
@@ -93,40 +105,40 @@ class AddEventForm extends Component {
     this.setState({
       isLoading: true,
     })
-    // try {
-    let data
-    if (selectedEvent && selectedEvent.id) {
-      const { data: gotData } = await putEvent({
-        ...selectedEvent,
-        name: EVENT_NAME,
-        description: TEXTAREA,
-        start_date: addStart,
-        end_date: addEnd,
-        unit_id: UNIT ? UNIT.value : null,
-        users: PERSON ? PERSON.map(person => person.value) : null,
-        resources: RESOURCES ? RESOURCES.map(resource => resource.value) : null,
-      })
-      data = gotData;
-    } else {
-      const { data: gotData } = await postEvent({
-        name: EVENT_NAME,
-        description: TEXTAREA,
-        start_date: addStart,
-        end_date: addEnd,
-        unit_id: UNIT ? UNIT.value : null,
-        users: PERSON ? PERSON.map(person => person.value) : null,
-        resources: RESOURCES ? RESOURCES.map(resource => resource.value) : null,
+    try {
+      let data
+      if (selectedEvent && selectedEvent.id) {
+        const { data: gotData } = await putEvent({
+          ...selectedEvent,
+          name: EVENT_NAME,
+          description: TEXTAREA,
+          start_date: addStart,
+          end_date: addEnd,
+          unit_id: UNIT ? UNIT.value : null,
+          users: PERSON ? PERSON.map(person => person.value) : null,
+          resources: RESOURCES ? RESOURCES.map(resource => resource.value) : null,
+        })
+        data = gotData;
+      } else {
+        const { data: gotData } = await postEvent({
+          name: EVENT_NAME,
+          description: TEXTAREA,
+          start_date: addStart,
+          end_date: addEnd,
+          unit_id: UNIT ? UNIT.value : null,
+          users: PERSON ? PERSON.map(person => person.value) : null,
+          resources: RESOURCES ? RESOURCES.map(resource => resource.value) : null,
 
-      })
-      data = gotData;
+        })
+        data = gotData;
+      }
+
+      this.setState({ isLoading: false })
+      toast.success('Event added!')
+      onSubmit(data, selectedEvent)
+    } catch (e) {
+      toast.error('Error adding event')
     }
-
-    this.setState({ isLoading: false })
-    toast.success('Event added!')
-    onSubmit(data)
-    // } catch (e) {
-    //   toast.error('Error adding event')
-    // }
   }
 
 
@@ -177,7 +189,7 @@ class AddEventForm extends Component {
           id: 'UNIT',
           name: 'UNIT',
           type: SELECT_MULTIPLE,
-          initialValue: (selectedEvent && selectedEvent.unit) ? { value: selectedEvent.unit_id.id, label: selectedEvent.unit_id.name } : '',
+          initialValue: (selectedEvent && selectedEvent.unit_id) ? { value: selectedEvent.unit_id.id, label: selectedEvent.unit_id.name } : '',
           validation: true,
           // required: true,
           placeholder: 'Unit',
@@ -215,7 +227,7 @@ class AddEventForm extends Component {
         },
 
       ],
-      deleteButton: selectedEvent ? this.renderDelete() : null,
+      deleteButton: selectedEvent ? this.renderDelete(selectedEvent.id) : null,
       submitButton: this.renderSubmitButton(),
     }
 
