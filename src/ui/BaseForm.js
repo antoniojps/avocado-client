@@ -157,7 +157,7 @@ class Form extends Component {
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values[EMAIL])) { return validations.email.invalid }
         break
       case SUBDOMAIN:
-        if (values[SUBDOMAIN].length > 10) {
+        if (values[SUBDOMAIN].length > 15) {
           return validations.subdomain.length
         }
         if (/[ !@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/i.test(values[SUBDOMAIN])) {

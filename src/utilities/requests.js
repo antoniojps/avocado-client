@@ -110,3 +110,5 @@ export const fetchDataAddEvent = () => axiosWithAuth().get('/eventwarmup')
 export const postEvent = (data) => axiosWithAuth().post('event', data)
 
 export const putEvent = (data) => axiosWithAuth().put(`event/${data.id}`, data)
+
+export const deleteEvent = id => axiosWithAuth().delete(`event/${id}`)

@@ -95,7 +95,7 @@ const textsEN = {
     invalid: 'The e-mail is invalid.',
   },
   subdomain: {
-    length: 'The subdomain must have 10 characters maximum.',
+    length: 'The subdomain must have 15 characters maximum.',
     invalid: 'The subdomain is invalid.',
   },
   address: {},

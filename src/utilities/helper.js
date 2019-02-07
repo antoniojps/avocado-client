@@ -196,7 +196,7 @@ export const mapRoutesObjToArray = routesObj => {
 export const generateMainNavList = (routesObj) => {
   const keys = Object.keys(routesObj)
   // blacklisted
-  const blackListed = ['index', 'gather', 'login']
+  const blackListed = ['index', 'gather', 'login', 'register']
 
   // remove blacklisted routes
   const filteredKeys = keys.filter(key => blackListed.indexOf(key) === -1)

@@ -9,8 +9,8 @@ import styled, { withTheme } from 'styled-components'
 import { Button, Subtitle } from 'elements'
 import { fetchEvents, fetchDataAddEvent } from 'utilities/requests'
 import { toast } from 'utilities'
+import withSizes from 'react-sizes'
 import AddEventForm from './AddEventForm'
-
 
 const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
 
@@ -18,7 +18,7 @@ class Calendar extends Component {
   state = {
     events: [],
     isLoading: true,
-    activeTab: 'week',
+    activeTab: !this.props.isMobile ? 'week' : 'day',
     modalAddOpen: false,
     addStart: null,
     addEnd: null,
@@ -31,7 +31,7 @@ class Calendar extends Component {
     const start = moment().startOf('month').subtract(10, 'days').unix() // current begin of week timestampt
     const end = moment().endOf('month').add(10, 'days').unix() // current end of week timestampt
     const currentMonth = moment().format('M')
-    let events
+    let events = []
     let dataAdd
 
     try {
@@ -39,18 +39,17 @@ class Calendar extends Component {
       events = data
       const { data: addData } = await fetchDataAddEvent()
       dataAdd = addData
+
+      events = events.map(event => (
+        {
+          ...event,
+          start: new Date(event.start),
+          end: new Date(event.end),
+        }
+      ))
     } catch (e) {
       toast.error('Error fetching events')
     }
-
-
-    events = events.map(event => (
-      {
-        ...event,
-        start: new Date(event.start),
-        end: new Date(event.end),
-      }
-    ))
 
     this.setState({
       events,
@@ -59,6 +58,15 @@ class Calendar extends Component {
       dataAdd,
     })
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isMobile !== this.props.isMobile) {
+      if (nextProps.isMobile) {
+        this.setState({ activeTab: 'day' })
+      }
+    }
+  }
+
 
   onNavigate = async (e) => {
     const { currentMonth } = this.state
@@ -97,16 +105,18 @@ class Calendar extends Component {
   getCustomBar = ({ label, onNavigate }) => (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        {!this.props.isMobile && (
+          <div>
+            <Button modifiers={this.getCurrent('month')} onClick={() => this.setState({ activeTab: 'month' })}>Month</Button>
+            <Button modifiers={this.getCurrent('week')} onClick={() => this.setState({ activeTab: 'week' })}>Week</Button>
+            <Button modifiers={this.getCurrent('day')} onClick={() => this.setState({ activeTab: 'day' })}>Day</Button>
+          </div>
+        )}
+        <Subtitle>{label}</Subtitle>
         <div>
           <Button onClick={() => onNavigate('PREV')}>Back</Button>
           <Button modifiers="leftMargin" onClick={() => onNavigate('TODAY')}>Today</Button>
           <Button modifiers="leftMargin" onClick={() => onNavigate('NEXT')}>Next</Button>
-        </div>
-        <Subtitle>{label}</Subtitle>
-        <div>
-          <Button modifiers={this.getCurrent('month')} onClick={() => this.setState({ activeTab: 'month' })}>Month</Button>
-          <Button modifiers={this.getCurrent('week')} onClick={() => this.setState({ activeTab: 'week' })}>Week</Button>
-          <Button modifiers={this.getCurrent('day')} onClick={() => this.setState({ activeTab: 'day' })}>Day</Button>
         </div>
       </div>
     </>
@@ -118,24 +128,44 @@ class Calendar extends Component {
   }
 
   toggleModal = (e) => {
+    const { modalAddOpen } = this.state;
     if (e && e.id) {
       this.setState({
-        selectedEvent: e, addStart: e.start, addEnd: e.end, modalAddOpen: !this.state.modalAddOpen,
+        selectedEvent: e, addStart: e.start, addEnd: e.end, modalAddOpen: !modalAddOpen,
       })
     } else {
-      this.setState({ selectedEvent: null, modalAddOpen: !this.state.modalAddOpen })
+      this.setState({ selectedEvent: null, modalAddOpen: !modalAddOpen })
     }
   }
 
-  onSubmit = ({ data }) => {
+  onSubmit = ({ data }, isEdit) => {
     this.toggleModal()
+    const { events } = this.state
+    if (isEdit) {
+      this.setState({
+        events: events.map(ev => (ev.id === data.id ? {
+          ...data,
+          start: new Date(data.start.date),
+          end: new Date(data.end.date),
+        } : ev)),
+      })
+    } else {
+      this.setState({
+        events: [...events, {
+          ...data,
+          start: new Date(data.start.date),
+          end: new Date(data.end.date),
+        }],
+      })
+    }
+  }
+
+  onDelete = eventId => {
+    const { events } = this.state
     this.setState({
-      events: [...this.state.events, {
-        ...data,
-        start: new Date(data.start.date),
-        end: new Date(data.end.date),
-      }],
+      events: events.filter(({ id }) => eventId !== id),
     })
+    this.toggleModal()
   }
 
   render() {
@@ -146,7 +176,7 @@ class Calendar extends Component {
       <>
         <BaseModal isOn={modalAddOpen} toggle={this.toggleModal}>
           <AddEventForm
-
+            onDelete={this.onDelete}
             onSubmit={this.onSubmit}
             selectedEvent={selectedEvent}
             {...{
@@ -182,9 +212,6 @@ class Calendar extends Component {
                 if (event.mine) {
                   newStyle.backgroundColor = this.props.theme.color.primaryDarker
                 }
-                if (event.allDay) {
-                  newStyle.backgroundColor = this.props.theme.color.primaryDarker
-                }
                 return {
                   className: '',
                   style: newStyle,
@@ -205,6 +232,9 @@ const Loader = styled(BaseLoading)`
     position: absolute;
     background-color: ${props => transparentize(0.9, props.theme.color.bgDark)};
 `
+const mapSizesToProps = ({ width }) => ({
+  isMobile: width < 710,
+})
 
-
-export default withTheme(Calendar)
+const ThemCalendar = withTheme(Calendar)
+export default withSizes(mapSizesToProps)(ThemCalendar)

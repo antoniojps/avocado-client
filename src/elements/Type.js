@@ -14,7 +14,6 @@ const TITLE_MODIFIERS = {
   `,
   small: ({ theme }) => `
     font-size: ${theme.size.xs};
-    margin-top: 0;
   `,
 
 

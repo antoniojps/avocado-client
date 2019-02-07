@@ -25,29 +25,6 @@ const routesConfig = {
     exact: true,
     name: 'index',
   },
-  documentation: {
-    index: {
-      component: PageDocsIndex,
-      key: 'docs',
-      exact: true,
-      name: 'Documentation',
-    },
-    elements: {
-      component: PageDocsElements,
-      key: 'docsElements',
-      name: 'Elements',
-    },
-    components: {
-      component: PageDocsComponents,
-      key: 'docsComponents',
-      name: 'Components',
-    },
-    store: {
-      component: PageDocsStore,
-      key: 'docsStore',
-      name: 'Store',
-    },
-  },
   gather: {
     index: {
       component: PageGather,
@@ -67,10 +44,19 @@ const routesConfig = {
     key: 'calendar',
     name: 'Calendar',
   },
-  resources: {
-    component: PageResources,
-    key: 'resources',
-    name: 'Resources',
+  team: {
+    index: {
+      component: PageUsers,
+      key: 'team',
+      exact: true,
+      name: 'Team',
+    },
+    invite: {
+      component: PageInvite,
+      key: 'teamInvite',
+      exact: true,
+      name: 'Invite',
+    },
   },
   login: {
     component: PageLogin,
@@ -96,19 +82,10 @@ const routesConfig = {
     exact: true,
     name: 'Units',
   },
-  team: {
-    index: {
-      component: PageUsers,
-      key: 'team',
-      exact: true,
-      name: 'Team',
-    },
-    invite: {
-      component: PageInvite,
-      key: 'teamInvite',
-      exact: true,
-      name: 'Invite',
-    },
+  resources: {
+    component: PageResources,
+    key: 'resources',
+    name: 'Resources',
   },
   settings: {
     index: {
@@ -121,6 +98,29 @@ const routesConfig = {
       component: PageRoles,
       key: 'roles',
       name: 'Roles',
+    },
+  },
+  documentation: {
+    index: {
+      component: PageDocsIndex,
+      key: 'docs',
+      exact: true,
+      name: 'Documentation',
+    },
+    elements: {
+      component: PageDocsElements,
+      key: 'docsElements',
+      name: 'Elements',
+    },
+    components: {
+      component: PageDocsComponents,
+      key: 'docsComponents',
+      name: 'Components',
+    },
+    store: {
+      component: PageDocsStore,
+      key: 'docsStore',
+      name: 'Store',
     },
   },
 }
