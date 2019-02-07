@@ -42,7 +42,7 @@ function* destroy({ payload, callFunction, context }) {
   try {
     const { data } = yield call(callFunction, payload);
     yield put({ type: `DELETE_${context}_SUCCESS`, data })
-    toast.error(`${capitalize(context.slice(0, -1))} deleted`)
+    toast.success(`${capitalize(context.slice(0, -1))} deleted`)
   } catch (err) {
     yield put({ type: `DELETE_${context}_FAILURE`, data: err })
     toast.warning(`Error deleting ${context.toLowerCase().slice(0, -1)}`)
