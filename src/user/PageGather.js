@@ -58,8 +58,9 @@ class PageGather extends Component {
   handleAuthVerification = () => {
     const { history } = this.props
     const token = getToken()
+    const isWhiteListed = this.computeWhiteListedRedirect()
 
-    if (!token) {
+    if (!token && !isWhiteListed) {
       history.push('/login')
     } else this.handleWarmupRequest()
   }

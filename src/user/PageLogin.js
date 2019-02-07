@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import {
-  Container, Title, P, Button,
+  Container, Title, P, Button, Subtitle,
 } from 'elements'
 import BaseForm, { inputTypes } from 'ui/BaseForm';
 import { BaseFormInput, BaseLoader } from 'ui'
@@ -9,6 +9,7 @@ import withAuth from 'user/withAuth'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { above } from 'utilities'
+import withTenant from 'tenant/withTenant'
 
 class PageLogin extends Component {
   componentDidMount = () => {
@@ -65,15 +66,15 @@ class PageLogin extends Component {
     form: { touched, errors }, // values, setXXXX, handleXXXX, dirty, isValid, status, etc.
     ...props
   }) => (
-    <BaseFormInput
-      {...field}
-      {...props}
-      type="text"
-      autoComplete="username"
-      touched={touched[field.name]}
-      error={errors[field.name]}
-    />
-  )
+      <BaseFormInput
+        {...field}
+        {...props}
+        type="text"
+        autoComplete="username"
+        touched={touched[field.name]}
+        error={errors[field.name]}
+      />
+    )
 
   renderInputPassword = ({ field, form: { touched, errors }, ...props }) => (
     <BaseFormInput
@@ -87,6 +88,7 @@ class PageLogin extends Component {
   )
 
   render() {
+    const { tenant } = this.props
     const { EMAIL, PASSWORD } = inputTypes
 
     const form = {
@@ -122,8 +124,13 @@ class PageLogin extends Component {
       <Wrapper>
         <Container>
           <Title modifiers="big">
-            Sonae
+            {tenant.name}
           </Title>
+          {tenant.description && (
+            <Subtitle>
+              {tenant.description}
+            </Subtitle>
+          )}
           <P>
             Workspace
           </P>
@@ -174,4 +181,4 @@ PageLogin.defaultProps = {
 
 }
 
-export default withRouter(withAuth(PageLogin))
+export default withRouter(withTenant(withAuth(PageLogin)))

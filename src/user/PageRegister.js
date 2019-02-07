@@ -103,30 +103,30 @@ class PageRegister extends Component {
     form: { touched, errors }, // values, setXXXX, handleXXXX, dirty, isValid, status, etc.
     ...props
   }) => (
-      <BaseFormInput
-        {...field}
-        {...props}
-        type="text"
-        autoComplete="username"
-        touched={touched[field.name]}
-        error={errors[field.name]}
-      />
-    )
+    <BaseFormInput
+      {...field}
+      {...props}
+      type="text"
+      autoComplete="username"
+      touched={touched[field.name]}
+      error={errors[field.name]}
+    />
+  )
 
   renderInputDisabled = ({
     field, // { name, value, onChange, onBlur }
     form: { touched, errors }, // values, setXXXX, handleXXXX, dirty, isValid, status, etc.
     ...props
   }) => (
-      <BaseFormInput
-        {...field}
-        {...props}
-        type="text"
-        touched={touched[field.name]}
-        error={errors[field.name]}
-        disabled
-      />
-    )
+    <BaseFormInput
+      {...field}
+      {...props}
+      type="text"
+      touched={touched[field.name]}
+      error={errors[field.name]}
+      disabled
+    />
+  )
 
   renderInputPassword = ({ field, form: { touched, errors }, ...props }) => (
     <BaseFormInput
