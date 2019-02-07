@@ -57,7 +57,7 @@ Card.Team = styled.div`
     font-weight: 500;
   }
 
-  ${above.sm`
+  ${above.md`
     ${Title} {
         padding-left: ${props => props.theme.spacing.xs};
       }
@@ -78,7 +78,7 @@ Card.Section = styled.div`
     padding-bottom: 0;
     padding-left: 0;
   }
-  ${above.sm`
+  ${above.md`
     flex-direction: row;
     ${P} {
       padding-left: ${props => props.theme.spacing.xs};
@@ -87,9 +87,17 @@ Card.Section = styled.div`
 `
 
 Card.Actions = styled.div`
-  padding: ${props => props.theme.spacing.xs};
-  ${above.sm`
-    padding: 0;
+  margin-top: ${props => props.theme.spacing.xs};
+  width: 100%;
+  button {
+    width: 100%;
+  }
+  ${above.md`
+    margin-top: 0;
+    width: auto;
+    button {
+      width: auto;
+    }
   `}
 `
 
@@ -101,7 +109,7 @@ const Id = styled.div`
   &:before {
     content: '#';
   }
-  ${above.sm`
+  ${above.md`
       padding-left: ${props => props.theme.spacing.xs};
 
   `}

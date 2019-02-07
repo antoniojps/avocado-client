@@ -35,10 +35,10 @@ export const queryPutTenant = ({
   themes_id,
   logo,
 }, {
-  Headers: {
-    'Content-type': 'application/x-www-form-urlencoded',
-  },
-})
+    Headers: {
+      'Content-type': 'application/x-www-form-urlencoded',
+    },
+  })
 
 export const queryDeleteTenant = () => axiosWithAuth().delete('tenant');
 
@@ -59,21 +59,22 @@ export const createTenant = ({
   fqdn,
 })
 
-export const inviteUser = ({ name, email, role }) => axiosWithAuth().post('/invite', { name, email, role })
-
 export const queryCurrentTenantRoles = () => axiosWithAuth().get('/roles');
 export const queryPostRole = name => axiosWithAuth().post('/roles', { name })
 export const queryPutRole = ({ id, permissions }) => axiosWithAuth().put(`/roles/${id}`, {
   permissions,
 }, {
-  Headers: {
-    'Content-type': 'application/x-www-form-urlencoded',
-  },
-})
+    Headers: {
+      'Content-type': 'application/x-www-form-urlencoded',
+    },
+  })
 export const queryDeleteRole = id => axiosWithAuth().delete(`/roles/${id}`)
 
 export const login = ({ email, password }) => axiosWithAuth().post('/login', { email, password })
 export const queryWarmup = () => axiosWithAuth().get('/warmup')
+export const inviteUser = (arrayOfUsers) => axiosWithAuth().post('/invite', arrayOfUsers)
+export const registerTokenValidate = (token) => axios.get(`/info/${token}`)
+export const register = ({ token, email, name, password, password_confirmation }) => axios.put(`/register/${token}`, { email, name, password, password_confirmation })
 
 /** reusable */
 export const fetch = ({ url, search, page }) => axiosWithAuth().get(url, {

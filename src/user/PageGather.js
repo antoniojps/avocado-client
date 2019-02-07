@@ -60,7 +60,6 @@ class PageGather extends Component {
     const token = getToken()
 
     if (!token) {
-      console.log('GATHER: Redirect to /login')
       history.push('/login')
     } else this.handleWarmupRequest()
   }
@@ -71,20 +70,33 @@ class PageGather extends Component {
     fetchWarmup()
   }
 
+  computeWhiteListedRedirect = () => {
+    const { gatherRedirect } = this.props
+    const whiteList = ['register']
+    const page = gatherRedirect.split('/')[1]
+    const isWhiteListed = whiteList.includes(page)
+    return (isWhiteListed)
+  }
+
   handleWarmupVerifications = () => {
     const {
-      warmup, warmupFailure, warmupLoading, history,
+      warmup, warmupFailure, warmupLoading, history, gatherRedirect,
     } = this.props
+
+    const isWhiteListed = this.computeWhiteListedRedirect()
+
     if (warmupLoading) return;
     if (warmupFailure) {
-      history.push('/login')
+      if (isWhiteListed) history.push(gatherRedirect);
+      else history.push('/login')
     }
     if (warmup) this.handleSuccess()
   }
 
   handleSuccess = () => {
     const { gatherRedirect, history } = this.props
-    console.log(gatherRedirect)
+    const isWhiteListed = this.computeWhiteListedRedirect()
+    if (gatherRedirect === '/gather/register' || isWhiteListed) return history.push('/')
     history.push(gatherRedirect)
   }
 

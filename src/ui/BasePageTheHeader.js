@@ -12,9 +12,9 @@ const BasePageHeader = ({ tenant, location }) => {
     title: (tenant && tenant.name) || 'Avocado',
     to: '/',
   }
-  const removeFrom = ['/login', '/gather']
-  const currentPath = location.pathname
-  const shouldRender = !removeFrom.includes(currentPath)
+  const blacklist = ['login', 'gather', 'register']
+  const currentPath = location.pathname.split('/')[1]
+  const shouldRender = !blacklist.includes(currentPath)
 
   if (!shouldRender) return null;
 

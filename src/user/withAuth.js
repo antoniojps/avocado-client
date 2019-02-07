@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updateGatherRedirect, login, fetchWarmup } from './actions'
+import { updateGatherRedirect, login, fetchWarmup, register } from './actions'
 
 export const mapStateToProps = ({
   user: {
@@ -10,6 +10,8 @@ export const mapStateToProps = ({
     userLoading,
     userFailure,
     userAuthenticated,
+    userRegisterLoading,
+    userRegisterFailure,
     warmup,
     warmupLoading,
     warmupFailure,
@@ -20,6 +22,8 @@ export const mapStateToProps = ({
   userLoading,
   userFailure,
   userAuthenticated,
+  userRegisterLoading,
+  userRegisterFailure,
   warmup,
   warmupLoading,
   warmupFailure,
@@ -29,6 +33,7 @@ export const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateGatherRedirect,
   login,
   fetchWarmup,
+  register,
 }, dispatch)
 
 export const withAuth = (WrappedComponent) => {

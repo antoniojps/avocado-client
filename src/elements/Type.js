@@ -31,6 +31,14 @@ export const Subtitle = styled.h2`
   margin: 0;
   padding-bottom: ${props => props.theme.spacing.xs};
 `
+
+
+const PARAGRAPH_MODIFIERS = {
+  small: ({ theme }) => `
+    font-size: ${theme.size.xxs};
+  `,
+}
+
 export const P = styled.p`
   font-size: ${props => props.theme.size.base};
   color: ${props => props.theme.color.baseLighter};
@@ -38,4 +46,5 @@ export const P = styled.p`
   margin: 0;
   padding-bottom: ${props => props.theme.spacing.xs};
   line-height: ${props => props.theme.size.sm};
+  ${applyStyleModifiers(PARAGRAPH_MODIFIERS)};
 `

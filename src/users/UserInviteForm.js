@@ -35,11 +35,11 @@ class UserInviteForm extends Component {
       EMAIL, FIRST_NAME, LAST_NAME, SELECT,
     } = values
     const role = this.getRoleFromId(SELECT)
-    const params = {
+    const params = [{
       email: EMAIL,
       name: `${FIRST_NAME} ${LAST_NAME}`,
       role,
-    }
+    }]
     return inviteUser(params)
   }
 
@@ -76,7 +76,6 @@ class UserInviteForm extends Component {
   renderLoader = () => (
     <BaseLoader message="Inviting user..." />
   )
-
 
   renderInput = ({
     field, // { name, value, onChange, onBlur }
@@ -171,7 +170,6 @@ class UserInviteForm extends Component {
           initialValue: 0,
           validation: true,
           required: true,
-          placeholder: 'Type',
           label: 'Type',
           component: this.renderInputRoles,
         },

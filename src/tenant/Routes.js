@@ -15,6 +15,7 @@ import PageUsers from 'users/PageUsers';
 import PageInvite from 'users/PageInvite';
 import PageCalendar from 'calendar/PageCalendar';
 import PageIndex from './PageIndex'
+import PageRegister from '../user/PageRegister';
 
 const routesConfig = {
   index: {
@@ -47,9 +48,18 @@ const routesConfig = {
     },
   },
   gather: {
-    component: PageGather,
-    key: 'gather',
-    name: 'Gather',
+    index: {
+      component: PageGather,
+      key: 'gather',
+      name: 'Gather',
+      exact: true,
+    },
+    register: {
+      component: PageGather,
+      key: 'gather',
+      name: 'Gather',
+      exact: true,
+    },
   },
   calendar: {
     component: PageCalendar,
@@ -65,6 +75,19 @@ const routesConfig = {
     component: PageLogin,
     key: 'login',
     name: 'Login',
+  },
+  register: {
+    index: {
+      component: PageRegister,
+      key: 'register',
+      name: 'register',
+      exact: true,
+    },
+    ':token': {
+      component: PageRegister,
+      key: 'registerToken',
+      name: 'registerToken',
+    },
   },
   units: {
     component: PageUnits,
