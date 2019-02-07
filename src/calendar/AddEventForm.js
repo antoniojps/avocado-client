@@ -36,6 +36,8 @@ class AddEventForm extends Component {
     />
   )
 
+  renderDelete = () => <Button modifiers={['small', 'danger']}>Delete</Button>
+
   renderInputSelect = ({
     field, initialValue, form, form: { touched, errors }, options, touchedEnv, ...props
   }) => (
@@ -213,6 +215,7 @@ class AddEventForm extends Component {
         },
 
       ],
+      deleteButton: selectedEvent ? this.renderDelete() : null,
       submitButton: this.renderSubmitButton(),
     }
 
@@ -224,6 +227,7 @@ class AddEventForm extends Component {
         </Title>
         {this.renderExtraFields(addStart, addEnd)}
         <Form form={form} />
+
       </>
     )
   }
