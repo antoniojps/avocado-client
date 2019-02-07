@@ -98,7 +98,7 @@ const BaseFormSelect = (props) => {
 }
 
 BaseFormSelect.propTypes = {
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   error: PropTypes.string,
   touched: PropTypes.bool,
   modifiers: PropTypes.oneOfType([
@@ -118,6 +118,7 @@ BaseFormSelect.propTypes = {
 }
 
 BaseFormSelect.defaultProps = {
+  placeholder: '',
   error: null,
   modifiers: [],
   touched: false,

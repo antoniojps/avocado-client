@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { applyPathToRoutesObj, mapRoutesObjToArray } from 'utilities/helper'
 import PageDocsIndex from 'docs/PageIndex'
 import PageDocsElements from 'docs/PageElements'
@@ -14,8 +14,9 @@ import PageUnits from 'units/PageUnits';
 import PageUsers from 'users/PageUsers';
 import PageInvite from 'users/PageInvite';
 import PageCalendar from 'calendar/PageCalendar';
+import PageRegister from 'user/PageRegister';
+import PageNotFound from 'tenant/PageNotFound';
 import PageIndex from './PageIndex'
-import PageRegister from '../user/PageRegister';
 
 const routesConfig = {
   index: {
@@ -125,16 +126,22 @@ const routesConfig = {
 }
 
 const routesObj = applyPathToRoutesObj(routesConfig)
-const routesArr = mapRoutesObjToArray(routesObj)
+const routesArr = [
+  ...mapRoutesObjToArray(routesObj),
+  {
+    component: PageNotFound,
+    key: 'NotFound',
+  },
+]
 
 const Routes = () => (
-  <>
+  <Switch>
     {
       routesArr.map(route => (
         <Route {...route} />
       ))
     }
-  </>
+  </Switch>
 )
 
 export const routes = routesObj

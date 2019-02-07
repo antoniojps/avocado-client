@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { applyStyleModifiers } from 'styled-components-modifiers'
 
-
 const INPUT_MODIFIERS = {
   hover: ({ theme }) => `
     border: 1px solid ${theme.color.base};
@@ -14,6 +13,17 @@ const INPUT_MODIFIERS = {
   `,
   noMargin: () => `
     margin: 0
+  `,
+  small: ({ theme }) => `
+    padding: ${theme.spacing.xxxs} ${theme.spacing.xxms};
+  `,
+  primary: ({ theme }) => `
+    background-color: ${theme.color.bg};
+    border: 1px solid ${theme.color.bg};
+    color: ${theme.color.base};
+    &::placeholder {
+      color: ${theme.color.base};
+    }
   `,
 }
 

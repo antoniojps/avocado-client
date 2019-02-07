@@ -18,6 +18,8 @@ import { withRouter } from 'react-router-dom'
 const getTabsFromPath = (path) => {
   if (path === '/') return null
   const pathParent = path.split('/').slice(1)[0]
+  const pathExists = Object.keys(routes).includes(pathParent)
+  if (!pathExists) return null
   const pathRoutes = routes[pathParent]
   const tabs = []
   Object.keys(pathRoutes).forEach(keyRoute => {
@@ -111,7 +113,7 @@ const BasePageMain = ({
               }
             </Main.Header>
             <BaseBreakpoints render={({ md }) => !md
-            && renderMainContent({ children, page, wrapContainer })
+              && renderMainContent({ children, page, wrapContainer })
             }
             />
           </Container>
@@ -124,9 +126,9 @@ const BasePageMain = ({
               )
             }
             <BaseBreakpoints render={({ md }) => md
-            && renderMainContent(
-              { children, page, wrapContainer }
-            )
+              && renderMainContent(
+                { children, page, wrapContainer }
+              )
             }
             />
           </Main.Wrapper>

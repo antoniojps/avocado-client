@@ -182,10 +182,10 @@ class Form extends Component {
       case ADDRESS:
         break
       case PASSWORD:
-        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/i.test(values[PASSWORD])) { return validations.password.weak }
+        if (!/^(?=.*[a-z])(?=.{8,})/i.test(values[PASSWORD])) { return validations.password.weak }
         break
       case REPEAT_PASSWORD:
-        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/i.test(values[REPEAT_PASSWORD])) { return validations.repeat_password.weak }
+        if (!/^(?=.*[a-z])(?=.{8,})/i.test(values[REPEAT_PASSWORD])) { return validations.repeat_password.weak }
         if (values[PASSWORD] && values[PASSWORD] !== values[REPEAT_PASSWORD]) { return validations.repeat_password.different }
         break
       case SELECT:

@@ -14,6 +14,11 @@ const GridToggle = styled.div`
   margin-bottom: ${props => props.theme.spacing.sm};
 `
 
+const Role = styled.div`
+  width: 100%;
+  padding-left: ${props => props.theme.spacing.xs};
+`
+
 class EditPermissionsModal extends Component {
   constructor(props) {
     super(props);
@@ -44,12 +49,12 @@ class EditPermissionsModal extends Component {
     const { allPermissions } = this.props;
     const { rolePermissions } = this.state;
     return allPermissions.map(perm => (
-      <div key={perm}>
+      <Role key={perm}>
         <div><P>{perm}</P></div>
         <div>
           <BaseSwitch key={perm} modifiers="noMargin" isChecked={rolePermissions.includes(perm)} onChange={() => this.handlePermissionChange(perm)} />
         </div>
-      </div>
+      </Role>
     ))
   }
 

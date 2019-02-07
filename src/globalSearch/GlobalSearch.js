@@ -74,7 +74,7 @@ class GlobalSearch extends Component {
             </ThemeProvider>
           )}
         >
-          <BaseSearch onChange={search => this.handleSearch(search)} modifiers={['noMargin']}>
+          <BaseSearch onChange={search => this.handleSearch(search)} modifiers={['noMargin', 'small', 'primary']}>
             Serch
           </BaseSearch>
 

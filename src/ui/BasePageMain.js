@@ -27,11 +27,6 @@ const BasePage = withRouter(({ children, className, history: { push } }) => (
         </div>
       </Row>
     </Main>
-    <Footer>
-      <Row>
-        Footer
-      </Row>
-    </Footer>
   </div>
 ))
 
@@ -71,13 +66,6 @@ const Main = styled.main`
     ${above.md`
       padding-top: ${props => props.theme.spacing.m};
   `}
-`
-
-const Footer = styled.footer`
-  color: ${props => props.theme.color.baseInverse};
-  padding: ${props => props.theme.spacing.base};
-  background-color: ${props => props.theme.color.bgLight};
-  margin-top: auto;
 `
 
 export default styled(BasePage)`
