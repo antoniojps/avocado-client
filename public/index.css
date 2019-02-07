@@ -38,3 +38,12 @@
   .css-2o5izw:hover {
     border-color: black!important;  
   }
+  .rdtPicker {
+    bottom: 0;
+  }
+  .react-datetime-picker__calendar--above-label{
+    top: 100%!important;
+  }
+  .react-datetime-picker__clock {
+    top: 100%!important;
+  }

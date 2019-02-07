@@ -1,4 +1,4 @@
-import styled, { withTheme } from 'styled-components'
+import styled from 'styled-components'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Transition } from 'react-spring'
@@ -18,7 +18,7 @@ const INPUT_MODIFIERS = {
   `,
 }
 
-const Input = styled(Select)`
+const Input = styled(Select) `
   display: block;
   width: 100%;
   -webkit-appearance: none;
@@ -77,40 +77,28 @@ const renderError = (error) => {
 }
 
 
-const BaseSelect = withTheme((props) => {
+const BaseSelect = (props) => {
   const {
-    touchedEnv, error, options, initial, value, label,
+    touchedEnv, error, options, value, label, initialValue,
   } = props
 
   const errorElement = renderError(error)
   const modifiersFromProps = generateModifiersFromProps({ touchedEnv, error })
-
   return (
     <Wrapper>
       {label && <P>{label}</P>}
       <Select
-        // styles={{
-        //   control: (base, state) => ({
-        //     ...base,
-        //     boxShadow: state.isFocused ? 0 : 0,
-        //     borderColor: props.theme.color.border,
-        //     '&:hover': {
-        //       border: `1px solid ${props.theme.color.base}`,
-        //     },
-        //   }),
-        // }}
         {...props}
         label={label}
         modifiers={modifiersFromProps}
-        value={value || initial}
+        value={value || initialValue}
         options={options}
-        s
       />
       {touchedEnv && errorElement}
       <Input.Spacing />
     </Wrapper>
   )
-})
+}
 
 BaseSelect.propTypes = {
   placeholder: PropTypes.string.isRequired,

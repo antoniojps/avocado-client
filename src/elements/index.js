@@ -7,5 +7,6 @@ export * from './Buttons'
 export * from './Tags'
 export * from './Icons'
 export * from './Inputs'
+export * from './Avatar'
 
 export { Emoji }
