@@ -15,6 +15,9 @@ const TAG_MODIFIERS = {
     font-weight: 400
     text-transform: none;
   `,
+  calendar: (props) => `
+    color: ${(props.color === theme.color.bg ? props.theme.color.base : props.theme.color.baseInverse)};
+  `,
 }
 
 export const Tag = styled.div`
@@ -23,7 +26,7 @@ export const Tag = styled.div`
   border-radius: ${props => props.theme.value.borderRadius};
   background-color: ${({ theme, color }) => color || theme.color.blue};
   font-size: ${props => props.theme.size.xxxs};
-  color: ${props => props.theme.color.baseInverse};
+  color: ${props => (props.inverse ? props.theme.color.base : props.theme.color.baseInverse)};
   text-transform: uppercase;
   margin-right: ${props => props.theme.spacing.xxs};
   margin-bottom: ${props => props.theme.spacing.xs};
@@ -61,21 +64,21 @@ TagWithData.defaultProps = {
 
 
 TagWithData.Wrapper = styled(Tag)`
-  display: flex;
-  justify-content: space-between;
+display: flex;
+justify - content: space - between;
 `
 
 TagWithData.Left = styled.div`
-  display: flex;
+display: flex;
 `
 
 TagWithData.Icon = styled.div`
-  display: flex;
-  padding-right: ${props => props.theme.spacing.xxs};
+display: flex;
+padding - right: ${props => props.theme.spacing.xxs};
 `
 
 TagWithData.Value = styled.div`
 
-`
+  `
 
 export const TagIcon = withTheme(TagWithData)

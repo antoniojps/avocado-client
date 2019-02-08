@@ -6,7 +6,6 @@ import { Button } from 'elements'
 import BaseList from 'ui/BaseList';
 import PropTypes from 'prop-types'
 import { fetch } from 'utilities/requests'
-import styled from 'styled-components'
 import withUnits from './withUnits';
 import UnitCreateFrom from './UnitCreateForm';
 import CardUnit from './CardUnit'
@@ -107,9 +106,7 @@ class PageUnits extends Component {
         wrapContainer={false}
       >
         <>
-          {/* <Header> */}
           {this.renderAction('Add')}
-          {/* </Header> */}
           <BaseList {...this.props} context="units" fetchList={() => this.fetchUnits} loadMore={this.fetchUnits}>
             {list.map((unit) => {
               if (!unit) return null
@@ -129,11 +126,6 @@ class PageUnits extends Component {
     )
   }
 }
-
-const Header = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`
 
 PageUnits.propTypes = {
   getUnits: PropTypes.func.isRequired,

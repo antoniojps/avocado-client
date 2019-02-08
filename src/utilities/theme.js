@@ -19,6 +19,7 @@ const color = {
   purple: '#B86BFF',
   warning: '#F5874A',
   success: '#40CB89',
+  yellow: '#FFDD57',
   star: '#FFDD57',
   gray: '#e8e8e8',
 }
@@ -27,6 +28,18 @@ const gradient = {
   bg: () => css`
     background-image: linear-gradient(-90deg, #408263 2%, #42705C 100%);
   `,
+}
+
+const calendar = {
+  bg: color.bgLighter,
+  offRangeBg: color.bg,
+  offRangeColor: color.bgLighter,
+  eventColor: color.base,
+  eventOwnColor: color.baseInverse,
+}
+
+const modal = {
+  bg: color.bgPrimary,
 }
 
 const value = {
@@ -133,4 +146,6 @@ export const theme = {
   mixin,
   animation,
   width,
+  calendar,
+  modal,
 }

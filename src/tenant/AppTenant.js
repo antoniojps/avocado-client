@@ -6,12 +6,13 @@ import {
 import GlobalStyle from 'GlobalStyle'
 import withAuth from 'user/withAuth'
 import { ThemeProvider } from 'styled-components'
-import { theme, history } from 'utilities'
+import { history } from 'utilities'
 import Routes from 'tenant/Routes'
 import { flow } from 'lodash'
 import { BasePageTheHeader as TheHeader } from 'ui'
 import { ToastContainer } from 'react-toastify';
 import withTenant from './withTenant';
+import { themeFromId } from './themes'
 
 class AppTenant extends Component {
   componentWillMount() {
@@ -21,12 +22,13 @@ class AppTenant extends Component {
   }
 
   render() {
-    // removed themes for now because two themes require more maintenance
-    // const { tenant } = this.props
-    // let themesId = null;
-    // if (tenant) {
-    //   themesId = tenant.themes_id;
-    // }
+    const { tenant } = this.props
+    let themesId = 0;
+    if (tenant) {
+      themesId = tenant.themes_id;
+    }
+    const theme = themeFromId(themesId)
+
     return (
       <ThemeProvider theme={theme}>
         <>

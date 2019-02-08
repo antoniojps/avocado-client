@@ -17,6 +17,7 @@ import PageInvite from 'users/PageInvite';
 import PageCalendar from 'calendar/PageCalendar';
 import PageRegister from 'user/PageRegister';
 import PageNotFound from 'tenant/PageNotFound';
+import PageComingSoon from 'tenant/PageComingSoon';
 import PageIndex from './PageIndex'
 
 const routesConfig = {
@@ -58,6 +59,12 @@ const routesConfig = {
       exact: true,
       name: 'Invite',
     },
+    types: {
+      component: PageComingSoon,
+      key: 'teamTypes',
+      exact: true,
+      name: 'Types',
+    },
   },
   login: {
     component: PageLogin,
@@ -84,6 +91,12 @@ const routesConfig = {
       exact: true,
       name: 'Units',
     },
+    types: {
+      component: PageComingSoon,
+      key: 'unitsTypes',
+      exact: true,
+      name: 'Types',
+    },
   },
   resources: {
     index: {
@@ -92,7 +105,12 @@ const routesConfig = {
       name: 'Resources',
       exact: true,
     },
-
+    types: {
+      component: PageComingSoon,
+      key: 'resourcesTypes',
+      exact: true,
+      name: 'Types',
+    },
   },
   settings: {
     index: {

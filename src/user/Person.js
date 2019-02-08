@@ -5,7 +5,7 @@ import { Avatar, Icon } from 'elements';
 import { BaseBreakpoints } from 'ui'
 import Popover from 'react-tiny-popover'
 import { theme } from 'utilities'
-
+import { lighten } from 'polished'
 
 class Person extends PureComponent {
   state = {
@@ -72,7 +72,7 @@ const ListItem = styled.div`
     border-radius: ${props => props.theme.value.borderRadius};
     margin-top: ${props => props.theme.spacing.xxs};
     &:hover {
-    background: ${props => props.theme.color.baseLighter};
+    background: ${props => lighten(0.4, props.theme.color.baseLighter)};
     }
 `
 const Logout = styled.div`

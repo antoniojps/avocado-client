@@ -2,16 +2,16 @@ import { rem } from 'polished'
 import { css, keyframes } from 'styled-components'
 
 const color = {
-  base: '#363636',
+  base: '#FFFFFF',
   baseInverse: '#FFFFFF',
-  baseLighter: '#7A7A7A',
+  baseLighter: '#E8E8E8',
   primary: '#40CB89',
   primaryDarker: '#2AB875',
-  border: '#E6E6E6',
-  borderBtn: '#DDDDDD',
-  bg: '#F5F5F5',
-  bgLighter: '#FFFFFF',
-  bgDark: '#242424',
+  border: '#777986',
+  borderBtn: '#737880',
+  bg: '#282B3A',
+  bgLighter: '#3A3E4B',
+  bgDark: '#151926',
   bgPrimary: '#42705C',
   danger: '#FB6D77',
   dangerDarker: '#EB4D5D',
@@ -19,13 +19,26 @@ const color = {
   purple: '#B86BFF',
   warning: '#F5874A',
   success: '#40CB89',
+  yellow: '#FFDD57',
   star: '#FFDD57',
-  gray: '#e8e8e8',
+  gray: '#A9B1BC',
+}
+
+const calendar = {
+  bg: '#424755',
+  offRangeBg: color.bg,
+  offRangeColor: color.bgLighter,
+  eventColor: color.baseInverse,
+  eventOwnColor: color.baseInverse,
+}
+
+const modal = {
+  bg: color.bgDark,
 }
 
 const gradient = {
   bg: () => css`
-    background-image: linear-gradient(-90deg, #408263 2%, #42705C 100%);
+    background-image: linear-gradient(-90deg, #151822 2%, #1E1F2B 100%);
   `,
 }
 
@@ -33,6 +46,11 @@ const value = {
   borderRadius: '8px',
   borderSize: '2px',
   transition: '150ms',
+}
+
+const width = {
+  s: '300px',
+  m: '600px',
 }
 
 const size = {
@@ -44,8 +62,8 @@ const size = {
   s: rem('20px'),
   sm: rem('24px'),
   m: rem('32px'),
-  l: rem('48px'),
   ml: rem('42px'),
+  l: rem('48px'),
   xl: rem('60px'),
 }
 
@@ -66,9 +84,14 @@ const spacing = {
 }
 
 const zIndex = {
+  negative: -10,
   s: 0,
   m: 10,
   l: 20,
+  ml: 30,
+  xl: 40,
+  xxl: 50,
+  above: 100,
 }
 
 const colorBorder = color.border
@@ -93,9 +116,9 @@ const mixin = {
 
 const animation = {
   pulse: keyframes`
-  0% {transform: scale(0.94);}
-  50% {transform: scale(1);}
-  100% {transform: scale(0.94);}
+    0% {transform: scale(0.94);}
+    50% {transform: scale(1);}
+    100% {transform: scale(0.94);}
   `,
   pop: keyframes`
     0% {
@@ -103,6 +126,13 @@ const animation = {
       transform: scale(0);
     }
     100% {transform: scale(1);}
+  `,
+  bounce: keyframes`
+    0%, 100% {
+      transform: scale(0.0);
+    } 50% {
+      transform: scale(1.0);
+    }
   `,
 }
 
@@ -115,4 +145,7 @@ export const themeDark = {
   zIndex,
   mixin,
   animation,
+  width,
+  calendar,
+  modal,
 }

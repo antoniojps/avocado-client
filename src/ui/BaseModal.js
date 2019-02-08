@@ -74,7 +74,7 @@ const Modal = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
-  background-color: ${props => props.theme.color.bgPrimary};
+  background-color: ${props => props.theme.modal.bg};
   padding: ${props => props.theme.spacing.base};
   padding-top: ${props => props.theme.spacing.l};
 `
