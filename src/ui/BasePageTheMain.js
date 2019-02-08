@@ -6,7 +6,7 @@ import {
   P,
   Row,
 } from 'elements'
-import { above } from 'utilities'
+import { above, hasPermissions } from 'utilities'
 import {
   BaseTabs,
   BaseBreakpoints,
@@ -14,6 +14,7 @@ import {
 import { routes } from 'tenant/Routes'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 const getTabsFromPath = (path) => {
   if (path === '/') return null
@@ -29,6 +30,7 @@ const getTabsFromPath = (path) => {
         name: route.name,
         to: route.path,
         key: route.key,
+        required: route.required || null,
       })
     }
   })
@@ -36,20 +38,46 @@ const getTabsFromPath = (path) => {
   return tabs
 }
 
-const renderBaseTabs = ({ history }) => {
+const BaseTabsList = ({ history, permissions }) => {
   const { location: { pathname } } = history
   const tabs = getTabsFromPath(pathname)
   if (!tabs) return null
   return (
     <BaseTabs orientation="vertical">
-      {tabs.map(({ name, to, key }) => (
-        <BaseTabs.Tab to={to} key={key}>
-          {name}
-        </BaseTabs.Tab>
-      ))}
+      {tabs.map(({
+        name, to, key, required,
+      }) => {
+        if (required) {
+          return hasPermissions({ permissions, required })
+            ? (
+              <BaseTabs.Tab to={to} key={key}>
+                {name}
+              </BaseTabs.Tab>
+            )
+            : (
+              <BaseTabs.Tab to="/just-sending-this-to-prevent-invalid-prop-to" key={key} isVisible={false} />
+            )
+        }
+        return (
+          <BaseTabs.Tab to={to} key={key}>
+            {name}
+          </BaseTabs.Tab>
+        )
+      }
+      )}
     </BaseTabs>
   )
 }
+
+const mapStateToProps = state => {
+  const { user: { warmup } } = state
+  const permissions = (warmup && warmup.permissions) || null
+  return {
+    permissions,
+  }
+}
+
+const TabsList = connect(mapStateToProps)(BaseTabsList)
 
 const renderMainContent = ({ children, page, wrapContainer }) => {
   const { subtitle, description } = page
@@ -121,7 +149,7 @@ const BasePageMain = ({
             {hasTabs
               && (
                 <Main.NavSecondaryDesktop>
-                  {renderBaseTabs({ history })}
+                  <TabsList history={history} />
                 </Main.NavSecondaryDesktop>
               )
             }
@@ -165,67 +193,67 @@ BasePageMain.defaultProps = {
 
 const Main = styled.main`
     display: block;
-    position: relative;
+              position: relative;
     background-color: ${props => props.theme.color.bg};
     padding: ${props => props.theme.spacing.base};
-    padding-top: 0;
+              padding-top: 0;
     &:before {
-      ${props => props.theme.gradient.bg()};
-      content: " ";
-      display: block;
-      height: 40px;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
+                ${props => props.theme.gradient.bg()};
+              content: " ";
+              display: block;
+              height: 40px;
+              left: 0;
+              position: absolute;
+              top: 0;
+              width: 100%;
       z-index: ${props => props.theme.zIndex.s};
-    }
-`
+            }
+        `
 
 Main.Header = styled.div`
-  display: flex;
-  justify-content: initial;
-  align-items: center;
-  flex-direction: column;
-  align-items: initial;
+          display: flex;
+          justify-content: initial;
+          align-items: center;
+          flex-direction: column;
+          align-items: initial;
   ${above.md`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   `}
-`
+              `
 
 Main.HeaderTitle = styled.div`
   padding-bottom: ${props => props.theme.spacing.base};
   ${above.md`
     padding-bottom: 0;
   `}
-`
+              `
 
 Main.HeaderSide = styled.div`
-`
+              `
 
 Main.Wrapper = styled.div`
-  display: flex;
-  width: 100%;
-`
+                display: flex;
+                width: 100%;
+              `
 
 Main.NavSecondaryDesktop = styled.div`
-  display: none;
-  width: 260px;
+                display: none;
+                width: 260px;
   margin-right: ${props => props.theme.spacing.ms};
   ${above.md`
     display: block;
   `}
-`
+              `
 
 Main.Content = styled.div`
-  width: 100%;
-`
+                width: 100%;
+              `
 
 Main.Subtitle = styled(Title)`
   font-size: ${props => props.theme.size.s};
-  font-weight: 400;
+              font-weight: 400;
   color: ${props => props.theme.color.baseLighter};
 
   ${above.md`
@@ -235,10 +263,10 @@ Main.Subtitle = styled(Title)`
     color: ${props => props.theme.color.base};
   `}
 
-`
+              `
 
 Main.Description = styled(P)`
   padding-bottom: ${props => props.theme.spacing.ms};
-`
+            `
 
 export default withRouter(BasePageMain)

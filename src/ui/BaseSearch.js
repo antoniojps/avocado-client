@@ -61,7 +61,10 @@ class BaseSearch extends Component {
 BaseSearch.propTypes = {
   placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  modifiers: PropTypes.arrayOf(PropTypes.string),
+  modifiers: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string,
+  ]),
 }
 BaseSearch.defaultProps = {
   placeholder: 'Search',

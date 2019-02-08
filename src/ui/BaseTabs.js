@@ -10,7 +10,17 @@ class BaseTabs extends Component {
   generateTabElement = ({ element, pre }) => {
     const { history: { push }, orientation } = this.props
     const { props } = element
+    const { isVisible } = props
     const tabHasToProp = ('to' in props && props.to !== null)
+    if (!isVisible) {
+      return {
+        ...element,
+        key: generateKey(pre),
+        props: {
+          isVisible,
+        },
+      }
+    }
     if (tabHasToProp) {
       return {
         ...element,
@@ -152,6 +162,7 @@ const TAB_MODIFIERS = {
 }
 
 BaseTabs.Tab = styled.button`
+  display: ${props => (props.isVisible ? 'flex' : 'none')};
   text-align: ${({ orientation }) => (orientation === 'vertical' ? 'left' : 'center')};
   padding: ${props => props.theme.spacing.xms} ${props => props.theme.spacing.m};
   color: ${props => props.theme.color.baseLighter};
@@ -173,10 +184,12 @@ BaseTabs.Tab = styled.button`
 BaseTabs.Tab.propTypes = {
   to: PropTypes.string.isRequired,
   modifiers: styleModifierPropTypes(TAB_MODIFIERS),
+  isVisible: PropTypes.bool,
 }
 
 BaseTabs.Tab.defaultProps = {
   to: null,
+  isVisible: true,
 }
 
 export default withRouter(styled(BaseTabs)`

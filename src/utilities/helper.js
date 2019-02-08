@@ -193,6 +193,33 @@ export const mapRoutesObjToArray = routesObj => {
   return cleanedUpResult
 }
 
+const hasPermissionsArray = ({ permissions, required, needs }) => {
+  let hasPermissions = false
+  // finds if user has any of the required permissions
+  const userPermissionsUnfiltered = permissions.map(
+    ({ name: permissionName }) => required.find(
+      requiredPermission => requiredPermission === permissionName
+    )
+  )
+  const userRequiredPermissions = userPermissionsUnfiltered.filter(perm => !!perm)
+  if (needs === 'one') hasPermissions = userRequiredPermissions.length > 0
+  if (needs === 'all') hasPermissions = userRequiredPermissions.length === required.length
+  return hasPermissions
+}
+
+const hasPermissionsString = ({ permissions, required }) => {
+  const hasPermissions = permissions.find(permission => permission.name === required)
+  return hasPermissions
+}
+
+export const hasPermissions = ({ permissions, required, needs = 'all' }) => {
+  let hasPerms = false
+  const isString = typeof required === 'string'
+  if (isString) hasPerms = hasPermissionsString({ permissions, required })
+  if (!isString && required.length > 0) hasPerms = hasPermissionsArray({ permissions, required, needs })
+  return hasPerms
+}
+
 export const generateMainNavList = (routesObj) => {
   const keys = Object.keys(routesObj)
   // blacklisted

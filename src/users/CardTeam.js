@@ -6,6 +6,8 @@ import {
 } from 'elements'
 import { above } from 'utilities'
 import withAuth from 'user/withAuth'
+import BasePermission from 'user/BasePermission'
+import { DELETE_USERS } from 'user/permissions'
 
 const CardTeam = (props) => {
   const { team, renderDelete, warmup: { id: idLogged } } = props
@@ -33,7 +35,9 @@ const CardTeam = (props) => {
           </Card.Section>
         </Card.Container>
         <Card.Actions>
-          {idLogged !== id && renderDelete}
+          <BasePermission required={DELETE_USERS}>
+            {idLogged !== id && renderDelete}
+          </BasePermission>
         </Card.Actions>
       </Card.Team>
     </Card>

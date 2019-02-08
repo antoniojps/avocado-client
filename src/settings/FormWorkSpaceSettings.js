@@ -7,6 +7,8 @@ import { Button } from 'elements'
 import BaseFormSelect from 'ui/BaseFormSelect';
 import BaseFormFile from 'ui/BaseFormFile';
 import withTenant from 'tenant/withTenant'
+import BasePermission from 'user/BasePermission'
+import { EDIT_TENANT } from 'user/permissions'
 
 class FormWorkSpaceSettings extends Component {
   state = {
@@ -27,7 +29,16 @@ class FormWorkSpaceSettings extends Component {
   }
 
   renderSubmitButton = () => (
-    <Button type="submit" modifiers="primary">Submit preferences</Button>
+    <BasePermission required={EDIT_TENANT}>
+      {({ hasPermissions }) => (
+        <>
+          {console.log('hasPermissions', hasPermissions)}
+          {hasPermissions
+            && (<Button type="submit" modifiers="primary">Submit preferences</Button>)
+          }
+        </>
+      )}
+    </BasePermission>
   )
 
   renderInput = ({ field, form: { touched, errors }, ...props }) => (
@@ -131,10 +142,10 @@ class FormWorkSpaceSettings extends Component {
 }
 
 const Form = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center
-  `
+    width: 100%;
+    display: flex;
+    justify-content: center
+    `
 
 
 FormWorkSpaceSettings.propTypes = {

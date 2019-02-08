@@ -11,6 +11,8 @@ import { fetchEvents, fetchDataAddEvent } from 'utilities/requests'
 import { toast, above } from 'utilities'
 import withSizes from 'react-sizes'
 import { transparentize } from 'polished'
+import BasePermission from 'user/BasePermission'
+import { CREATE_EVENTS } from 'user/permissions'
 import AddEventForm from './AddEventForm'
 
 const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
@@ -54,14 +56,12 @@ class Calendar extends Component {
     } catch (e) {
       toast.error('Error fetching events')
     }
-    if (this.isComponentMounted) {
-      this.setState({
-        events,
-        isLoading: false,
-        currentMonth,
-        dataAdd,
-      })
-    }
+    this.setState({
+      events,
+      isLoading: false,
+      currentMonth,
+      dataAdd,
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -98,13 +98,11 @@ class Calendar extends Component {
           end: new Date(event.end),
         }
       ))
-      if (this.isComponentMounted) {
-        this.setState({
-          currentMonth,
-          events,
-          isLoading: false,
-        })
-      }
+      this.setState({
+        currentMonth,
+        events,
+        isLoading: false,
+      })
     }
   }
 
@@ -207,16 +205,18 @@ class Calendar extends Component {
     const { theme, className } = this.props
     return (
       <>
-        <BaseModal isOn={modalAddOpen} toggle={this.toggleModal}>
-          <AddEventForm
-            onDelete={this.onDelete}
-            onSubmit={this.onSubmit}
-            selectedEvent={selectedEvent}
-            {...{
-              addStart, addEnd, onChange: this.onChange, isLoading, selectData: dataAdd,
-            }}
-          />
-        </BaseModal>
+        <BasePermission required={CREATE_EVENTS}>
+          <BaseModal isOn={modalAddOpen} toggle={this.toggleModal}>
+            <AddEventForm
+              onDelete={this.onDelete}
+              onSubmit={this.onSubmit}
+              selectedEvent={selectedEvent}
+              {...{
+                addStart, addEnd, onChange: this.onChange, isLoading, selectData: dataAdd,
+              }}
+            />
+          </BaseModal>
+        </BasePermission>
         {this.renderTags()}
         <div style={{ position: 'relative', height: activeTab === 'month' ? '900px' : '100%' }}>
           {isLoading && <Loader width="50%" height="50%" color={theme.color.primary} />}

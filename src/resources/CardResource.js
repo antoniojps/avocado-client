@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 import PropTypes from 'prop-types'
 import { BaseToggleAnimated } from 'ui'
 import {
-  Title, Icon, Container, P, TagIcon,
+  Title, Icon, Container, P, Tag,
 } from 'elements'
 import { above } from 'utilities'
 
@@ -20,7 +20,9 @@ class CardResource extends Component {
   }
 
   render() {
-    const { resource, renderEdit, renderDelete } = this.props
+    const {
+      resource, renderEdit, renderDelete, theme,
+    } = this.props
     const { isExpanded, collapseIcon } = this.state
 
     const {
@@ -50,8 +52,11 @@ class CardResource extends Component {
             {description
               && (<P>{description}</P>)}
             {type
-            && (<TagIcon icon="risk" name="Risk factor" value="tipo" color="red" />
-            )}
+              && (
+                <Tag color={theme.color.blue}>
+                  {type.name}
+                </Tag>
+              )}
             <Footer>
               <Footer.Id>
                 {id}
@@ -158,4 +163,4 @@ CardResource.propTypes = {
 CardResource.defaultProps = {}
 
 
-export default CardResource
+export default withTheme(CardResource)

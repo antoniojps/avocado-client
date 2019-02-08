@@ -18,6 +18,7 @@ import PageCalendar from 'calendar/PageCalendar';
 import PageRegister from 'user/PageRegister';
 import PageNotFound from 'tenant/PageNotFound';
 import PageComingSoon from 'tenant/PageComingSoon';
+import { INVITE_USERS } from 'user/permissions'
 import PageIndex from './PageIndex'
 
 const routesConfig = {
@@ -36,7 +37,7 @@ const routesConfig = {
     },
     register: {
       component: PageGather,
-      key: 'gather',
+      key: 'gatherRegister',
       name: 'Gather',
       exact: true,
     },
@@ -58,6 +59,7 @@ const routesConfig = {
       key: 'teamInvite',
       exact: true,
       name: 'Invite',
+      required: INVITE_USERS,
     },
     types: {
       component: PageComingSoon,
