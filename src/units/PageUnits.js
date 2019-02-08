@@ -6,6 +6,7 @@ import { Button } from 'elements'
 import BaseList from 'ui/BaseList';
 import PropTypes from 'prop-types'
 import { fetch } from 'utilities/requests'
+import styled from 'styled-components'
 import withUnits from './withUnits';
 import UnitCreateFrom from './UnitCreateForm';
 import CardUnit from './CardUnit'
@@ -38,8 +39,8 @@ class PageUnits extends Component {
   }
 
   computedModifiers = (type = 'Add') => {
-    if (type === 'Add') return ['primary']
-    return ['small']
+    if (type === 'Add') return ['primary', 'rightTop']
+    return ['small', 'rightTop']
   }
 
   renderAction = (type = 'Add', unit = null) => {
@@ -94,14 +95,21 @@ class PageUnits extends Component {
     const { list } = this.props
     return (
       <BasePage
-        page={{ title: 'Units', wrapContainer: false }}
+        page={{
+          title: 'Units',
+          wrapContainer: false,
+          subtitle: 'Manage the units',
+          description: 'Search your units or remove some from the workspace',
+        }}
         sideHeader={(
-          <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
+          <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} modifiers="small" />
         )}
         wrapContainer={false}
       >
         <>
+          {/* <Header> */}
           {this.renderAction('Add')}
+          {/* </Header> */}
           <BaseList {...this.props} context="units" fetchList={() => this.fetchUnits} loadMore={this.fetchUnits}>
             {list.map((unit) => {
               if (!unit) return null
@@ -121,6 +129,11 @@ class PageUnits extends Component {
     )
   }
 }
+
+const Header = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
 
 PageUnits.propTypes = {
   getUnits: PropTypes.func.isRequired,

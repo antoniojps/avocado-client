@@ -5,9 +5,10 @@ import {
   Title, Icon, Container, P,
 } from 'elements'
 import { above } from 'utilities'
+import withAuth from 'user/withAuth'
 
 const CardTeam = (props) => {
-  const { team, renderDelete } = props
+  const { team, renderDelete, warmup: { id: idLogged } } = props
   const {
     name,
     id,
@@ -32,7 +33,7 @@ const CardTeam = (props) => {
           </Card.Section>
         </Card.Container>
         <Card.Actions>
-          {renderDelete}
+          {idLogged !== id && renderDelete}
         </Card.Actions>
       </Card.Team>
     </Card>
@@ -123,4 +124,4 @@ CardTeam.propTypes = {
 CardTeam.defaultProps = {}
 
 
-export default CardTeam
+export default withAuth(CardTeam)

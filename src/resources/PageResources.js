@@ -94,9 +94,13 @@ class PageResources extends Component {
     const { list } = this.props
     return (
       <BasePage
-        page={{ title: 'Resources' }}
+        page={{
+          title: 'Resources',
+          subtitle: 'Manage the resources',
+          description: 'Search your resources or remove some from the workspace',
+        }}
         sideHeader={(
-          <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
+          <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} modifiers="small" />
         )}
         wrapContainer={false}
       >

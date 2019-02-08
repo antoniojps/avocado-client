@@ -1,3 +1,4 @@
+import { toast } from 'utilities'
 import {
   REQUEST_TENANT_LOADING,
   REQUEST_TENANT_SUCCESS,
@@ -95,12 +96,14 @@ export default function (state = initialState, action) {
       tenantPutLoading: true,
     }
   case PUT_TENANT_SUCCESS:
+    toast.success('Tenant updated')
     return {
       ...state,
       tenantPutLoading: false,
       tenant: data.tenant,
     }
   case PUT_TENANT_FAILURE:
+    toast.error('Error updating tenant')
     return {
       ...state,
       tenantPutLoading: false,

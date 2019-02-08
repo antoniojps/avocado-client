@@ -94,7 +94,7 @@ class PageUsers extends Component {
         sideHeader={(
           <>
             {/* {this.renderAction('Add')} */}
-            <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} />
+            <BaseSearch onChange={this.handleSearch} value={this.getSearchParam()} modifiers="small" />
           </>
         )}
         wrapContainer={false}
@@ -102,7 +102,7 @@ class PageUsers extends Component {
         <BaseList {...this.props} context="users" fetchList={() => this.fetchUsers} loadMore={this.fetchUsers}>
           {list.map((team) => (
             <CardTeam
-              renderDelete={<Button modifiers={['small', 'danger']} onClick={(e) => this.handleDelete(e, team.id)}>Delete</Button>}
+              renderDelete={<Button modifiers={['small', 'danger', 'noMargin']} onClick={(e) => this.handleDelete(e, team.id)}>Delete</Button>}
               key={team.id}
               team={team}
             />
