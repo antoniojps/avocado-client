@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Spring } from 'react-spring'
+import { Spring, animated } from 'react-spring'
 import { P } from 'elements'
 import { transparentize } from 'polished'
 
@@ -27,6 +27,7 @@ export default class BaseLoader extends Component {
     return (
       <Loader center={center}>
         <Spring
+          native
           reset
           reverse={reverse}
           onRest={this.onAnimationEnd}
@@ -34,7 +35,7 @@ export default class BaseLoader extends Component {
           to={{ x: 0, opacity: 0 }}
         >
           {props => (
-            <svg
+            <animated.svg
               width="30"
               height="49"
               viewBox="0 0 30 49"
@@ -54,8 +55,8 @@ export default class BaseLoader extends Component {
                   <stop stopColor="#BDF188" offset="100%" />
                 </linearGradient>
               </defs>
-              <path d="M15 47.5c7.463 0 13.5-5.906 13.5-13.175 0-4.17-1.804-12.722-4.305-19.695C21.27 6.475 17.815 1.5 15 1.5c-2.694 0-5.997 4.572-8.858 12.21C3.472 20.84 1.5 29.94 1.5 34.325 1.5 41.594 7.537 47.5 15 47.5z" fill="url(#a)" fillOpacity={props.opacity} />
-            </svg>
+              <animated.path d="M15 47.5c7.463 0 13.5-5.906 13.5-13.175 0-4.17-1.804-12.722-4.305-19.695C21.27 6.475 17.815 1.5 15 1.5c-2.694 0-5.997 4.572-8.858 12.21C3.472 20.84 1.5 29.94 1.5 34.325 1.5 41.594 7.537 47.5 15 47.5z" fill="url(#a)" fillOpacity={props.opacity} />
+            </animated.svg>
           )}
         </Spring>
 
@@ -90,13 +91,13 @@ BaseLoader.defaultProps = {
 export const BaseLoading = ({
   className, width, height, color,
 }) => (
-  <Loading className={className}>
-    <Loading.Spinner width={width} height={height} color={color}>
-      <div className="double-bounce1" />
-      <div className="double-bounce2" />
-    </Loading.Spinner>
-  </Loading>
-)
+    <Loading className={className}>
+      <Loading.Spinner width={width} height={height} color={color}>
+        <div className="double-bounce1" />
+        <div className="double-bounce2" />
+      </Loading.Spinner>
+    </Loading>
+  )
 
 
 BaseLoading.propTypes = {
