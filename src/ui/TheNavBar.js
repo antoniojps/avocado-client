@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {
   Icon,
   Title,
+  Seperator,
 } from 'elements'
 import { BaseBreakpoints, TheNavList } from 'ui'
 import { routes } from 'tenant/Routes'
@@ -83,12 +84,6 @@ class TheNavBar extends Component {
 const NavBar = styled.div`
   display: flex;
   justify-content: space-between;
-`
-const Seperator = styled.div`
-  height: 2px;
-  width: 100%;
-  background-image: linear-gradient(90deg, rgba(255,255,255,0.00) 0%, rgba(255,255,255,0.32) 15%, rgba(255,255,255,0.32) 50%, rgba(255,255,255,0.36) 85%, rgba(255,255,255,0.00) 100%);
-  margin-top: ${props => props.theme.spacing.s};
 `
 
 NavBar.Left = styled.div`

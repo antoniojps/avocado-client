@@ -15,7 +15,6 @@ import {
   BaseLoader,
   BaseFormInput,
   BaseModal,
-  BaseSearch,
 
 } from 'ui'
 import SyntaxHighlighter from 'docs/SyntaxHighlighter'
@@ -51,10 +50,19 @@ export default class PageComponents extends Component {
         <Title>
           Input
         </Title>
-        <BaseSearch onChange={this.handleChange} />
-        <BaseFormInput placeholder="Name" type="date" />
-        <BaseFormInput placeholder="Valid" modifiers="valid" />
-        <BaseFormInput placeholder="Error" modifiers="error" error="epa ocorreu um grave erro" />
+        <P>Costum input used with formik</P>
+        <BaseFormInput placeholder="Default" />
+        <BaseFormInput placeholder="Success" modifiers="valid" />
+        <BaseFormInput placeholder="Error" modifiers="error" error="epa ocorreu um grave erro" touched />
+
+        <SyntaxHighlighter>
+          {`import { BaseFormInput } from 'ui'
+
+<BaseFormInput placeholder="Default" />
+<BaseFormInput placeholder="Success" modifiers="valid" />
+<BaseFormInput placeholder="Error" modifiers="error" error="Ainda não planeaste uma auditoria hoje" touched />`}
+        </SyntaxHighlighter>
+
         <Title>
           Modal
         </Title>
@@ -71,28 +79,19 @@ export default class PageComponents extends Component {
           )}
         </BaseToggle>
         <Title>
-          Loader
-        </Title>
-        <BaseLoader message="Loading something..." />
-        <SyntaxHighlighter>
-          {`import { BaseLoader } from 'ui'
-
-<BaseLoader message="Loading something..." />`}
-        </SyntaxHighlighter>
-        <Title>
           Tabs
         </Title>
         <P>
           Horizontal
         </P>
         <BaseTabs>
-          <BaseTabs.Tab to="/components">
+          <BaseTabs.Tab to="/documentation/components">
             Components
           </BaseTabs.Tab>
-          <BaseTabs.Tab to="/components/tab-2">
+          <BaseTabs.Tab to="/documentation/components/tab-2">
             Tab 2
           </BaseTabs.Tab>
-          <BaseTabs.Tab to="/components/tab-3">
+          <BaseTabs.Tab to="/documentation/components/tab-3">
             Tab 3
           </BaseTabs.Tab>
         </BaseTabs>
@@ -101,13 +100,13 @@ export default class PageComponents extends Component {
           {`import { BaseTabs } from 'ui'
 
 <BaseTabs>
-  <BaseTabs.Tab to="/components">
+  <BaseTabs.Tab to="/documentation/components">
     Components
   </BaseTabs.Tab>
-  <BaseTabs.Tab to="/components/tab-2">
+  <BaseTabs.Tab to="/documentation/components/tab-2">
     Tab 2
   </BaseTabs.Tab>
-  <BaseTabs.Tab to="/components/tab-3">
+  <BaseTabs.Tab to="/documentation/components/tab-3">
     Tab 3
   </BaseTabs.Tab>
 </BaseTabs>`}
@@ -116,13 +115,13 @@ export default class PageComponents extends Component {
           Vertical
         </P>
         <BaseTabs orientation="vertical">
-          <BaseTabs.Tab to="/components">
+          <BaseTabs.Tab to="/documentation/components">
             Components
           </BaseTabs.Tab>
-          <BaseTabs.Tab to="/components/tab-2">
+          <BaseTabs.Tab to="/documentation/components/tab-2">
             Tab 2
           </BaseTabs.Tab>
-          <BaseTabs.Tab to="/components/tab-3">
+          <BaseTabs.Tab to="/documentation/components/tab-3">
             Tab 3
           </BaseTabs.Tab>
         </BaseTabs>
@@ -131,13 +130,13 @@ export default class PageComponents extends Component {
           {`import { BaseTabs } from 'ui'
 
 <BaseTabs orientation="vertical">
-  <BaseTabs.Tab to="/components">
+  <BaseTabs.Tab to="/documentation/components">
     Components
   </BaseTabs.Tab>
-  <BaseTabs.Tab to="/components/tab-2">
+  <BaseTabs.Tab to="/documentation/components/tab-2">
     Tab 2
   </BaseTabs.Tab>
-  <BaseTabs.Tab to="/components/tab-3">
+  <BaseTabs.Tab to="/documentation/components/tab-3">
     Tab 3
   </BaseTabs.Tab>
 </BaseTabs>`}
@@ -270,6 +269,15 @@ basePage={{
   }}
   parentVisible={false}
 />`}
+        </SyntaxHighlighter>
+        <Title>
+          Loader
+        </Title>
+        <BaseLoader message="Loading something..." />
+        <SyntaxHighlighter>
+          {`import { BaseLoader } from 'ui'
+
+<BaseLoader message="Loading something..." />`}
         </SyntaxHighlighter>
       </BasePage>
     )

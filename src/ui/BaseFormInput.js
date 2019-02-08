@@ -41,10 +41,12 @@ const renderError = (error) => {
 
 const BaseFormInput = (props) => {
   const {
-    touched, error, type, label,
+    touched, error, type, label, modifiers,
   } = props
+  let modifiersFromProps
   const errorElement = renderError(error)
-  const modifiersFromProps = generateModifiersFromProps({ touched, error })
+  if (touched && error) modifiersFromProps = generateModifiersFromProps({ touched, error })
+  modifiersFromProps = modifiers
   return (
     <Wrapper>
       {label && <P>{label}</P>}

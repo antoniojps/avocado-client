@@ -42,6 +42,9 @@ const PARAGRAPH_MODIFIERS = {
   small: ({ theme }) => `
     font-size: ${theme.size.xxs};
   `,
+  primary: ({ theme }) => `
+    color: ${theme.color.primary};
+  `,
 }
 
 export const P = styled.p`

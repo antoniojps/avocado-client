@@ -5,6 +5,7 @@ import PageDocsIndex from 'docs/PageIndex'
 import PageDocsElements from 'docs/PageElements'
 import PageDocsComponents from 'docs/PageComponents'
 import PageDocsStore from 'docs/PageStore'
+import PageDocsPermissions from 'docs/PagePermissions'
 import PageResources from 'resources/PageResources'
 import PageGather from 'user/PageGather'
 import PageLogin from 'user/PageLogin'
@@ -116,6 +117,11 @@ const routesConfig = {
       component: PageDocsComponents,
       key: 'docsComponents',
       name: 'Components',
+    },
+    permissions: {
+      component: PageDocsPermissions,
+      key: 'docsPermissions',
+      name: 'Permissions',
     },
     store: {
       component: PageDocsStore,

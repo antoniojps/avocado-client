@@ -9,6 +9,13 @@ const CONTAINER_MODIFIERS = {
   `,
 }
 
+export const Seperator = styled.div`
+  height: 2px;
+  width: 100%;
+  background-image: linear-gradient(90deg, rgba(255,255,255,0.00) 0%, rgba(255,255,255,0.32) 15%, rgba(255,255,255,0.32) 50%, rgba(255,255,255,0.36) 85%, rgba(255,255,255,0.00) 100%);
+  margin-top: ${props => props.theme.spacing.s};
+`
+
 export const Row = styled.section`
   margin-left: auto;
   margin-right: auto;
@@ -35,5 +42,5 @@ export const CenterDiv = styled.div`
 `
 /** Dont blame me, component is external and dont supports theme provider */
 export const PopUp = styled(Container)`
-  
+
 `
