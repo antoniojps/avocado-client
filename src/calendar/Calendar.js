@@ -5,10 +5,10 @@ import { BaseLoading } from 'ui/BaseLoader'
 import { BaseModal } from 'ui'
 import styled, { withTheme } from 'styled-components'
 import {
-  Button, Subtitle, Tag,
+  Button, Subtitle, Tag, Icon,
 } from 'elements'
 import { fetchEvents, fetchDataAddEvent } from 'utilities/requests'
-import { toast } from 'utilities'
+import { toast, above } from 'utilities'
 import withSizes from 'react-sizes'
 import { transparentize } from 'polished'
 import AddEventForm from './AddEventForm'
@@ -16,6 +16,8 @@ import AddEventForm from './AddEventForm'
 const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
 
 class Calendar extends Component {
+  isComponentMounted = false
+
   state = {
     events: [],
     isLoading: true,
@@ -29,6 +31,7 @@ class Calendar extends Component {
   }
 
   async componentDidMount() {
+    this.isComponentMounted = true
     const start = moment().startOf('month').subtract(10, 'days').unix() // current begin of week timestampt
     const end = moment().endOf('month').add(10, 'days').unix() // current end of week timestampt
     const currentMonth = moment().format('M')
@@ -51,13 +54,14 @@ class Calendar extends Component {
     } catch (e) {
       toast.error('Error fetching events')
     }
-
-    this.setState({
-      events,
-      isLoading: false,
-      currentMonth,
-      dataAdd,
-    })
+    if (this.isComponentMounted) {
+      this.setState({
+        events,
+        isLoading: false,
+        currentMonth,
+        dataAdd,
+      })
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -66,6 +70,10 @@ class Calendar extends Component {
         this.setState({ activeTab: 'day' })
       }
     }
+  }
+
+  componentWillUnmount = () => {
+    this.isComponentMounted = false
   }
 
 
@@ -90,11 +98,13 @@ class Calendar extends Component {
           end: new Date(event.end),
         }
       ))
-      this.setState({
-        currentMonth,
-        events,
-        isLoading: false,
-      })
+      if (this.isComponentMounted) {
+        this.setState({
+          currentMonth,
+          events,
+          isLoading: false,
+        })
+      }
     }
   }
 
@@ -105,7 +115,7 @@ class Calendar extends Component {
 
   getCustomBar = ({ label, onNavigate }) => (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Header>
         {!this.props.isMobile && (
           <div>
             <Button modifiers={this.getCurrent('month')} onClick={() => this.setState({ activeTab: 'month' })}>Month</Button>
@@ -115,11 +125,21 @@ class Calendar extends Component {
         )}
         <Subtitle>{label}</Subtitle>
         <div>
-          <Button onClick={() => onNavigate('PREV')}>Back</Button>
-          <Button modifiers="leftMargin" onClick={() => onNavigate('TODAY')}>Today</Button>
-          <Button modifiers="leftMargin" onClick={() => onNavigate('NEXT')}>Next</Button>
+          <Button onClick={() => onNavigate('PREV')}>
+            <Icon icon="baselineArrowBack" height={12} />
+            {' '}
+            Back
+          </Button>
+          <Button modifiers="leftMargin" onClick={() => onNavigate('TODAY')}>
+            Today
+          </Button>
+          <Button modifiers="leftMargin" onClick={() => onNavigate('NEXT')}>
+            Next
+            {' '}
+            <Icon icon="baselineArrowForward" height={12} />
+          </Button>
         </div>
-      </div>
+      </Header>
     </>
   )
 
@@ -253,8 +273,20 @@ const mapSizesToProps = ({ width }) => ({
 const Legend = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: initial;
   margin-bottom: ${props => props.theme.spacing.xs};
+  ${above.md`
+   justify-content: flex-end;
+  `}
+`
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  ${above.md`
+    flex-direction: row;
+  `}
 `
 
 const StyledCalendar = styled(Calendar)`

@@ -161,13 +161,31 @@ const BaseIcon = ({
         </g>
       </svg>
     )
-    case 'user':
-      return (
-        <svg xmlns="http://www.w3.org/2000/svg" width={getWidth(24, 24, height)} height={height} fill={iconColor} viewBox="0 0 24 24">
-          <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/>
-          <path d="M0 0h24v24H0z" fill="none"/>
-        </svg>
-      )
+  case 'user':
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" width={getWidth(24, 24, height)} height={height} fill={iconColor} viewBox="0 0 24 24">
+        <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z" />
+        <path d="M0 0h24v24H0z" fill="none" />
+      </svg>
+    )
+  case 'baselineArrowForward':
+    return (
+      <svg width={getWidth(13, 20, height)} height={height} viewBox="0 0 13 20" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" fillRule="evenodd">
+          <path fill={iconColor} fillRule="nonzero" d="M.88 2.12L8.76 10 .88 17.88 3 20l10-10L3 0z" />
+          <path d="M-5-2h24v24H-5z" />
+        </g>
+      </svg>
+    )
+  case 'baselineArrowBack':
+    return (
+      <svg width={getWidth(12, 20, height)} height={height} viewBox="0 0 12 20" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" fillRule="evenodd">
+          <path fill={iconColor} fillRule="nonzero" d="M11.67 1.77L9.9 0 0 9.9l9.9 9.9 1.77-1.77L3.54 9.9z" />
+          <path d="M-6-2h24v24H-6z" />
+        </g>
+      </svg>
+    )
   default:
     console.error('Invalid Icon prop')
     return 'Invalid Icon'
@@ -189,6 +207,7 @@ BaseIcon.propTypes = {
     'arrow-down',
     'logout',
     'user',
+    'baselineArrowForward', 'baselineArrowBack',
   ]).isRequired,
   color: PropTypes.string,
   height: PropTypes.number,

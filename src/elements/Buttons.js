@@ -16,7 +16,7 @@ const BUTTON_MODIFIERS = {
   ${above.sm`
   backgroud: red;
   float: right;
-  top: -70px; 
+  top: -70px;
 `}
  `,
   leftMargin: ({ theme }) => `margin-left: ${theme.spacing.xxs}`,
@@ -125,19 +125,19 @@ export const Button = ({
   type,
   isLoading,
 }) => (
-  <StyledButton
-    type={type}
-    pulse={pulse}
-    isLoading={isLoading}
-    modifiers={modifiers}
-    onClick={isLoading ? () => { } : onClick}
-    className={className}
-  >
-    {children}
-    <Ink />
-    {isLoading && <BaseLoading />}
-  </StyledButton>
-)
+    <StyledButton
+      type={type}
+      pulse={pulse}
+      isLoading={isLoading}
+      modifiers={modifiers}
+      onClick={isLoading ? () => { } : onClick}
+      className={className}
+    >
+      {children}
+      <Ink />
+      {isLoading && <BaseLoading />}
+    </StyledButton>
+  )
 
 Button.propTypes = {
   children: PropTypes.node,

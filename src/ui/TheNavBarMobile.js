@@ -76,6 +76,8 @@ const Nav = styled.div`
   width: 80%;
   height: 100%;
   padding-top: ${props => props.theme.spacing.xl};
+  padding-bottom: ${props => props.theme.spacing.xl};
+  overflow-y: scroll;
 `
 
 Nav.LinkWrapper = styled.div`
@@ -137,8 +139,10 @@ export default styled(TheNavBarMobile)`
 TheNavBarMobile.propTypes = {
   isOpen: PropTypes.bool,
   className: PropTypes.string.isRequired,
+  onClose: PropTypes.func,
 }
 
 TheNavBarMobile.defaultProps = {
   isOpen: false,
+  onClose: () => { },
 }
